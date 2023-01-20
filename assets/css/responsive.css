@@ -1,0 +1,210 @@
+/* Mobile & Tablet */
+@media (max-width: 1023px){
+    .hide-on-mobile-tablet {
+        display: none;
+    }
+    
+    
+}
+
+/* Tablet */
+@media (min-width: 740px) and (max-width: 1023px) {
+    .hide-on-tablet {
+        display: none;
+    }
+    .intro {
+        display: block;
+        margin-top: 15%;
+    }
+    .intro-user{
+        display: block;
+    }
+    .intro-user-right{
+        display: block;
+        margin-bottom: 14px;
+    }
+    .intro-user-left{
+        margin: -14% 0px 0px 23px;
+    }
+    .intro-user-avt{
+        height: 150px;
+        width: 150px;
+        margin-bottom: 20px;
+    }
+    .intro-user-right__name{
+        margin-right: 0;
+    }
+    .intro-user-right__social{
+        margin-top: 34px;
+    }
+    .intro-user::after{
+        display:none;
+    }
+    .intro-user-right__job{
+        display: block;
+    }
+    .intro-contact{
+        justify-content:space-between;
+    }
+    .intro-contact-list{
+        margin-right: 17%;
+        margin-left: -5%;
+    }
+    .options{
+        width: 100%!important;
+        position: relative!important;
+        margin-top: -10px!important;
+        top: 0px!important;
+        margin-bottom: -24px;
+    }
+    .option{
+        flex-direction: row;
+    }
+    .option-item{
+        margin: 0 8px 0;
+    }
+    .ententain-text-span{
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 4;
+    }
+    
+}
+
+@media (min-width: 1024px) {
+    .hide-on-low-pc {
+        display: none;
+    }
+    .ententain-text-span{
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 4;
+    }
+}
+
+/* Mobile */
+@media (max-width: 739px) {
+    .wide{
+        width: 390px;
+    }
+    .hide-on-mobile {
+        display: none;
+    }
+    .extends{
+        margin-bottom: 21%;
+    }
+    .intro {
+        width: 120%;
+        display: block;
+        margin-top: 15%;
+    }
+    .intro-user{
+        display: block;
+    }
+    .intro-user-right{
+        display: block;
+        margin-bottom: 14px;
+    }
+    .intro-user-left{
+        margin: -20% 0px 0px 23px;
+    }
+    .intro-user-avt{
+        height: 130px;
+        width: 130px;
+        margin-bottom: 20px;
+    }
+    .intro-user-right__name{
+        margin-right: 0;
+        font-size: 24px;
+    }
+    .intro-user-right__social{
+        margin-top: 32px;
+    }
+    .intro-user-right__social i{
+        font-size: 13px;
+        line-height: 34px;
+    }
+    #tooltip-icon{
+        height: 34px;
+        width: 34px;
+    }
+    .tooltip{
+        font-size: 10px;
+    }
+    .intro-user-right__social-icon:hover .tooltip{
+        top: -30px;
+    }
+    .intro-user::after{
+        display:none;
+    }
+    .intro-user-right__job{
+        display: block;
+        font-size: 12px;
+    }
+    .intro-contact{
+        display: block;
+    }
+    .intro-contact-list__item:last-child{
+        margin-bottom: 0;
+    }
+    .intro-contact-list{
+        margin-right: 17%;
+        margin-left: -5%;
+    }
+    .container{
+        margin-top: -12%;
+    }
+    .options{
+        border-bottom: 0;
+        border-radius: 0;
+        box-shadow: 0 20px 40px rgb(103 118 128 / 20%);
+        padding: 8px 0;
+        position: fixed!important;
+        bottom: 0;
+        left: 0;
+        width: 100%!important;
+        z-index: 10;
+        margin-top: 0!important;
+        top: auto!important;
+    }
+    .option{
+        flex-direction: row;
+        padding: 0;
+        justify-content:center
+    }
+    .option-item{
+        height: 4.25rem;
+        width: 21%;
+        margin: 0 5px 0;
+    }
+    lord-icon{
+        width: 40px!important;
+        height: 40px!important;
+    }
+    .option-item-icon{
+        font-size: 12px;
+    }
+    .ententain-text-span{
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+    }
+    .ententain-avatar--avt{
+        width: 129px;
+        height: 81px;
+    }
+}
+
+@media (max-width: 400px) {
+    .wide{
+        width: 340px;
+    }
+    .intro {
+        width: 105%;
+        display: block;
+        margin-top: 15%;
+    }
+}
