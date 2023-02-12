@@ -1,0 +1,14 @@
+{
+  "name": "d3-dashboard",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "cubejs-server"
+  },
+  "template": "docker",
+  "templateVersion": "0.31.61",
+  "devDependencies": {
+    "@cubejs-backend/postgres-driver": "^0.31.60",
+    "@cubejs-backend/server": "^0.31.61"
+  }
+}
