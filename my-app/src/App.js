@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import { useData } from './useData';
 import { Marks } from './Marks';
 
-const width = window.screen.availWidth;
-const height = window.screen.availHeight;
+const width = 960;
+const height = 500;
 
 const App = () => {
   const data = useData();
