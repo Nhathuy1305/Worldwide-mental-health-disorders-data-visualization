@@ -1,5 +1,5 @@
 <div id="top" align="center">
-<img src="src/assets/logo/banner.jpg" alt="Banner">
+<img src="" alt="Banner">
 </div>
 
 [![Contributors][contributors-shield]][contributors-url]
