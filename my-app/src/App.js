@@ -1,34 +1,11 @@
-import React, { useState, useCallback, useEffect } from 'react';
-import ReactDOM from 'react-dom';
-import { useData } from './useData';
-import { Marks } from './Marks';
+import React from 'react';
+import Map from './pages/Map/index'
+import './index.css'
 
-const width = 960;
-const height = 500;
-
-const App = () => {
-  const data = useData();
-
-  if (!data) {
-    return <pre>Loading...</pre>;
-  }
-
+export default function App() {
   return (
-    <svg width={width} height={height}>
-      <Marks data={data} />
-    </svg>
+    <>
+    <Map />
+    </>
   );
 };
-
-const rootElement = document.getElementById('root');
-ReactDOM.render(<App />, rootElement);
-
-// function App() {
-//   return (
-//     <div className="App">
-      
-//     </div>
-//   );
-// }
-
-export default App;

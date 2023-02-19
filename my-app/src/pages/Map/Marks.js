@@ -1,5 +1,4 @@
 import { geoEqualEarth, geoPath, geoGraticule } from 'd3';
-import './App.css';
 
 const projection = geoEqualEarth();
 const path = geoPath(projection);

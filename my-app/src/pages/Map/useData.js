@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { json } from 'd3';
 import { feature, mesh } from 'topojson';
 
