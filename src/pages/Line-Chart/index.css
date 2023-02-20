@@ -1,0 +1,35 @@
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+        'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+        'Helvetica Neue', sans-serif;
+}
+
+path {
+    fill: none;
+    stroke: black;
+    stroke-width: 5px;
+}
+
+.marker-line {
+    stroke: black;
+    stroke-width: 2px;
+}
+
+text {
+    font-size: 2em;
+}
+
+.domain {
+    display: none;
+}
+
+.tick line {
+    stroke: #bbbbbb;
+}
+
+.tick text {
+    fill: #565656;
+    font-size: 14px;
+}

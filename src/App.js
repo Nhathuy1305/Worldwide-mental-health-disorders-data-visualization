@@ -1,11 +1,13 @@
 import React from 'react';
-import Map from './pages/Map/index'
+import LineChartCons from './pages/Line-Chart/index';
+import Map from './pages/World-map/index';
 import './index.css'
 
 export default function App() {
   return (
-    <>
-    <Map />
-    </>
+    <div>
+      <Map />
+      <LineChartCons />
+    </div>
   );
 };
