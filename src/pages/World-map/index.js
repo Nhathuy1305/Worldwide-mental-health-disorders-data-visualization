@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { useData } from './useData'
 import { Marks } from './Marks'
 import './index.css'
@@ -7,7 +6,7 @@ import './index.css'
 const width = 960;
 const height = 500;
 
-export default function Map() {
+const WorldMap = () => {
   const data = useData();
 
   if (!data) {
@@ -21,5 +20,4 @@ export default function Map() {
   );
 };
 
-const rootElement = document.getElementById('root');
-ReactDOM.render(<Map />, rootElement);
+export default WorldMap;

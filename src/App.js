@@ -1,11 +1,13 @@
 import React from 'react';
-import Map from './pages/Map/index'
+// import WorldMap from './pages/World-map/index';
+import LineCharts  from './pages/Line-Chart/index';
 import './index.css'
 
 export default function App() {
   return (
     <>
-    <Map />
+      {/* <WorldMap /> */}
+      <LineCharts />
     </>
   );
 };
