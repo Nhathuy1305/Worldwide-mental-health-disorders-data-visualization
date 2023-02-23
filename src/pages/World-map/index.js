@@ -6,7 +6,7 @@ import './index.css'
 const width = 960;
 const height = 500;
 
-const Map = () => {
+const WorldMap = () => {
   const data = useData();
 
   if (!data) {
@@ -20,4 +20,4 @@ const Map = () => {
   );
 };
 
-export default Map;
+export default WorldMap;

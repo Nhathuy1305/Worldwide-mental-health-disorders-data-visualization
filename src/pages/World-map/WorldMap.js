@@ -13,4 +13,3 @@ export const WorldMap = ({ data, width, height }) => {
         </svg>
     );
 }
-

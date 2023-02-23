@@ -6,11 +6,11 @@ import './index.css'
 const width = window.innerWidth;
 const height = window.innerHeight;
 
-const LineChartCons = () => {
+const LineCharts = () => {
     const data = useData();
     return data
         ? <LineChart data={data} width={width} height={height} />
         : <div>Loading...</div>;
 };
 
-export default LineChartCons;
+export default LineCharts;
