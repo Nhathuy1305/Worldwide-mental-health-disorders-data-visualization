@@ -1,7 +1,6 @@
 // Define basic constraint
 const width = 200;
 const height = 200;
-const padding = 200;
 
 // Define row converter for CSV
 let rowConverter = function (d) {
@@ -29,6 +28,112 @@ function vietnam() {
     "https://raw.githubusercontent.com/Nhathuy1305/DSDV-project/main/Vietnam.csv",
     rowConverter
   ).then((data) => {
-    console.log(data);
+    // Define depressive rate scale
+    let depScale = d3
+      .scaleLinear()
+      .domain([
+        d3.min(data, function (d) {
+          return d.depressive;
+        }),
+        d3.max(data, function (d) {
+          return d.depressive;
+        }),
+      ])
+      .range([padding, width - padding]);
+
+    // Define suicide rate scale
+    let suiScale = d3
+      .scaleLinear()
+      .domain([
+        d3.min(data, function (d) {
+          return d.suicide;
+        }),
+        d3.max(data, function (d) {
+          return d.suicide;
+        }),
+      ])
+      .range([height - padding, padding]);
+
+    // Define depressive rate scale
+    let allScale = d3
+      .scaleLinear()
+      .domain([
+        d3.min(data, function (d) {
+          return d.all;
+        }),
+        d3.max(data, function (d) {
+          return d.all;
+        }),
+      ])
+      .range([padding, width - padding]);
+
+    // Define suicide rate scale
+    let popScale = d3
+      .scaleLinear()
+      .domain([
+        d3.min(data, function (d) {
+          return d.population;
+        }),
+        d3.max(data, function (d) {
+          return d.population;
+        }),
+      ])
+      .range([height - padding, padding]);
+
+    // Define male rate scale
+    let maleScale = d3
+      .scaleLinear()
+      .domain([
+        d3.min(data, function (d) {
+          return d.male;
+        }),
+        d3.max(data, function (d) {
+          return d.male;
+        }),
+      ])
+      .range([height - padding, padding]);
+
+    // Define female rate scale
+    let femaleScale = d3
+      .scaleLinear()
+      .domain([
+        d3.min(data, function (d) {
+          return d.female;
+        }),
+        d3.max(data, function (d) {
+          return d.female;
+        }),
+      ])
+      .range([height - padding, padding]);
+
+    // Define yearly scale
+    let yearScale = d3
+      .scaleBand()
+      .domain(d3.range(data.length))
+      .rangeRound([0, height - padding])
+      .paddingInner(0.2);
+
+    // Add new canvas
+    let svg1 = d3
+      .select(".task")
+      .append("svg")
+      .attr("height", height)
+      .attr("width", width);
+
+    let svg2 = d3
+      .select(".task")
+      .append("svg")
+      .attr("height", height)
+      .attr("width", width);
+    let svg3 = d3
+      .select(".task")
+      .append("svg")
+      .attr("height", height)
+      .attr("width", width);
+    let svg4 = d3
+      .select(".task")
+      .append("svg")
+      .attr("height", height)
+      .attr("width", width);
   });
 }
