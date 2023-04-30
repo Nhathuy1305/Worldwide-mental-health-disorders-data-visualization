@@ -8,10 +8,16 @@
     <link rel="stylesheet" href="styles/style.css" />
     <link rel="stylesheet" href="styles/normalize.css" />
     <script src="https://d3js.org/d3.v7.min.js"></script>
-    <script src="scripts/vietnam.js"></script>
+    <script src="scripts/charts/index.js"></script>
+    <script src="scripts/map/index.js"></script>
   </head>
   <body>
-    <div id="world-map"></div>
+
+    <div id="world-map">
+      <script>
+        drawWorldMap()
+      </script>
+    </div>
     <div id="vietnam-area">
       <script>
         vietnam();
