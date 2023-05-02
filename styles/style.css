@@ -18,18 +18,14 @@ body {
 }
 
 .fill {
-    fill: #fff;
+    fill: #4242e4;
 }
 
 .graticule {
     fill: none;
-    stroke: #777;
-    stroke-width: .5px;
+    stroke: rgba(201, 190, 190, 0.89);
+    stroke-width: 1px;
     stroke-opacity: .5;
-}
-
-.land {
-    fill: #222;
 }
 
 .boundary {

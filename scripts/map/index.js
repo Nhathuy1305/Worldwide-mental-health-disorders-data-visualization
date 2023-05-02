@@ -1,5 +1,6 @@
 const width = 960,
-    height = 500;
+    height = 500,
+    padding = 50;
 
 const options = [
     {name: "Aitoff", projection: d3.geoAitoff()},
@@ -75,13 +76,61 @@ svg.append("path")
     .attr("class", "graticule")
     .attr("d", path);
 
-d3.json("data/world-110m.json", function(error, world) {
+const data = d3.map();
+
+// define a variable to store the currently hovered path element
+let hoveredPath = null;
+
+const colorScale = d3.scaleThreshold()
+    .domain([100000, 1000000, 10000000, 30000000, 100000000, 500000000])
+    .range(d3.schemeBlues[7]);
+
+d3.json("data/world.geojson", function(error, world) {
     if (error) throw error;
 
-    svg.insert("path", ".graticule")
-        .datum(topojson.feature(world, world.objects.land))
-        .attr("class", "land")
-        .attr("d", path)
+    // add the land areas to the map as path elements
+    svg.append("g")
+        .selectAll("path")
+        .data(world.features)
+        .enter()
+        .append("path")
+        // draw each country
+        .attr("d", d3.geoPath()
+            .projection(projection)
+        )
+        // set the color of each country
+        .attr("fill", function (d) {
+            d.total = data.get(d.id) || 0;
+            return colorScale(d.total);
+        })
+        .style("stroke", "transparent")
+        .attr("class", function(d){ return "Country" } )
+        .style("opacity", .8)
+        // add event handlers for mouseover and mouseout events
+        .on("mouseover", function(d) {
+            // change the fill color of the hovered path element
+            d3.selectAll(".Country")
+                .transition()
+                .duration(200)
+                .style("opacity", .5);
+            d3.select(this)
+                .transition()
+                .duration(200)
+                .style("opacity", 1)
+                .style("stroke", "black");
+        })
+        .on("mouseout", function(d) {
+            // change the fill color of the previously hovered path element
+            d3.selectAll(".Country")
+                .transition()
+                .duration(200)
+                .style("opacity", .8);
+            d3.select(this)
+                .transition()
+                .duration(200)
+                .style("stroke", "transparent");
+        });
+
 });
 
 const menu = d3.select("#projection-menu")
@@ -93,17 +142,6 @@ menu.selectAll("option")
     .data(options)
     .enter().append("option")
     .text(function(d) { return d.name; });
-
-/**
- * Loop to be more visualize
- */
-// update(options[0])
-
-// function loop() {
-//     const j = Math.floor(Math.random() * n);
-//     menu.property("selectedIndex", i = j + (j >= i));
-//     update(options[i]);
-// }
 
 function change() {
     const selectedOption = options[this.selectedIndex];
