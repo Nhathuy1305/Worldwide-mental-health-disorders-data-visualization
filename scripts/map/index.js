@@ -78,19 +78,26 @@ svg.append("path")
 
 const data = d3.map();
 
-// define a variable to store the currently hovered path element
-let hoveredPath = null;
-
 const colorScale = d3.scaleThreshold()
     .domain([100000, 1000000, 10000000, 30000000, 100000000, 500000000])
     .range(d3.schemeBlues[7]);
 
+// define a variable to store the currently brushed selection
+let brushedSelection = null;
+
 d3.json("data/world.geojson", function(error, world) {
     if (error) throw error;
 
+    // create a group for the land path elements
+    const landGroup = svg.append("g");
+
+    // create a tooltip element and hide it initially
+    const tooltip = d3.select("body").append("div")
+        .attr("class", "tooltip")
+        .style("opacity", 0);
+
     // add the land areas to the map as path elements
-    svg.append("g")
-        .selectAll("path")
+    landGroup.selectAll("path")
         .data(world.features)
         .enter()
         .append("path")
@@ -118,6 +125,13 @@ d3.json("data/world.geojson", function(error, world) {
                 .duration(200)
                 .style("opacity", 1)
                 .style("stroke", "black");
+            // show tooltip with country name and total value
+            tooltip.html(`<strong>${d.properties.name}</strong><br/>Total: ${d.total}`)
+                .style("left", (d3.event.pageX + 10) + "px")
+                .style("top", (d3.event.pageY + 10) + "px")
+                .transition()
+                .duration(200)
+                .style("opacity", .9);
         })
         .on("mouseout", function(d) {
             // change the fill color of the previously hovered path element
@@ -129,9 +143,12 @@ d3.json("data/world.geojson", function(error, world) {
                 .transition()
                 .duration(200)
                 .style("stroke", "transparent");
+            // hide tooltip
+            tooltip.transition()
+                .duration(200)
+                .style("opacity", 0);
         });
-
-});
+})
 
 const menu = d3.select("#projection-menu")
     .on("change", change)
