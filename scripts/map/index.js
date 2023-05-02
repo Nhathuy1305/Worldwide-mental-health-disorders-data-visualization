@@ -1,77 +1,138 @@
-import * as d3 from 'd3';
-import { queue } from 'd3-queue';
+const width = 960,
+    height = 500;
 
-function WorldMap() {
-  // The svg
-  var svg = d3.select("svg"),
-    width = +svg.attr("width"),
-    height = +svg.attr("height");
+const options = [
+    {name: "Aitoff", projection: d3.geoAitoff()},
+    {name: "Albers", projection: d3.geoAlbers().scale(145).parallels([20, 50])},
+    {name: "August", projection: d3.geoAugust().scale(60)},
+    {name: "Baker", projection: d3.geoBaker().scale(100)},
+    {name: "Boggs", projection: d3.geoBoggs()},
+    {name: "Bonne", projection: d3.geoBonne().scale(120)},
+    {name: "Bromley", projection: d3.geoBromley()},
+    {name: "Collignon", projection: d3.geoCollignon().scale(93)},
+    {name: "Craster Parabolic", projection: d3.geoCraster()},
+    {name: "Eckert I", projection: d3.geoEckert1().scale(165)},
+    {name: "Eckert II", projection: d3.geoEckert2().scale(165)},
+    {name: "Eckert III", projection: d3.geoEckert3().scale(180)},
+    {name: "Eckert IV", projection: d3.geoEckert4().scale(180)},
+    {name: "Eckert V", projection: d3.geoEckert5().scale(170)},
+    {name: "Eckert VI", projection: d3.geoEckert6().scale(170)},
+    {name: "Eisenlohr", projection: d3.geoEisenlohr().scale(60)},
+    {name: "Equirectangular (Plate Carrée)", projection: d3.geoEquirectangular()},
+    {name: "Hammer", projection: d3.geoHammer().scale(165)},
+    {name: "Hill", projection: d3.geoHill()},
+    {name: "Goode Homolosine", projection: d3.geoHomolosine()},
+    {name: "Kavrayskiy VII", projection: d3.geoKavrayskiy7()},
+    {name: "Lambert cylindrical equal-area", projection: d3.geoCylindricalEqualArea()},
+    {name: "Lagrange", projection: d3.geoLagrange().scale(120)},
+    {name: "Larrivée", projection: d3.geoLarrivee().scale(95)},
+    {name: "Laskowski", projection: d3.geoLaskowski().scale(120)},
+    {name: "Loximuthal", projection: d3.geoLoximuthal()},
+    // {name: "Mercator", projection: d3.geoMercator().scale(490 / 2 / Math.PI)},
+    {name: "Miller", projection: d3.geoMiller().scale(100)},
+    {name: "McBryde–Thomas Flat-Polar Parabolic", projection: d3.geoMtFlatPolarParabolic()},
+    {name: "McBryde–Thomas Flat-Polar Quartic", projection: d3.geoMtFlatPolarQuartic()},
+    {name: "McBryde–Thomas Flat-Polar Sinusoidal", projection: d3.geoMtFlatPolarSinusoidal()},
+    {name: "Mollweide", projection: d3.geoMollweide().scale(165)},
+    {name: "Natural Earth", projection: d3.geoNaturalEarth()},
+    {name: "Nell–Hammer", projection: d3.geoNellHammer()},
+    {name: "Polyconic", projection: d3.geoPolyconic().scale(100)},
+    {name: "Robinson", projection: d3.geoRobinson()},
+    {name: "Sinusoidal", projection: d3.geoSinusoidal()},
+    {name: "Sinu-Mollweide", projection: d3.geoSinuMollweide()},
+    {name: "van der Grinten", projection: d3.geoVanDerGrinten().scale(75)},
+    {name: "van der Grinten IV", projection: d3.geoVanDerGrinten4().scale(120)},
+    {name: "Wagner IV", projection: d3.geoWagner4()},
+    {name: "Wagner VI", projection: d3.geoWagner6()},
+    {name: "Wagner VII", projection: d3.geoWagner7()},
+    {name: "Winkel Tripel", projection: d3.geoWinkel3()}
+];
 
-  // Map and projection
-  var path = d3.geoPath();
-  var projection = d3.geoMercator()
-    .scale(70)
-    .center([0, 20])
-    .translate([width / 2, height / 2]);
+options.forEach(function(o) {
+    o.projection.rotate([0, 0]).center([0, 0]);
+});
 
-  // Data and color scale
-  var data = d3.map();
-  var colorScale = d3.scaleThreshold()
-    .domain([100000, 1000000, 10000000, 30000000, 100000000, 500000000])
-    .range(d3.schemeBlues[7]);
+let i = 0, projection = options[i].projection;
+const path = d3.geoPath(projection);
+const graticule = d3.geoGraticule();
+const svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height);
 
-  // Load external data and boot
-  queue()
-    .defer(d3.json, "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson")
-    .defer(d3.csv, "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world_population.csv", function (d) { data.set(d.code, +d.pop); })
-    .await(ready);
+svg.append("defs")
+    .append("path")
+    .datum({type: "Sphere"})
+    .attr("id", "sphere")
+    .attr("d", path);
+svg.append("use")
+    .attr("class", "stroke")
+    .attr("xlink:href", "#sphere");
+svg.append("use")
+    .attr("class", "fill")
+    .attr("xlink:href", "#sphere");
+svg.append("path")
+    .datum(graticule)
+    .attr("class", "graticule")
+    .attr("d", path);
 
-  function ready(error, topo) {
+d3.json("data/world-110m.json", function(error, world) {
+    if (error) throw error;
 
-    let mouseOver = function (d) {
-      d3.selectAll(".Country")
-        .transition()
-        .duration(200)
-        .style("opacity", .5)
-      d3.select(this)
-        .transition()
-        .duration(200)
-        .style("opacity", 1)
-        .style("stroke", "black")
-    }
+    svg.insert("path", ".graticule")
+        .datum(topojson.feature(world, world.objects.land))
+        .attr("class", "land")
+        .attr("d", path)
+});
 
-    let mouseLeave = function (d) {
-      d3.selectAll(".Country")
-        .transition()
-        .duration(200)
-        .style("opacity", .8)
-      d3.select(this)
-        .transition()
-        .duration(200)
-        .style("stroke", "transparent")
-    }
+const menu = d3.select("#projection-menu")
+    .on("change", change)
+    .style("border-radius", "3px")
+    .style("right", "-70px")
 
-    // Draw the map
-    svg.append("g")
-      .selectAll("path")
-      .data(topo.features)
-      .enter()
-      .append("path")
-      // draw each country
-      .attr("d", d3.geoPath()
-        .projection(projection)
-      )
-      // set the color of each country
-      .attr("fill", function (d) {
-        d.total = data.get(d.id) || 0;
-        return colorScale(d.total);
-      })
-      .style("stroke", "transparent")
-      .attr("class", function (d) { return "Country" })
-      .style("opacity", .8)
-      .on("mouseover", mouseOver)
-      .on("mouseleave", mouseLeave)
-  }
+menu.selectAll("option")
+    .data(options)
+    .enter().append("option")
+    .text(function(d) { return d.name; });
+
+/**
+ * Loop to be more visualize
+ */
+// update(options[0])
+
+// function loop() {
+//     const j = Math.floor(Math.random() * n);
+//     menu.property("selectedIndex", i = j + (j >= i));
+//     update(options[i]);
+// }
+
+function change() {
+    const selectedOption = options[this.selectedIndex];
+    update(selectedOption);
 }
 
-export default WorldMap;
+function update(option) {
+    svg.selectAll("path").interrupt().transition()
+        .duration(1000).ease(d3.easeLinear)
+        .attrTween("d", projectionTween(projection, projection = option.projection))
+    // d3.timeout(loop, 1000)
+}
+
+function projectionTween(projection0, projection1) {
+    return function(d) {
+        let t = 0;
+        const projection = d3.geoProjection(project)
+            .scale(1)
+            .translate([width / 2, height / 2]);
+        const path = d3.geoPath(projection);
+
+        function project(a, b) {
+            a *= 180 / Math.PI, b *= 180 / Math.PI;
+            const p0 = projection0([a, b]), p1 = projection1([a, b]);
+            return [(1 - t) * p0[0] + t * p1[0], (1 - t) * -p0[1] + t * -p1[1]];
+        }
+        return function(_) {
+            t = _;
+            return path(d);
+        };
+    };
+}
