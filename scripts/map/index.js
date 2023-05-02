@@ -1,6 +1,19 @@
 const width = 960,
-    height = 500,
-    padding = 50;
+    height = 500;
+
+const years = [
+    {year: 1990}, {year: 1991}, {year: 1992}, {year: 1993}, {year: 1994}, {year: 1995}, {year: 1996}, {year: 1997},
+    {year: 1998}, {year: 1999}, {year: 2000}, {year: 2001}, {year: 2002}, {year: 2003}, {year: 2004}, {year: 2005},
+    {year: 2006}, {year: 2007}, {year: 2008}, {year: 2009}, {year: 2010}, {year: 2011}, {year: 2012}, {year: 2013},
+    {year: 2014}, {year: 2015}, {year: 2016}, {year: 2017}
+]
+
+const maps = [
+    {type: "Age"},
+    {type: "Population"},
+    {type: "Suicide rate"},
+    {type: "Disorder rate"}
+]
 
 const options = [
     {name: "Aitoff", projection: d3.geoAitoff()},
@@ -171,6 +184,26 @@ function update(option) {
         .attrTween("d", projectionTween(projection, projection = option.projection))
     // d3.timeout(loop, 1000)
 }
+
+const menu1 = d3.select("#years-menu")
+    .on("change", change)
+    .style("border-radius", "3px")
+    .style("right", "-70px")
+
+menu1.selectAll("option")
+    .data(years)
+    .enter().append("option")
+    .text(function(d) { return d.year; });
+
+const menu2 = d3.select("#maps-menu")
+    .on("change", change)
+    .style("border-radius", "3px")
+    .style("right", "-70px")
+
+menu2.selectAll("option")
+    .data(maps)
+    .enter().append("option")
+    .text(function(d) { return d.type; });
 
 function projectionTween(projection0, projection1) {
     return function(d) {

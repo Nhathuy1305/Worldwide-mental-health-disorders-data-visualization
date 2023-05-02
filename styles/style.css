@@ -11,6 +11,17 @@ body {
     top: 10px;
 }
 
+#maps-menu {
+    position: absolute;
+    right: 10px;
+    top: 40px;
+}
+#years-menu {
+    position: absolute;
+    right: 10px;
+    top: 70px;
+}
+
 .stroke {
     fill: none;
     stroke: #000;
@@ -32,4 +43,15 @@ body {
     fill: none;
     stroke: #fff;
     stroke-width: 1px;
+}
+
+.tooltip {
+    position: absolute;
+    padding: 8px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+    font-size: 14px;
+    line-height: 1.4;
 }
