@@ -7,20 +7,17 @@
     <title>Our World in Depression</title>
     <link rel="stylesheet" href="styles/style.css" />
     <link rel="stylesheet" href="styles/normalize.css" />
-    <script src="https://d3js.org/d3.v7.min.js"></script>
-    <script src="scripts/charts/index.js"></script>
-    <script src="scripts/map/index.js"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
   </head>
   <body>
     <div id="world-map">
-      <script>
-        drawWorldMap();
-      </script>
+      <label for="projection-menu"></label><select id="projection-menu"></select>
+      <script src="//d3js.org/d3-geo-projection.v1.min.js"></script>
+      <script src="//d3js.org/topojson.v2.min.js"></script>
+      <script src="scripts/map/index.js"></script>
     </div>
     <div id="vietnam-area">
-      <script>
-        vietnam();
-      </script>
+      <script src="scripts/charts/index.js"></script>
     </div>
     <div id="vietnam-depression"></div>
   </body>
