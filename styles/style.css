@@ -16,6 +16,7 @@ body {
     right: 10px;
     top: 40px;
 }
+
 #years-menu {
     position: absolute;
     right: 10px;
@@ -29,7 +30,7 @@ body {
 }
 
 .fill {
-    fill: #4242e4;
+    fill: #0057b9;
 }
 
 .graticule {

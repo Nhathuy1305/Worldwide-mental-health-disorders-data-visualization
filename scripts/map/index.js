@@ -66,7 +66,8 @@ options.forEach(function(o) {
     o.projection.rotate([0, 0]).center([0, 0]);
 });
 
-let i = 0, projection = options[i].projection;
+let i = 0;
+let projection = options[i].projection;
 const path = d3.geoPath(projection);
 const graticule = d3.geoGraticule();
 const svg = d3.select("body").append("svg")
@@ -89,16 +90,82 @@ svg.append("path")
     .attr("class", "graticule")
     .attr("d", path);
 
+const menu = d3.select("#projection-menu")
+    .on("change", change)
+    .style("border-radius", "3px")
+    .style("right", "-70px")
+
+menu.selectAll("option")
+    .data(options)
+    .enter().append("option")
+    .text(function(d) { return d.name; });
+
+function change() {
+    const selectedOption = options[this.selectedIndex];
+    update(selectedOption);
+}
+
+function update(option) {
+    svg.selectAll("path").interrupt().transition()
+        .duration(1000).ease(d3.easeLinear)
+        .attrTween("d", projectionTween(projection, projection = option.projection))
+}
+
+// function changeMap() {
+//     const selectedOption = maps[this.selectedIndex];
+//     updateMap(selectedOption);
+// }
+//
+// function updateMap(option) {
+//     svg.selectAll("path").interrupt().transition()
+//         .duration(1000).ease(d3.easeLinear)
+//         .attrTween("d", projectionTween(projection, projection = option.projection))
+// }
+
+// Years
+const menu1 = d3.select("#years-menu")
+    .on("change", change)
+    .style("border-radius", "3px")
+    .style("right", "-70px")
+
+menu1.selectAll("option")
+    .data(years)
+    .enter().append("option")
+    .text(function(d) { return d.year; });
+
+// Maps
+const menu2 = d3.select("#maps-menu")
+    .on("change", change)
+    .style("border-radius", "3px")
+    .style("right", "-70px")
+
+menu2.selectAll("option")
+    .data(maps)
+    .enter().append("option")
+    .text(function(d) { return d.type; });
+
 const data = d3.map();
 
 const colorScale = d3.scaleThreshold()
     .domain([100000, 1000000, 10000000, 30000000, 100000000, 500000000])
-    .range(d3.schemeBlues[7]);
+    .range(d3.schemeGreens[7]);
 
-// define a variable to store the currently brushed selection
-let brushedSelection = null;
+let mapRowConverter = function(d) {
 
-d3.json("data/world.geojson", function(error, world) {
+    return {
+        country: d.Entity,
+        year: +d.Year,
+        pop: +d.Population
+    };
+};
+
+d3.queue()
+    .defer(d3.json, "data/world.geojson")
+    .defer(d3.csv, "data/population_data.csv", mapRowConverter)
+    // .defer(d3.csv, "data/suicide_rate_data.csv")
+    .await(draw);
+
+function draw (error, world) {
     if (error) throw error;
 
     // create a group for the land path elements
@@ -139,7 +206,7 @@ d3.json("data/world.geojson", function(error, world) {
                 .style("opacity", 1)
                 .style("stroke", "black");
             // show tooltip with country name and total value
-            tooltip.html(`<strong>${d.properties.name}</strong><br/>Total: ${d.total}`)
+            tooltip.html(`<strong>${d.properties.name}</strong><br/>Population: ${d.total}`)
                 .style("left", (d3.event.pageX + 10) + "px")
                 .style("top", (d3.event.pageY + 10) + "px")
                 .transition()
@@ -161,49 +228,7 @@ d3.json("data/world.geojson", function(error, world) {
                 .duration(200)
                 .style("opacity", 0);
         });
-})
-
-const menu = d3.select("#projection-menu")
-    .on("change", change)
-    .style("border-radius", "3px")
-    .style("right", "-70px")
-
-menu.selectAll("option")
-    .data(options)
-    .enter().append("option")
-    .text(function(d) { return d.name; });
-
-function change() {
-    const selectedOption = options[this.selectedIndex];
-    update(selectedOption);
 }
-
-function update(option) {
-    svg.selectAll("path").interrupt().transition()
-        .duration(1000).ease(d3.easeLinear)
-        .attrTween("d", projectionTween(projection, projection = option.projection))
-    // d3.timeout(loop, 1000)
-}
-
-const menu1 = d3.select("#years-menu")
-    .on("change", change)
-    .style("border-radius", "3px")
-    .style("right", "-70px")
-
-menu1.selectAll("option")
-    .data(years)
-    .enter().append("option")
-    .text(function(d) { return d.year; });
-
-const menu2 = d3.select("#maps-menu")
-    .on("change", change)
-    .style("border-radius", "3px")
-    .style("right", "-70px")
-
-menu2.selectAll("option")
-    .data(maps)
-    .enter().append("option")
-    .text(function(d) { return d.type; });
 
 function projectionTween(projection0, projection1) {
     return function(d) {
