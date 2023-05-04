@@ -90,7 +90,7 @@ svg.append("path")
 const menu = d3.select("#projection-menu")
     .on("change", change)
     .style("border-radius", "3px")
-    .style("right", "-70px")
+    .style("right", "210px")
 
 menu.selectAll("option")
     .data(options)
@@ -111,7 +111,7 @@ function update(option) {
 // Years
 const menuYear = d3.select("#years-menu")
     .style("border-radius", "3px")
-    .style("right", "-70px")
+    .style("right", "210px")
 
 menuYear.selectAll("option")
     .data(years)
