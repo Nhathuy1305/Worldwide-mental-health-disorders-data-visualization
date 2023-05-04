@@ -9,10 +9,10 @@ const years = [
 ]
 
 const maps = [
-    {type: "Age"},
-    {type: "Population"},
-    {type: "Suicide rate"},
-    {type: "Disorder rate"}
+    {type: "Population", value: "data1"},
+    {type: "Age", value: "data2"},
+    {type: "Suicide rate", value: "data3"},
+    {type: "Disorder rate", value: "data4"}
 ]
 
 const options = [
@@ -70,7 +70,9 @@ let i = 0;
 let projection = options[i].projection;
 const path = d3.geoPath(projection);
 const graticule = d3.geoGraticule();
-const svg = d3.select("body").append("svg")
+const svg = d3.select("body")
+    .append("svg")
+    .attr("class", "state")
     .attr("width", width)
     .attr("height", height);
 
@@ -124,7 +126,6 @@ function update(option) {
 
 // Years
 const menu1 = d3.select("#years-menu")
-    .on("change", change)
     .style("border-radius", "3px")
     .style("right", "-70px")
 
@@ -135,13 +136,15 @@ menu1.selectAll("option")
 
 // Maps
 const menu2 = d3.select("#maps-menu")
-    .on("change", change)
     .style("border-radius", "3px")
     .style("right", "-70px")
 
 menu2.selectAll("option")
     .data(maps)
     .enter().append("option")
+    .attr("value", function (d) {
+        return d.value;
+    })
     .text(function(d) { return d.type; });
 
 const data = d3.map();
@@ -150,85 +153,97 @@ const colorScale = d3.scaleThreshold()
     .domain([100000, 1000000, 10000000, 30000000, 100000000, 500000000])
     .range(d3.schemeGreens[7]);
 
-let mapRowConverter = function(d) {
+function updateMap() {
+    svg.selectAll(".state").remove();
 
-    return {
-        country: d.Entity,
-        year: +d.Year,
-        pop: +d.Population
-    };
-};
+    d3.queue()
+        .defer(d3.json, "data/world.geojson")
+        .defer(d3.csv, "data/population_data.csv", function(d) { data.set(d.Code, +d.Population); })
+        .await(draw);
 
-d3.queue()
-    .defer(d3.json, "data/world.geojson")
-    .defer(d3.csv, "data/population_data.csv", mapRowConverter)
-    // .defer(d3.csv, "data/suicide_rate_data.csv")
-    .await(draw);
+    function draw (error, world) {
+        if (error) throw error;
 
-function draw (error, world) {
-    if (error) throw error;
+        // create a group for the land path elements
+        const landGroup = svg.append("g");
 
-    // create a group for the land path elements
-    const landGroup = svg.append("g");
+        // create a tooltip element and hide it initially
+        const tooltip = d3.select("body").append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0);
 
-    // create a tooltip element and hide it initially
-    const tooltip = d3.select("body").append("div")
-        .attr("class", "tooltip")
-        .style("opacity", 0);
-
-    // add the land areas to the map as path elements
-    landGroup.selectAll("path")
-        .data(world.features)
-        .enter()
-        .append("path")
-        // draw each country
-        .attr("d", d3.geoPath()
-            .projection(projection)
-        )
-        // set the color of each country
-        .attr("fill", function (d) {
-            d.total = data.get(d.id) || 0;
-            return colorScale(d.total);
-        })
-        .style("stroke", "transparent")
-        .attr("class", function(d){ return "Country" } )
-        .style("opacity", .8)
-        // add event handlers for mouseover and mouseout events
-        .on("mouseover", function(d) {
-            // change the fill color of the hovered path element
-            d3.selectAll(".Country")
-                .transition()
-                .duration(200)
-                .style("opacity", .5);
-            d3.select(this)
-                .transition()
-                .duration(200)
-                .style("opacity", 1)
-                .style("stroke", "black");
-            // show tooltip with country name and total value
-            tooltip.html(`<strong>${d.properties.name}</strong><br/>Population: ${d.total}`)
-                .style("left", (d3.event.pageX + 10) + "px")
-                .style("top", (d3.event.pageY + 10) + "px")
-                .transition()
-                .duration(200)
-                .style("opacity", .9);
-        })
-        .on("mouseout", function(d) {
-            // change the fill color of the previously hovered path element
-            d3.selectAll(".Country")
-                .transition()
-                .duration(200)
-                .style("opacity", .8);
-            d3.select(this)
-                .transition()
-                .duration(200)
-                .style("stroke", "transparent");
-            // hide tooltip
-            tooltip.transition()
-                .duration(200)
-                .style("opacity", 0);
-        });
+        // add the land areas to the map as path elements
+        landGroup.selectAll("path")
+            .data(world.features)
+            .enter()
+            .append("path")
+            // draw each country
+            .attr("d", d3.geoPath()
+                .projection(projection)
+            )
+            // set the color of each country
+            .attr("fill", function (d) {
+                d.total = data.get(d.id) || 0;
+                return colorScale(d.total);
+            })
+            .style("stroke", "transparent")
+            .attr("class", function(d){ return "Country" } )
+            .style("opacity", .8)
+            // add event handlers for mouseover and mouseout events
+            .on("mouseover", function(d) {
+                // change the fill color of the hovered path element
+                d3.selectAll(".Country")
+                    .transition()
+                    .duration(200)
+                    .style("opacity", .5);
+                d3.select(this)
+                    .transition()
+                    .duration(200)
+                    .style("opacity", 1)
+                    .style("stroke", "black");
+                // show tooltip with country name and total value
+                tooltip.html(`<strong>${d.properties.name}</strong><br/>Population: ${d.total}`)
+                    .style("left", (d3.event.pageX + 10) + "px")
+                    .style("top", (d3.event.pageY + 10) + "px")
+                    .transition()
+                    .duration(200)
+                    .style("opacity", .9);
+            })
+            .on("mouseout", function(d) {
+                // change the fill color of the previously hovered path element
+                d3.selectAll(".Country")
+                    .transition()
+                    .duration(200)
+                    .style("opacity", .8);
+                d3.select(this)
+                    .transition()
+                    .duration(200)
+                    .style("stroke", "transparent");
+                // hide tooltip
+                tooltip.transition()
+                    .duration(200)
+                    .style("opacity", 0);
+            });
+    }
 }
+
+updateMap();
+
+d3.select("#maps-menu").on("change", function() {
+    const selectedOption = d3.select(this).property("value");
+    if (selectedOption === "data3") {
+        updateSuicideMap();
+    }
+    else if (selectedOption === "data4") {
+        updateDisorderMap();
+    }
+    else if (selectedOption === "data2") {
+        updateAgeMap();
+    }
+    else {
+        updateMap();
+    }
+})
 
 function projectionTween(projection0, projection1) {
     return function(d) {
