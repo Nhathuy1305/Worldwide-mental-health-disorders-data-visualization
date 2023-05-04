@@ -2,17 +2,13 @@ const width = 960,
     height = 500;
 
 const years = [
-    {year: 1990}, {year: 1991}, {year: 1992}, {year: 1993}, {year: 1994}, {year: 1995}, {year: 1996}, {year: 1997},
-    {year: 1998}, {year: 1999}, {year: 2000}, {year: 2001}, {year: 2002}, {year: 2003}, {year: 2004}, {year: 2005},
-    {year: 2006}, {year: 2007}, {year: 2008}, {year: 2009}, {year: 2010}, {year: 2011}, {year: 2012}, {year: 2013},
-    {year: 2014}, {year: 2015}, {year: 2016}, {year: 2017}
-]
-
-const maps = [
-    {type: "Population", value: "data1"},
-    {type: "Age", value: "data2"},
-    {type: "Suicide rate", value: "data3"},
-    {type: "Disorder rate", value: "data4"}
+    {year: 1990, value: "data1"}, {year: 1991, value: "data2"}, {year: 1992, value: "data3"}, {year: 1993, value: "data4"},
+    {year: 1994, value: "data5"}, {year: 1995, value: "data6"}, {year: 1996, value: "data7"}, {year: 1997, value: "data8"},
+    {year: 1998, value: "data9"}, {year: 1999, value: "data10"}, {year: 2000, value: "data11"}, {year: 2001, value: "data12"},
+    {year: 2002, value: "data13"}, {year: 2003, value: "data14"}, {year: 2004, value: "data15"}, {year: 2005, value: "data16"},
+    {year: 2006, value: "data17"}, {year: 2007, value: "data18"}, {year: 2008, value: "data19"}, {year: 2009, value: "data20"},
+    {year: 2010, value: "data21"}, {year: 2011, value: "data22"}, {year: 2012, value: "data23"}, {year: 2013, value: "data24"},
+    {year: 2014, value: "data25"}, {year: 2015, value: "data26"}, {year: 2016, value: "data27"}, {year: 2017, value: "data28"}
 ]
 
 const options = [
@@ -72,7 +68,6 @@ const path = d3.geoPath(projection);
 const graticule = d3.geoGraticule();
 const svg = d3.select("body")
     .append("svg")
-    .attr("class", "state")
     .attr("width", width)
     .attr("height", height);
 
@@ -113,52 +108,31 @@ function update(option) {
         .attrTween("d", projectionTween(projection, projection = option.projection))
 }
 
-// function changeMap() {
-//     const selectedOption = maps[this.selectedIndex];
-//     updateMap(selectedOption);
-// }
-//
-// function updateMap(option) {
-//     svg.selectAll("path").interrupt().transition()
-//         .duration(1000).ease(d3.easeLinear)
-//         .attrTween("d", projectionTween(projection, projection = option.projection))
-// }
-
 // Years
-const menu1 = d3.select("#years-menu")
+const menuYear = d3.select("#years-menu")
     .style("border-radius", "3px")
     .style("right", "-70px")
 
-menu1.selectAll("option")
+menuYear.selectAll("option")
     .data(years)
     .enter().append("option")
-    .text(function(d) { return d.year; });
-
-// Maps
-const menu2 = d3.select("#maps-menu")
-    .style("border-radius", "3px")
-    .style("right", "-70px")
-
-menu2.selectAll("option")
-    .data(maps)
-    .enter().append("option")
-    .attr("value", function (d) {
+    .attr("value", function(d) {
         return d.value;
     })
-    .text(function(d) { return d.type; });
+    .text(function(d) { return d.year; });
 
 const data = d3.map();
 
 const colorScale = d3.scaleThreshold()
-    .domain([100000, 1000000, 10000000, 30000000, 100000000, 500000000])
-    .range(d3.schemeGreens[7]);
+    .domain([0, 10, 30, 50, 70 , 90, 100])
+    .range(d3.schemeOranges[7]);
 
-function updateMap() {
+function update1990() {
     svg.selectAll(".state").remove();
 
     d3.queue()
         .defer(d3.json, "data/world.geojson")
-        .defer(d3.csv, "data/population_data.csv", function(d) { data.set(d.Code, +d.Population); })
+        .defer(d3.csv, "data/suicide_rate_data.csv", function(d) { data.set(d.Code, +d.SuicideRate); })
         .await(draw);
 
     function draw (error, world) {
@@ -202,7 +176,7 @@ function updateMap() {
                     .style("opacity", 1)
                     .style("stroke", "black");
                 // show tooltip with country name and total value
-                tooltip.html(`<strong>${d.properties.name}</strong><br/>Population: ${d.total}`)
+                tooltip.html(`<strong>${d.properties.name}</strong><br/>Suicide Rate: ${d.total}`)
                     .style("left", (d3.event.pageX + 10) + "px")
                     .style("top", (d3.event.pageY + 10) + "px")
                     .transition()
@@ -227,21 +201,93 @@ function updateMap() {
     }
 }
 
-updateMap();
+update1990();
 
-d3.select("#maps-menu").on("change", function() {
+d3.select("#years-menu").on("change", function() {
     const selectedOption = d3.select(this).property("value");
-    if (selectedOption === "data3") {
-        updateSuicideMap();
+    if (selectedOption === "data2") {
+        update1991();
+    }
+    else if (selectedOption === "data3") {
+        update1992();
     }
     else if (selectedOption === "data4") {
-        updateDisorderMap();
+        update1993();
     }
-    else if (selectedOption === "data2") {
-        updateAgeMap();
+    else if (selectedOption === "data5") {
+        update1994();
+    }
+    else if (selectedOption === "data6") {
+        update1995();
+    }
+    else if (selectedOption === "data7") {
+        update1996();
+    }
+    else if (selectedOption === "data8") {
+        update1997();
+    }
+    else if (selectedOption === "data9") {
+        update1998();
+    }
+    else if (selectedOption === "data10") {
+        update1999();
+    }
+    else if (selectedOption === "data11") {
+        update2000();
+    }
+    else if (selectedOption === "data12") {
+        update2001();
+    }
+    else if (selectedOption === "data13") {
+        update2002();
+    }
+    else if (selectedOption === "data14") {
+        update2003();
+    }
+    else if (selectedOption === "data15") {
+        update2004();
+    }
+    else if (selectedOption === "data16") {
+        update2005();
+    }
+    else if (selectedOption === "data17") {
+        update2006();
+    }
+    else if (selectedOption === "data18") {
+        update2007();
+    }
+    else if (selectedOption === "data19") {
+        update2008();
+    }
+    else if (selectedOption === "data20") {
+        update2009();
+    }
+    else if (selectedOption === "data21") {
+        update2010();
+    }
+    else if (selectedOption === "data22") {
+        update2011();
+    }
+    else if (selectedOption === "data23") {
+        update2012();
+    }
+    else if (selectedOption === "data24") {
+        update2013();
+    }
+    else if (selectedOption === "data25") {
+        update2014();
+    }
+    else if (selectedOption === "data26") {
+        update2015();
+    }
+    else if (selectedOption === "data27") {
+        update2016();
+    }
+    else if (selectedOption === "data28") {
+        update2017();
     }
     else {
-        updateMap();
+        update1990();
     }
 })
 
