@@ -124,7 +124,7 @@ menuYear.selectAll("option")
 const data = d3.map();
 
 const colorScale = d3.scaleThreshold()
-    .domain([100000, 1000000, 10000000, 30000000, 100000000, 500000000])
+    .domain([40000, 100000, 1000000, 10000000, 50000000, 100000000, 1000000000])
     .range(d3.schemeGreens[7]);
 
 function update1990() {
@@ -132,7 +132,11 @@ function update1990() {
 
     d3.queue()
         .defer(d3.json, "data/world.geojson")
-        .defer(d3.csv, "data/population_data.csv", function(d) { data.set(d.Code, +d.Population); })
+        .defer(d3.csv, "data/population_data.csv", function(d) {
+            if (d.Year === "1990") {
+                data.set(d.Code, +d.Population);
+            }
+        })
         .await(draw);
 
     function draw (error, world) {

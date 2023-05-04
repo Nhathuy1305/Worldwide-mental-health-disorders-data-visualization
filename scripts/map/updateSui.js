@@ -1,6 +1,6 @@
-const colorScale1 = d3.scaleThreshold()
-    .domain([10000, 100000, 1000000, 10000000, 100000000, 1000000000])
-    .range(d3.schemeGreens[7]);
+const colorScale2 = d3.scaleThreshold()
+    .domain([0, 10, 30, 50, 70 , 90, 100])
+    .range(d3.schemeOranges[7]);
 
 function update1991() {
     // Remove any existing elements
@@ -8,88 +8,9 @@ function update1991() {
 
     d3.queue()
         .defer(d3.json, "data/world.geojson")
-        .defer(d3.csv, "data/population_data.csv", function(d) {
+        .defer(d3.csv, "data/suicide_rate_data.csv", function(d) {
             if (d.Year === "1991") {
-                data.set(d.Code, +d.Population);
-            }
-        })
-        .await(draw);
-
-    function draw (error, world) {
-        if (error) throw error;
-
-        // create a group for the land path elements
-        const landGroup = svg.append("g");
-
-        // create a tooltip element and hide it initially
-        const tooltip = d3.select("body").append("div")
-            .attr("class", "tooltip")
-            .style("opacity", 0);
-
-            // add the land areas to the map as path elements
-            landGroup.selectAll("path")
-                .data(world.features)
-                .enter()
-                .append("path")
-                // draw each country
-                .attr("d", d3.geoPath()
-                    .projection(projection)
-                )
-                // set the color of each country
-                .attr("fill", function (d) {
-                    d.total = data.get(d.id) || 0;
-                    return colorScale1(d.total);
-                })
-                .style("stroke", "transparent")
-                .attr("class", function(d){ return "Country" } )
-                .style("opacity", .8)
-                // add event handlers for mouseover and mouseout events
-                .on("mouseover", function(d) {
-                    // change the fill color of the hovered path element
-                    d3.selectAll(".Country")
-                        .transition()
-                        .duration(200)
-                        .style("opacity", .5);
-                    d3.select(this)
-                        .transition()
-                        .duration(200)
-                        .style("opacity", 1)
-                        .style("stroke", "black");
-                    // show tooltip with country name and total value
-                    tooltip.html(`<strong>${d.properties.name}</strong><br/>Population: ${d.total}`)
-                        .style("left", (d3.event.pageX + 10) + "px")
-                        .style("top", (d3.event.pageY + 10) + "px")
-                        .transition()
-                        .duration(200)
-                        .style("opacity", .9);
-                })
-                .on("mouseout", function(d) {
-                    // change the fill color of the previously hovered path element
-                    d3.selectAll(".Country")
-                        .transition()
-                        .duration(200)
-                        .style("opacity", .8);
-                    d3.select(this)
-                        .transition()
-                        .duration(200)
-                        .style("stroke", "transparent");
-                    // hide tooltip
-                    tooltip.transition()
-                        .duration(200)
-                        .style("opacity", 0);
-                });
-    }
-}
-
-function update1992() {
-    // Remove any existing elements
-    svg.selectAll(".state").remove();
-
-    d3.queue()
-        .defer(d3.json, "data/world.geojson")
-        .defer(d3.csv, "data/population_data.csv", function(d) {
-            if (d.Year === "1992") {
-                data.set(d.Code, +d.Population);
+                data.set(d.Code, +d.SuicideRate);
             }
         })
         .await(draw);
@@ -117,7 +38,7 @@ function update1992() {
             // set the color of each country
             .attr("fill", function (d) {
                 d.total = data.get(d.id) || 0;
-                return colorScale1(d.total);
+                return colorScale2(d.total);
             })
             .style("stroke", "transparent")
             .attr("class", function(d){ return "Country" } )
@@ -135,7 +56,86 @@ function update1992() {
                     .style("opacity", 1)
                     .style("stroke", "black");
                 // show tooltip with country name and total value
-                tooltip.html(`<strong>${d.properties.name}</strong><br/>Population: ${d.total}`)
+                tooltip.html(`<strong>${d.properties.name}</strong><br/>Suicide Rate: ${d.total}`)
+                    .style("left", (d3.event.pageX + 10) + "px")
+                    .style("top", (d3.event.pageY + 10) + "px")
+                    .transition()
+                    .duration(200)
+                    .style("opacity", .9);
+            })
+            .on("mouseout", function(d) {
+                // change the fill color of the previously hovered path element
+                d3.selectAll(".Country")
+                    .transition()
+                    .duration(200)
+                    .style("opacity", .8);
+                d3.select(this)
+                    .transition()
+                    .duration(200)
+                    .style("stroke", "transparent");
+                // hide tooltip
+                tooltip.transition()
+                    .duration(200)
+                    .style("opacity", 0);
+            });
+    }
+}
+
+function update1992() {
+    // Remove any existing elements
+    svg.selectAll(".state").remove();
+
+    d3.queue()
+        .defer(d3.json, "data/world.geojson")
+        .defer(d3.csv, "data/suicide_rate_data.csv", function(d) {
+            if (d.Year === "1992") {
+                data.set(d.Code, +d.SuicideRate);
+            }
+        })
+        .await(draw);
+
+    function draw (error, world) {
+        if (error) throw error;
+
+        // create a group for the land path elements
+        const landGroup = svg.append("g");
+
+        // create a tooltip element and hide it initially
+        const tooltip = d3.select("body").append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0);
+
+        // add the land areas to the map as path elements
+        landGroup.selectAll("path")
+            .data(world.features)
+            .enter()
+            .append("path")
+            // draw each country
+            .attr("d", d3.geoPath()
+                .projection(projection)
+            )
+            // set the color of each country
+            .attr("fill", function (d) {
+                d.total = data.get(d.id) || 0;
+                return colorScale2(d.total);
+            })
+            .style("stroke", "transparent")
+            .attr("class", function(d){ return "Country" } )
+            .style("opacity", .8)
+            // add event handlers for mouseover and mouseout events
+            .on("mouseover", function(d) {
+                // change the fill color of the hovered path element
+                d3.selectAll(".Country")
+                    .transition()
+                    .duration(200)
+                    .style("opacity", .5);
+                d3.select(this)
+                    .transition()
+                    .duration(200)
+                    .style("opacity", 1)
+                    .style("stroke", "black");
+                // show tooltip with country name and total value
+                tooltip.html(`<strong>${d.properties.name}</strong><br/>Suicide Rate: ${d.total}`)
                     .style("left", (d3.event.pageX + 10) + "px")
                     .style("top", (d3.event.pageY + 10) + "px")
                     .transition()
@@ -166,9 +166,9 @@ function update1993() {
 
     d3.queue()
         .defer(d3.json, "data/world.geojson")
-        .defer(d3.csv, "data/population_data.csv", function(d) {
+        .defer(d3.csv, "data/suicide_rate_data.csv", function(d) {
             if (d.Year === "1993") {
-                data.set(d.Code, +d.Population);
+                data.set(d.Code, +d.SuicideRate);
             }
         })
         .await(draw);
@@ -196,7 +196,7 @@ function update1993() {
             // set the color of each country
             .attr("fill", function (d) {
                 d.total = data.get(d.id) || 0;
-                return colorScale1(d.total);
+                return colorScale2(d.total);
             })
             .style("stroke", "transparent")
             .attr("class", function(d){ return "Country" } )
@@ -214,7 +214,7 @@ function update1993() {
                     .style("opacity", 1)
                     .style("stroke", "black");
                 // show tooltip with country name and total value
-                tooltip.html(`<strong>${d.properties.name}</strong><br/>Population: ${d.total}`)
+                tooltip.html(`<strong>${d.properties.name}</strong><br/>Suicide Rate: ${d.total}`)
                     .style("left", (d3.event.pageX + 10) + "px")
                     .style("top", (d3.event.pageY + 10) + "px")
                     .transition()
@@ -245,9 +245,9 @@ function update1994() {
 
     d3.queue()
         .defer(d3.json, "data/world.geojson")
-        .defer(d3.csv, "data/population_data.csv", function(d) {
+        .defer(d3.csv, "data/suicide_rate_data.csv", function(d) {
             if (d.Year === "1994") {
-                data.set(d.Code, +d.Population);
+                data.set(d.Code, +d.SuicideRate);
             }
         })
         .await(draw);
@@ -275,7 +275,7 @@ function update1994() {
             // set the color of each country
             .attr("fill", function (d) {
                 d.total = data.get(d.id) || 0;
-                return colorScale1(d.total);
+                return colorScale2(d.total);
             })
             .style("stroke", "transparent")
             .attr("class", function(d){ return "Country" } )
@@ -293,7 +293,7 @@ function update1994() {
                     .style("opacity", 1)
                     .style("stroke", "black");
                 // show tooltip with country name and total value
-                tooltip.html(`<strong>${d.properties.name}</strong><br/>Population: ${d.total}`)
+                tooltip.html(`<strong>${d.properties.name}</strong><br/>Suicide Rate: ${d.total}`)
                     .style("left", (d3.event.pageX + 10) + "px")
                     .style("top", (d3.event.pageY + 10) + "px")
                     .transition()
@@ -324,9 +324,9 @@ function update1995() {
 
     d3.queue()
         .defer(d3.json, "data/world.geojson")
-        .defer(d3.csv, "data/population_data.csv", function(d) {
+        .defer(d3.csv, "data/suicide_rate_data.csv", function(d) {
             if (d.Year === "1995") {
-                data.set(d.Code, +d.Population);
+                data.set(d.Code, +d.SuicideRate);
             }
         })
         .await(draw);
@@ -354,7 +354,7 @@ function update1995() {
             // set the color of each country
             .attr("fill", function (d) {
                 d.total = data.get(d.id) || 0;
-                return colorScale1(d.total);
+                return colorScale2(d.total);
             })
             .style("stroke", "transparent")
             .attr("class", function(d){ return "Country" } )
@@ -372,7 +372,7 @@ function update1995() {
                     .style("opacity", 1)
                     .style("stroke", "black");
                 // show tooltip with country name and total value
-                tooltip.html(`<strong>${d.properties.name}</strong><br/>Population: ${d.total}`)
+                tooltip.html(`<strong>${d.properties.name}</strong><br/>Suicide Rate: ${d.total}`)
                     .style("left", (d3.event.pageX + 10) + "px")
                     .style("top", (d3.event.pageY + 10) + "px")
                     .transition()
@@ -403,9 +403,9 @@ function update1996() {
 
     d3.queue()
         .defer(d3.json, "data/world.geojson")
-        .defer(d3.csv, "data/population_data.csv", function(d) {
+        .defer(d3.csv, "data/suicide_rate_data.csv", function(d) {
             if (d.Year === "1996") {
-                data.set(d.Code, +d.Population);
+                data.set(d.Code, +d.SuicideRate);
             }
         })
         .await(draw);
@@ -433,7 +433,7 @@ function update1996() {
             // set the color of each country
             .attr("fill", function (d) {
                 d.total = data.get(d.id) || 0;
-                return colorScale1(d.total);
+                return colorScale2(d.total);
             })
             .style("stroke", "transparent")
             .attr("class", function(d){ return "Country" } )
@@ -451,7 +451,7 @@ function update1996() {
                     .style("opacity", 1)
                     .style("stroke", "black");
                 // show tooltip with country name and total value
-                tooltip.html(`<strong>${d.properties.name}</strong><br/>Population: ${d.total}`)
+                tooltip.html(`<strong>${d.properties.name}</strong><br/>Suicide Rate: ${d.total}`)
                     .style("left", (d3.event.pageX + 10) + "px")
                     .style("top", (d3.event.pageY + 10) + "px")
                     .transition()
@@ -482,9 +482,9 @@ function update1997() {
 
     d3.queue()
         .defer(d3.json, "data/world.geojson")
-        .defer(d3.csv, "data/population_data.csv", function(d) {
+        .defer(d3.csv, "data/suicide_rate_data.csv", function(d) {
             if (d.Year === "1997") {
-                data.set(d.Code, +d.Population);
+                data.set(d.Code, +d.SuicideRate);
             }
         })
         .await(draw);
@@ -512,7 +512,7 @@ function update1997() {
             // set the color of each country
             .attr("fill", function (d) {
                 d.total = data.get(d.id) || 0;
-                return colorScale1(d.total);
+                return colorScale2(d.total);
             })
             .style("stroke", "transparent")
             .attr("class", function(d){ return "Country" } )
@@ -530,7 +530,7 @@ function update1997() {
                     .style("opacity", 1)
                     .style("stroke", "black");
                 // show tooltip with country name and total value
-                tooltip.html(`<strong>${d.properties.name}</strong><br/>Population: ${d.total}`)
+                tooltip.html(`<strong>${d.properties.name}</strong><br/>Suicide Rate: ${d.total}`)
                     .style("left", (d3.event.pageX + 10) + "px")
                     .style("top", (d3.event.pageY + 10) + "px")
                     .transition()
@@ -561,9 +561,9 @@ function update1998() {
 
     d3.queue()
         .defer(d3.json, "data/world.geojson")
-        .defer(d3.csv, "data/population_data.csv", function(d) {
+        .defer(d3.csv, "data/suicide_rate_data.csv", function(d) {
             if (d.Year === "1998") {
-                data.set(d.Code, +d.Population);
+                data.set(d.Code, +d.SuicideRate);
             }
         })
         .await(draw);
@@ -591,7 +591,7 @@ function update1998() {
             // set the color of each country
             .attr("fill", function (d) {
                 d.total = data.get(d.id) || 0;
-                return colorScale1(d.total);
+                return colorScale2(d.total);
             })
             .style("stroke", "transparent")
             .attr("class", function(d){ return "Country" } )
@@ -609,7 +609,7 @@ function update1998() {
                     .style("opacity", 1)
                     .style("stroke", "black");
                 // show tooltip with country name and total value
-                tooltip.html(`<strong>${d.properties.name}</strong><br/>Population: ${d.total}`)
+                tooltip.html(`<strong>${d.properties.name}</strong><br/>Suicide Rate: ${d.total}`)
                     .style("left", (d3.event.pageX + 10) + "px")
                     .style("top", (d3.event.pageY + 10) + "px")
                     .transition()
@@ -640,9 +640,9 @@ function update1999() {
 
     d3.queue()
         .defer(d3.json, "data/world.geojson")
-        .defer(d3.csv, "data/population_data.csv", function(d) {
+        .defer(d3.csv, "data/suicide_rate_data.csv", function(d) {
             if (d.Year === "1999") {
-                data.set(d.Code, +d.Population);
+                data.set(d.Code, +d.SuicideRate);
             }
         })
         .await(draw);
@@ -670,7 +670,7 @@ function update1999() {
             // set the color of each country
             .attr("fill", function (d) {
                 d.total = data.get(d.id) || 0;
-                return colorScale1(d.total);
+                return colorScale2(d.total);
             })
             .style("stroke", "transparent")
             .attr("class", function(d){ return "Country" } )
@@ -688,7 +688,7 @@ function update1999() {
                     .style("opacity", 1)
                     .style("stroke", "black");
                 // show tooltip with country name and total value
-                tooltip.html(`<strong>${d.properties.name}</strong><br/>Population: ${d.total}`)
+                tooltip.html(`<strong>${d.properties.name}</strong><br/>Suicide Rate: ${d.total}`)
                     .style("left", (d3.event.pageX + 10) + "px")
                     .style("top", (d3.event.pageY + 10) + "px")
                     .transition()
@@ -719,9 +719,9 @@ function update2000() {
 
     d3.queue()
         .defer(d3.json, "data/world.geojson")
-        .defer(d3.csv, "data/population_data.csv", function(d) {
+        .defer(d3.csv, "data/suicide_rate_data.csv", function(d) {
             if (d.Year === "2000") {
-                data.set(d.Code, +d.Population);
+                data.set(d.Code, +d.SuicideRate);
             }
         })
         .await(draw);
@@ -749,7 +749,7 @@ function update2000() {
             // set the color of each country
             .attr("fill", function (d) {
                 d.total = data.get(d.id) || 0;
-                return colorScale1(d.total);
+                return colorScale2(d.total);
             })
             .style("stroke", "transparent")
             .attr("class", function(d){ return "Country" } )
@@ -767,7 +767,7 @@ function update2000() {
                     .style("opacity", 1)
                     .style("stroke", "black");
                 // show tooltip with country name and total value
-                tooltip.html(`<strong>${d.properties.name}</strong><br/>Population: ${d.total}`)
+                tooltip.html(`<strong>${d.properties.name}</strong><br/>Suicide Rate: ${d.total}`)
                     .style("left", (d3.event.pageX + 10) + "px")
                     .style("top", (d3.event.pageY + 10) + "px")
                     .transition()
@@ -798,9 +798,9 @@ function update2001() {
 
     d3.queue()
         .defer(d3.json, "data/world.geojson")
-        .defer(d3.csv, "data/population_data.csv", function(d) {
+        .defer(d3.csv, "data/suicide_rate_data.csv", function(d) {
             if (d.Year === "2001") {
-                data.set(d.Code, +d.Population);
+                data.set(d.Code, +d.SuicideRate);
             }
         })
         .await(draw);
@@ -828,7 +828,7 @@ function update2001() {
             // set the color of each country
             .attr("fill", function (d) {
                 d.total = data.get(d.id) || 0;
-                return colorScale1(d.total);
+                return colorScale2(d.total);
             })
             .style("stroke", "transparent")
             .attr("class", function(d){ return "Country" } )
@@ -846,7 +846,7 @@ function update2001() {
                     .style("opacity", 1)
                     .style("stroke", "black");
                 // show tooltip with country name and total value
-                tooltip.html(`<strong>${d.properties.name}</strong><br/>Population: ${d.total}`)
+                tooltip.html(`<strong>${d.properties.name}</strong><br/>Suicide Rate: ${d.total}`)
                     .style("left", (d3.event.pageX + 10) + "px")
                     .style("top", (d3.event.pageY + 10) + "px")
                     .transition()
@@ -877,9 +877,9 @@ function update2002() {
 
     d3.queue()
         .defer(d3.json, "data/world.geojson")
-        .defer(d3.csv, "data/population_data.csv", function(d) {
+        .defer(d3.csv, "data/suicide_rate_data.csv", function(d) {
             if (d.Year === "2002") {
-                data.set(d.Code, +d.Population);
+                data.set(d.Code, +d.SuicideRate);
             }
         })
         .await(draw);
@@ -907,7 +907,7 @@ function update2002() {
             // set the color of each country
             .attr("fill", function (d) {
                 d.total = data.get(d.id) || 0;
-                return colorScale1(d.total);
+                return colorScale2(d.total);
             })
             .style("stroke", "transparent")
             .attr("class", function(d){ return "Country" } )
@@ -925,7 +925,7 @@ function update2002() {
                     .style("opacity", 1)
                     .style("stroke", "black");
                 // show tooltip with country name and total value
-                tooltip.html(`<strong>${d.properties.name}</strong><br/>Population: ${d.total}`)
+                tooltip.html(`<strong>${d.properties.name}</strong><br/>Suicide Rate: ${d.total}`)
                     .style("left", (d3.event.pageX + 10) + "px")
                     .style("top", (d3.event.pageY + 10) + "px")
                     .transition()
@@ -956,9 +956,9 @@ function update2003() {
 
     d3.queue()
         .defer(d3.json, "data/world.geojson")
-        .defer(d3.csv, "data/population_data.csv", function(d) {
+        .defer(d3.csv, "data/suicide_rate_data.csv", function(d) {
             if (d.Year === "2003") {
-                data.set(d.Code, +d.Population);
+                data.set(d.Code, +d.SuicideRate);
             }
         })
         .await(draw);
@@ -986,7 +986,7 @@ function update2003() {
             // set the color of each country
             .attr("fill", function (d) {
                 d.total = data.get(d.id) || 0;
-                return colorScale1(d.total);
+                return colorScale2(d.total);
             })
             .style("stroke", "transparent")
             .attr("class", function(d){ return "Country" } )
@@ -1004,7 +1004,7 @@ function update2003() {
                     .style("opacity", 1)
                     .style("stroke", "black");
                 // show tooltip with country name and total value
-                tooltip.html(`<strong>${d.properties.name}</strong><br/>Population: ${d.total}`)
+                tooltip.html(`<strong>${d.properties.name}</strong><br/>Suicide Rate: ${d.total}`)
                     .style("left", (d3.event.pageX + 10) + "px")
                     .style("top", (d3.event.pageY + 10) + "px")
                     .transition()
@@ -1035,9 +1035,9 @@ function update2004() {
 
     d3.queue()
         .defer(d3.json, "data/world.geojson")
-        .defer(d3.csv, "data/population_data.csv", function(d) {
+        .defer(d3.csv, "data/suicide_rate_data.csv", function(d) {
             if (d.Year === "2004") {
-                data.set(d.Code, +d.Population);
+                data.set(d.Code, +d.SuicideRate);
             }
         })
         .await(draw);
@@ -1065,7 +1065,7 @@ function update2004() {
             // set the color of each country
             .attr("fill", function (d) {
                 d.total = data.get(d.id) || 0;
-                return colorScale1(d.total);
+                return colorScale2(d.total);
             })
             .style("stroke", "transparent")
             .attr("class", function(d){ return "Country" } )
@@ -1083,7 +1083,7 @@ function update2004() {
                     .style("opacity", 1)
                     .style("stroke", "black");
                 // show tooltip with country name and total value
-                tooltip.html(`<strong>${d.properties.name}</strong><br/>Population: ${d.total}`)
+                tooltip.html(`<strong>${d.properties.name}</strong><br/>Suicide Rate: ${d.total}`)
                     .style("left", (d3.event.pageX + 10) + "px")
                     .style("top", (d3.event.pageY + 10) + "px")
                     .transition()
@@ -1114,9 +1114,9 @@ function update2005() {
 
     d3.queue()
         .defer(d3.json, "data/world.geojson")
-        .defer(d3.csv, "data/population_data.csv", function(d) {
+        .defer(d3.csv, "data/suicide_rate_data.csv", function(d) {
             if (d.Year === "2005") {
-                data.set(d.Code, +d.Population);
+                data.set(d.Code, +d.SuicideRate);
             }
         })
         .await(draw);
@@ -1144,7 +1144,7 @@ function update2005() {
             // set the color of each country
             .attr("fill", function (d) {
                 d.total = data.get(d.id) || 0;
-                return colorScale1(d.total);
+                return colorScale2(d.total);
             })
             .style("stroke", "transparent")
             .attr("class", function(d){ return "Country" } )
@@ -1162,7 +1162,7 @@ function update2005() {
                     .style("opacity", 1)
                     .style("stroke", "black");
                 // show tooltip with country name and total value
-                tooltip.html(`<strong>${d.properties.name}</strong><br/>Population: ${d.total}`)
+                tooltip.html(`<strong>${d.properties.name}</strong><br/>Suicide Rate: ${d.total}`)
                     .style("left", (d3.event.pageX + 10) + "px")
                     .style("top", (d3.event.pageY + 10) + "px")
                     .transition()
@@ -1193,9 +1193,9 @@ function update2006() {
 
     d3.queue()
         .defer(d3.json, "data/world.geojson")
-        .defer(d3.csv, "data/population_data.csv", function(d) {
+        .defer(d3.csv, "data/suicide_rate_data.csv", function(d) {
             if (d.Year === "2006") {
-                data.set(d.Code, +d.Population);
+                data.set(d.Code, +d.SuicideRate);
             }
         })
         .await(draw);
@@ -1223,7 +1223,7 @@ function update2006() {
             // set the color of each country
             .attr("fill", function (d) {
                 d.total = data.get(d.id) || 0;
-                return colorScale1(d.total);
+                return colorScale2(d.total);
             })
             .style("stroke", "transparent")
             .attr("class", function(d){ return "Country" } )
@@ -1241,7 +1241,7 @@ function update2006() {
                     .style("opacity", 1)
                     .style("stroke", "black");
                 // show tooltip with country name and total value
-                tooltip.html(`<strong>${d.properties.name}</strong><br/>Population: ${d.total}`)
+                tooltip.html(`<strong>${d.properties.name}</strong><br/>Suicide Rate: ${d.total}`)
                     .style("left", (d3.event.pageX + 10) + "px")
                     .style("top", (d3.event.pageY + 10) + "px")
                     .transition()
@@ -1272,9 +1272,9 @@ function update2007() {
 
     d3.queue()
         .defer(d3.json, "data/world.geojson")
-        .defer(d3.csv, "data/population_data.csv", function(d) {
+        .defer(d3.csv, "data/suicide_rate_data.csv", function(d) {
             if (d.Year === "2007") {
-                data.set(d.Code, +d.Population);
+                data.set(d.Code, +d.SuicideRate);
             }
         })
         .await(draw);
@@ -1302,7 +1302,7 @@ function update2007() {
             // set the color of each country
             .attr("fill", function (d) {
                 d.total = data.get(d.id) || 0;
-                return colorScale1(d.total);
+                return colorScale2(d.total);
             })
             .style("stroke", "transparent")
             .attr("class", function(d){ return "Country" } )
@@ -1320,7 +1320,7 @@ function update2007() {
                     .style("opacity", 1)
                     .style("stroke", "black");
                 // show tooltip with country name and total value
-                tooltip.html(`<strong>${d.properties.name}</strong><br/>Population: ${d.total}`)
+                tooltip.html(`<strong>${d.properties.name}</strong><br/>Suicide Rate: ${d.total}`)
                     .style("left", (d3.event.pageX + 10) + "px")
                     .style("top", (d3.event.pageY + 10) + "px")
                     .transition()
@@ -1351,9 +1351,9 @@ function update2008() {
 
     d3.queue()
         .defer(d3.json, "data/world.geojson")
-        .defer(d3.csv, "data/population_data.csv", function(d) {
+        .defer(d3.csv, "data/suicide_rate_data.csv", function(d) {
             if (d.Year === "2008") {
-                data.set(d.Code, +d.Population);
+                data.set(d.Code, +d.SuicideRate);
             }
         })
         .await(draw);
@@ -1381,7 +1381,7 @@ function update2008() {
             // set the color of each country
             .attr("fill", function (d) {
                 d.total = data.get(d.id) || 0;
-                return colorScale1(d.total);
+                return colorScale2(d.total);
             })
             .style("stroke", "transparent")
             .attr("class", function(d){ return "Country" } )
@@ -1399,7 +1399,7 @@ function update2008() {
                     .style("opacity", 1)
                     .style("stroke", "black");
                 // show tooltip with country name and total value
-                tooltip.html(`<strong>${d.properties.name}</strong><br/>Population: ${d.total}`)
+                tooltip.html(`<strong>${d.properties.name}</strong><br/>Suicide Rate: ${d.total}`)
                     .style("left", (d3.event.pageX + 10) + "px")
                     .style("top", (d3.event.pageY + 10) + "px")
                     .transition()
@@ -1430,9 +1430,9 @@ function update2009() {
 
     d3.queue()
         .defer(d3.json, "data/world.geojson")
-        .defer(d3.csv, "data/population_data.csv", function(d) {
+        .defer(d3.csv, "data/suicide_rate_data.csv", function(d) {
             if (d.Year === "2009") {
-                data.set(d.Code, +d.Population);
+                data.set(d.Code, +d.SuicideRate);
             }
         })
         .await(draw);
@@ -1460,7 +1460,7 @@ function update2009() {
             // set the color of each country
             .attr("fill", function (d) {
                 d.total = data.get(d.id) || 0;
-                return colorScale1(d.total);
+                return colorScale2(d.total);
             })
             .style("stroke", "transparent")
             .attr("class", function(d){ return "Country" } )
@@ -1478,7 +1478,7 @@ function update2009() {
                     .style("opacity", 1)
                     .style("stroke", "black");
                 // show tooltip with country name and total value
-                tooltip.html(`<strong>${d.properties.name}</strong><br/>Population: ${d.total}`)
+                tooltip.html(`<strong>${d.properties.name}</strong><br/>Suicide Rate: ${d.total}`)
                     .style("left", (d3.event.pageX + 10) + "px")
                     .style("top", (d3.event.pageY + 10) + "px")
                     .transition()
@@ -1509,9 +1509,9 @@ function update2010() {
 
     d3.queue()
         .defer(d3.json, "data/world.geojson")
-        .defer(d3.csv, "data/population_data.csv", function(d) {
+        .defer(d3.csv, "data/suicide_rate_data.csv", function(d) {
             if (d.Year === "2010") {
-                data.set(d.Code, +d.Population);
+                data.set(d.Code, +d.SuicideRate);
             }
         })
         .await(draw);
@@ -1539,7 +1539,7 @@ function update2010() {
             // set the color of each country
             .attr("fill", function (d) {
                 d.total = data.get(d.id) || 0;
-                return colorScale1(d.total);
+                return colorScale2(d.total);
             })
             .style("stroke", "transparent")
             .attr("class", function(d){ return "Country" } )
@@ -1557,7 +1557,7 @@ function update2010() {
                     .style("opacity", 1)
                     .style("stroke", "black");
                 // show tooltip with country name and total value
-                tooltip.html(`<strong>${d.properties.name}</strong><br/>Population: ${d.total}`)
+                tooltip.html(`<strong>${d.properties.name}</strong><br/>Suicide Rate: ${d.total}`)
                     .style("left", (d3.event.pageX + 10) + "px")
                     .style("top", (d3.event.pageY + 10) + "px")
                     .transition()
@@ -1588,9 +1588,9 @@ function update2011() {
 
     d3.queue()
         .defer(d3.json, "data/world.geojson")
-        .defer(d3.csv, "data/population_data.csv", function(d) {
+        .defer(d3.csv, "data/suicide_rate_data.csv", function(d) {
             if (d.Year === "2011") {
-                data.set(d.Code, +d.Population);
+                data.set(d.Code, +d.SuicideRate);
             }
         })
         .await(draw);
@@ -1618,7 +1618,7 @@ function update2011() {
             // set the color of each country
             .attr("fill", function (d) {
                 d.total = data.get(d.id) || 0;
-                return colorScale1(d.total);
+                return colorScale2(d.total);
             })
             .style("stroke", "transparent")
             .attr("class", function(d){ return "Country" } )
@@ -1636,7 +1636,7 @@ function update2011() {
                     .style("opacity", 1)
                     .style("stroke", "black");
                 // show tooltip with country name and total value
-                tooltip.html(`<strong>${d.properties.name}</strong><br/>Population: ${d.total}`)
+                tooltip.html(`<strong>${d.properties.name}</strong><br/>Suicide Rate: ${d.total}`)
                     .style("left", (d3.event.pageX + 10) + "px")
                     .style("top", (d3.event.pageY + 10) + "px")
                     .transition()
@@ -1667,9 +1667,9 @@ function update2012() {
 
     d3.queue()
         .defer(d3.json, "data/world.geojson")
-        .defer(d3.csv, "data/population_data.csv", function(d) {
+        .defer(d3.csv, "data/suicide_rate_data.csv", function(d) {
             if (d.Year === "2012") {
-                data.set(d.Code, +d.Population);
+                data.set(d.Code, +d.SuicideRate);
             }
         })
         .await(draw);
@@ -1697,7 +1697,7 @@ function update2012() {
             // set the color of each country
             .attr("fill", function (d) {
                 d.total = data.get(d.id) || 0;
-                return colorScale1(d.total);
+                return colorScale2(d.total);
             })
             .style("stroke", "transparent")
             .attr("class", function(d){ return "Country" } )
@@ -1715,7 +1715,7 @@ function update2012() {
                     .style("opacity", 1)
                     .style("stroke", "black");
                 // show tooltip with country name and total value
-                tooltip.html(`<strong>${d.properties.name}</strong><br/>Population: ${d.total}`)
+                tooltip.html(`<strong>${d.properties.name}</strong><br/>Suicide Rate: ${d.total}`)
                     .style("left", (d3.event.pageX + 10) + "px")
                     .style("top", (d3.event.pageY + 10) + "px")
                     .transition()
@@ -1746,9 +1746,9 @@ function update2013() {
 
     d3.queue()
         .defer(d3.json, "data/world.geojson")
-        .defer(d3.csv, "data/population_data.csv", function(d) {
+        .defer(d3.csv, "data/suicide_rate_data.csv", function(d) {
             if (d.Year === "2013") {
-                data.set(d.Code, +d.Population);
+                data.set(d.Code, +d.SuicideRate);
             }
         })
         .await(draw);
@@ -1776,7 +1776,7 @@ function update2013() {
             // set the color of each country
             .attr("fill", function (d) {
                 d.total = data.get(d.id) || 0;
-                return colorScale1(d.total);
+                return colorScale2(d.total);
             })
             .style("stroke", "transparent")
             .attr("class", function(d){ return "Country" } )
@@ -1794,7 +1794,7 @@ function update2013() {
                     .style("opacity", 1)
                     .style("stroke", "black");
                 // show tooltip with country name and total value
-                tooltip.html(`<strong>${d.properties.name}</strong><br/>Population: ${d.total}`)
+                tooltip.html(`<strong>${d.properties.name}</strong><br/>Suicide Rate: ${d.total}`)
                     .style("left", (d3.event.pageX + 10) + "px")
                     .style("top", (d3.event.pageY + 10) + "px")
                     .transition()
@@ -1825,9 +1825,9 @@ function update2014() {
 
     d3.queue()
         .defer(d3.json, "data/world.geojson")
-        .defer(d3.csv, "data/population_data.csv", function(d) {
+        .defer(d3.csv, "data/suicide_rate_data.csv", function(d) {
             if (d.Year === "2014") {
-                data.set(d.Code, +d.Population);
+                data.set(d.Code, +d.SuicideRate);
             }
         })
         .await(draw);
@@ -1855,7 +1855,7 @@ function update2014() {
             // set the color of each country
             .attr("fill", function (d) {
                 d.total = data.get(d.id) || 0;
-                return colorScale1(d.total);
+                return colorScale2(d.total);
             })
             .style("stroke", "transparent")
             .attr("class", function(d){ return "Country" } )
@@ -1873,7 +1873,7 @@ function update2014() {
                     .style("opacity", 1)
                     .style("stroke", "black");
                 // show tooltip with country name and total value
-                tooltip.html(`<strong>${d.properties.name}</strong><br/>Population: ${d.total}`)
+                tooltip.html(`<strong>${d.properties.name}</strong><br/>Suicide Rate: ${d.total}`)
                     .style("left", (d3.event.pageX + 10) + "px")
                     .style("top", (d3.event.pageY + 10) + "px")
                     .transition()
@@ -1904,9 +1904,9 @@ function update2015() {
 
     d3.queue()
         .defer(d3.json, "data/world.geojson")
-        .defer(d3.csv, "data/population_data.csv", function(d) {
+        .defer(d3.csv, "data/suicide_rate_data.csv", function(d) {
             if (d.Year === "2015") {
-                data.set(d.Code, +d.Population);
+                data.set(d.Code, +d.SuicideRate);
             }
         })
         .await(draw);
@@ -1934,7 +1934,7 @@ function update2015() {
             // set the color of each country
             .attr("fill", function (d) {
                 d.total = data.get(d.id) || 0;
-                return colorScale1(d.total);
+                return colorScale2(d.total);
             })
             .style("stroke", "transparent")
             .attr("class", function(d){ return "Country" } )
@@ -1952,7 +1952,7 @@ function update2015() {
                     .style("opacity", 1)
                     .style("stroke", "black");
                 // show tooltip with country name and total value
-                tooltip.html(`<strong>${d.properties.name}</strong><br/>Population: ${d.total}`)
+                tooltip.html(`<strong>${d.properties.name}</strong><br/>Suicide Rate: ${d.total}`)
                     .style("left", (d3.event.pageX + 10) + "px")
                     .style("top", (d3.event.pageY + 10) + "px")
                     .transition()
@@ -1983,9 +1983,9 @@ function update2016() {
 
     d3.queue()
         .defer(d3.json, "data/world.geojson")
-        .defer(d3.csv, "data/population_data.csv", function(d) {
+        .defer(d3.csv, "data/suicide_rate_data.csv", function(d) {
             if (d.Year === "2016") {
-                data.set(d.Code, +d.Population);
+                data.set(d.Code, +d.SuicideRate);
             }
         })
         .await(draw);
@@ -2013,7 +2013,7 @@ function update2016() {
             // set the color of each country
             .attr("fill", function (d) {
                 d.total = data.get(d.id) || 0;
-                return colorScale1(d.total);
+                return colorScale2(d.total);
             })
             .style("stroke", "transparent")
             .attr("class", function(d){ return "Country" } )
@@ -2031,7 +2031,7 @@ function update2016() {
                     .style("opacity", 1)
                     .style("stroke", "black");
                 // show tooltip with country name and total value
-                tooltip.html(`<strong>${d.properties.name}</strong><br/>Population: ${d.total}`)
+                tooltip.html(`<strong>${d.properties.name}</strong><br/>Suicide Rate: ${d.total}`)
                     .style("left", (d3.event.pageX + 10) + "px")
                     .style("top", (d3.event.pageY + 10) + "px")
                     .transition()
@@ -2062,9 +2062,9 @@ function update2017() {
 
     d3.queue()
         .defer(d3.json, "data/world.geojson")
-        .defer(d3.csv, "data/population_data.csv", function(d) {
+        .defer(d3.csv, "data/suicide_rate_data.csv", function(d) {
             if (d.Year === "2017") {
-                data.set(d.Code, +d.Population);
+                data.set(d.Code, +d.SuicideRate);
             }
         })
         .await(draw);
@@ -2092,7 +2092,7 @@ function update2017() {
             // set the color of each country
             .attr("fill", function (d) {
                 d.total = data.get(d.id) || 0;
-                return colorScale1(d.total);
+                return colorScale2(d.total);
             })
             .style("stroke", "transparent")
             .attr("class", function(d){ return "Country" } )
@@ -2110,7 +2110,7 @@ function update2017() {
                     .style("opacity", 1)
                     .style("stroke", "black");
                 // show tooltip with country name and total value
-                tooltip.html(`<strong>${d.properties.name}</strong><br/>Population: ${d.total}`)
+                tooltip.html(`<strong>${d.properties.name}</strong><br/>Suicide Rate: ${d.total}`)
                     .style("left", (d3.event.pageX + 10) + "px")
                     .style("top", (d3.event.pageY + 10) + "px")
                     .transition()
