@@ -9,7 +9,12 @@ const years = [
     {year: 2006, value: "data17"}, {year: 2007, value: "data18"}, {year: 2008, value: "data19"}, {year: 2009, value: "data20"},
     {year: 2010, value: "data21"}, {year: 2011, value: "data22"}, {year: 2012, value: "data23"}, {year: 2013, value: "data24"},
     {year: 2014, value: "data25"}, {year: 2015, value: "data26"}, {year: 2016, value: "data27"}, {year: 2017, value: "data28"}
-]
+];
+
+const maps = [
+    {type: "Depression Rate", value: "data1"},
+    {type: "Anxiety Disorders", value: "data2"}
+];
 
 const options = [
     {name: "Aitoff", projection: d3.geoAitoff()},
@@ -109,7 +114,7 @@ function update(option) {
 }
 
 // Years
-const menuYear = d3.select("#years-menu")
+const menuYear = d3.select("#years-menu-dis")
     .style("border-radius", "3px")
     .style("right", "-70px")
 
@@ -121,175 +126,379 @@ menuYear.selectAll("option")
     })
     .text(function(d) { return d.year; });
 
+const menuMap = d3.select("#maps-menu")
+    .style("border-radius", "3px")
+    .style("right", "-70px")
+
+menuMap.selectAll("option")
+    .data(maps)
+    .enter().append("option")
+    .attr("value", function(d) {
+        return d.value;
+    })
+    .text(function(d) { return d.type; });
+
 const data = d3.map();
 
-const colorScale = d3.scaleThreshold()
-    .domain([1, 2, 3, 4, 5, 6, 7])
-    .range(d3.schemeReds[7]);
-
-function update1990() {
-    svg.selectAll(".state").remove();
-
-    d3.queue()
-        .defer(d3.json, "data/world.geojson")
-        .defer(d3.csv, "data/world_data.csv", function(d) { data.set(d.Code, +d.Depression); })
-        .await(draw);
-
-    function draw (error, world) {
-        if (error) throw error;
-
-        // create a group for the land path elements
-        const landGroup = svg.append("g");
-
-        // create a tooltip element and hide it initially
-        const tooltip = d3.select("body").append("div")
-            .attr("class", "tooltip")
-            .style("opacity", 0);
-
-        // add the land areas to the map as path elements
-        landGroup.selectAll("path")
-            .data(world.features)
-            .enter()
-            .append("path")
-            // draw each country
-            .attr("d", d3.geoPath()
-                .projection(projection)
-            )
-            // set the color of each country
-            .attr("fill", function (d) {
-                d.total = data.get(d.id) || 0;
-                return colorScale(d.total);
-            })
-            .style("stroke", "transparent")
-            .attr("class", function(d){ return "Country" } )
-            .style("opacity", .8)
-            // add event handlers for mouseover and mouseout events
-            .on("mouseover", function(d) {
-                // change the fill color of the hovered path element
-                d3.selectAll(".Country")
-                    .transition()
-                    .duration(200)
-                    .style("opacity", .5);
-                d3.select(this)
-                    .transition()
-                    .duration(200)
-                    .style("opacity", 1)
-                    .style("stroke", "black");
-                // show tooltip with country name and total value
-                tooltip.html(`<strong>${d.properties.name}</strong><br/>Depression Rate: ${d.total}`)
-                    .style("left", (d3.event.pageX + 10) + "px")
-                    .style("top", (d3.event.pageY + 10) + "px")
-                    .transition()
-                    .duration(200)
-                    .style("opacity", .9);
-            })
-            .on("mouseout", function(d) {
-                // change the fill color of the previously hovered path element
-                d3.selectAll(".Country")
-                    .transition()
-                    .duration(200)
-                    .style("opacity", .8);
-                d3.select(this)
-                    .transition()
-                    .duration(200)
-                    .style("stroke", "transparent");
-                // hide tooltip
-                tooltip.transition()
-                    .duration(200)
-                    .style("opacity", 0);
-            });
-    }
-}
-
-update1990();
-
-d3.select("#years-menu").on("change", function() {
+d3.select("#maps-menu").on("change", function() {
     const selectedOption = d3.select(this).property("value");
     if (selectedOption === "data2") {
-        update1991();
-    }
-    else if (selectedOption === "data3") {
-        update1992();
-    }
-    else if (selectedOption === "data4") {
-        update1993();
-    }
-    else if (selectedOption === "data5") {
-        update1994();
-    }
-    else if (selectedOption === "data6") {
-        update1995();
-    }
-    else if (selectedOption === "data7") {
-        update1996();
-    }
-    else if (selectedOption === "data8") {
-        update1997();
-    }
-    else if (selectedOption === "data9") {
-        update1998();
-    }
-    else if (selectedOption === "data10") {
-        update1999();
-    }
-    else if (selectedOption === "data11") {
-        update2000();
-    }
-    else if (selectedOption === "data12") {
-        update2001();
-    }
-    else if (selectedOption === "data13") {
-        update2002();
-    }
-    else if (selectedOption === "data14") {
-        update2003();
-    }
-    else if (selectedOption === "data15") {
-        update2004();
-    }
-    else if (selectedOption === "data16") {
-        update2005();
-    }
-    else if (selectedOption === "data17") {
-        update2006();
-    }
-    else if (selectedOption === "data18") {
-        update2007();
-    }
-    else if (selectedOption === "data19") {
-        update2008();
-    }
-    else if (selectedOption === "data20") {
-        update2009();
-    }
-    else if (selectedOption === "data21") {
-        update2010();
-    }
-    else if (selectedOption === "data22") {
-        update2011();
-    }
-    else if (selectedOption === "data23") {
-        update2012();
-    }
-    else if (selectedOption === "data24") {
-        update2013();
-    }
-    else if (selectedOption === "data25") {
-        update2014();
-    }
-    else if (selectedOption === "data26") {
-        update2015();
-    }
-    else if (selectedOption === "data27") {
-        update2016();
-    }
-    else if (selectedOption === "data28") {
-        update2017();
+        updateAnxiety();
     }
     else {
-        update1990();
+        updateDepression();
     }
 })
+
+function updateDepression() {
+    const colorScale = d3.scaleThreshold()
+        .domain([1, 2, 3, 4, 5, 6, 7])
+        .range(d3.schemeReds[7]);
+
+    function update1990() {
+        svg.selectAll(".state").remove();
+
+        d3.queue()
+            .defer(d3.json, "data/world.geojson")
+            .defer(d3.csv, "data/world_data.csv", function(d) {
+                if (d.Year === "1990") {
+                    data.set(d.Code, +d.Depression);
+                }
+            })
+            .await(draw);
+
+        function draw (error, world) {
+            if (error) throw error;
+
+            // create a group for the land path elements
+            const landGroup = svg.append("g");
+
+            // create a tooltip element and hide it initially
+            const tooltip = d3.select("body").append("div")
+                .attr("class", "tooltip")
+                .style("opacity", 0);
+
+            // add the land areas to the map as path elements
+            landGroup.selectAll("path")
+                .data(world.features)
+                .enter()
+                .append("path")
+                // draw each country
+                .attr("d", d3.geoPath()
+                    .projection(projection)
+                )
+                // set the color of each country
+                .attr("fill", function (d) {
+                    d.total = data.get(d.id) || 0;
+                    return colorScale(d.total);
+                })
+                .style("stroke", "transparent")
+                .attr("class", function(d){ return "Country" } )
+                .style("opacity", .8)
+                // add event handlers for mouseover and mouseout events
+                .on("mouseover", function(d) {
+                    // change the fill color of the hovered path element
+                    d3.selectAll(".Country")
+                        .transition()
+                        .duration(200)
+                        .style("opacity", .5);
+                    d3.select(this)
+                        .transition()
+                        .duration(200)
+                        .style("opacity", 1)
+                        .style("stroke", "black");
+                    // show tooltip with country name and total value
+                    tooltip.html(`<strong>${d.properties.name}</strong><br/>Depression Rate: ${d.total}`)
+                        .style("left", (d3.event.pageX + 10) + "px")
+                        .style("top", (d3.event.pageY + 10) + "px")
+                        .transition()
+                        .duration(200)
+                        .style("opacity", .9);
+                })
+                .on("mouseout", function(d) {
+                    // change the fill color of the previously hovered path element
+                    d3.selectAll(".Country")
+                        .transition()
+                        .duration(200)
+                        .style("opacity", .8);
+                    d3.select(this)
+                        .transition()
+                        .duration(200)
+                        .style("stroke", "transparent");
+                    // hide tooltip
+                    tooltip.transition()
+                        .duration(200)
+                        .style("opacity", 0);
+                });
+        }
+    }
+
+    update1990();
+
+    d3.select("#years-menu-dis").on("change", function() {
+        const selectedOption = d3.select(this).property("value");
+        if (selectedOption === "data2") {
+            update1991();
+        }
+        else if (selectedOption === "data3") {
+            update1992();
+        }
+        else if (selectedOption === "data4") {
+            update1993();
+        }
+        else if (selectedOption === "data5") {
+            update1994();
+        }
+        else if (selectedOption === "data6") {
+            update1995();
+        }
+        else if (selectedOption === "data7") {
+            update1996();
+        }
+        else if (selectedOption === "data8") {
+            update1997();
+        }
+        else if (selectedOption === "data9") {
+            update1998();
+        }
+        else if (selectedOption === "data10") {
+            update1999();
+        }
+        else if (selectedOption === "data11") {
+            update2000();
+        }
+        else if (selectedOption === "data12") {
+            update2001();
+        }
+        else if (selectedOption === "data13") {
+            update2002();
+        }
+        else if (selectedOption === "data14") {
+            update2003();
+        }
+        else if (selectedOption === "data15") {
+            update2004();
+        }
+        else if (selectedOption === "data16") {
+            update2005();
+        }
+        else if (selectedOption === "data17") {
+            update2006();
+        }
+        else if (selectedOption === "data18") {
+            update2007();
+        }
+        else if (selectedOption === "data19") {
+            update2008();
+        }
+        else if (selectedOption === "data20") {
+            update2009();
+        }
+        else if (selectedOption === "data21") {
+            update2010();
+        }
+        else if (selectedOption === "data22") {
+            update2011();
+        }
+        else if (selectedOption === "data23") {
+            update2012();
+        }
+        else if (selectedOption === "data24") {
+            update2013();
+        }
+        else if (selectedOption === "data25") {
+            update2014();
+        }
+        else if (selectedOption === "data26") {
+            update2015();
+        }
+        else if (selectedOption === "data27") {
+            update2016();
+        }
+        else if (selectedOption === "data28") {
+            update2017();
+        }
+        else {
+            update1990();
+        }
+    })
+}
+
+updateDepression();
+
+function updateAnxiety() {
+    const colorScaleAn = d3.scaleThreshold()
+        .domain([1, 2, 3, 4, 5, 6, 7])
+        .range(d3.schemeReds[7]);
+
+    function updateAn1990() {
+        svg.selectAll(".state").remove();
+
+        d3.queue()
+            .defer(d3.json, "data/world.geojson")
+            .defer(d3.csv, "data/world_data.csv", function(d) {
+                if (d.Year === "1990") {
+                    data.set(d.Code, +d.AnxietyDisorders);
+                }
+            })
+            .await(draw);
+
+        function draw (error, world) {
+            if (error) throw error;
+
+            // create a group for the land path elements
+            const landGroup = svg.append("g");
+
+            // create a tooltip element and hide it initially
+            const tooltip = d3.select("body").append("div")
+                .attr("class", "tooltip")
+                .style("opacity", 0);
+
+            // add the land areas to the map as path elements
+            landGroup.selectAll("path")
+                .data(world.features)
+                .enter()
+                .append("path")
+                // draw each country
+                .attr("d", d3.geoPath()
+                    .projection(projection)
+                )
+                // set the color of each country
+                .attr("fill", function (d) {
+                    d.total = data.get(d.id) || 0;
+                    return colorScaleAn(d.total);
+                })
+                .style("stroke", "transparent")
+                .attr("class", function(d){ return "Country" } )
+                .style("opacity", .8)
+                // add event handlers for mouseover and mouseout events
+                .on("mouseover", function(d) {
+                    // change the fill color of the hovered path element
+                    d3.selectAll(".Country")
+                        .transition()
+                        .duration(200)
+                        .style("opacity", .5);
+                    d3.select(this)
+                        .transition()
+                        .duration(200)
+                        .style("opacity", 1)
+                        .style("stroke", "black");
+                    // show tooltip with country name and total value
+                    tooltip.html(`<strong>${d.properties.name}</strong><br/>Anxiety Disorders: ${d.total}`)
+                        .style("left", (d3.event.pageX + 10) + "px")
+                        .style("top", (d3.event.pageY + 10) + "px")
+                        .transition()
+                        .duration(200)
+                        .style("opacity", .9);
+                })
+                .on("mouseout", function(d) {
+                    // change the fill color of the previously hovered path element
+                    d3.selectAll(".Country")
+                        .transition()
+                        .duration(200)
+                        .style("opacity", .8);
+                    d3.select(this)
+                        .transition()
+                        .duration(200)
+                        .style("stroke", "transparent");
+                    // hide tooltip
+                    tooltip.transition()
+                        .duration(200)
+                        .style("opacity", 0);
+                });
+        }
+    }
+
+    updateAn1990();
+
+    d3.select("#years-menu-dis").on("change", function() {
+        const selectedOption = d3.select(this).property("value");
+        if (selectedOption === "data2") {
+            updateAn1991();
+        }
+        else if (selectedOption === "data3") {
+            updateAn1992();
+        }
+        else if (selectedOption === "data4") {
+            updateAn1993();
+        }
+        else if (selectedOption === "data5") {
+            updateAn1994();
+        }
+        else if (selectedOption === "data6") {
+            updateAn1995();
+        }
+        else if (selectedOption === "data7") {
+            updateAn1996();
+        }
+        else if (selectedOption === "data8") {
+            updateAn1997();
+        }
+        else if (selectedOption === "data9") {
+            updateAn1998();
+        }
+        else if (selectedOption === "data10") {
+            updateAn1999();
+        }
+        else if (selectedOption === "data11") {
+            updateAn2000();
+        }
+        else if (selectedOption === "data12") {
+            updateAn2001();
+        }
+        else if (selectedOption === "data13") {
+            updateAn2002();
+        }
+        else if (selectedOption === "data14") {
+            updateAn2003();
+        }
+        else if (selectedOption === "data15") {
+            updateAn2004();
+        }
+        else if (selectedOption === "data16") {
+            updateAn2005();
+        }
+        else if (selectedOption === "data17") {
+            updateAn2006();
+        }
+        else if (selectedOption === "data18") {
+            updateAn2007();
+        }
+        else if (selectedOption === "data19") {
+            updateAn2008();
+        }
+        else if (selectedOption === "data20") {
+            updateAn2009();
+        }
+        else if (selectedOption === "data21") {
+            updateAn2010();
+        }
+        else if (selectedOption === "data22") {
+            updateAn2011();
+        }
+        else if (selectedOption === "data23") {
+            updateAn2012();
+        }
+        else if (selectedOption === "data24") {
+            updateAn2013();
+        }
+        else if (selectedOption === "data25") {
+            updateAn2014();
+        }
+        else if (selectedOption === "data26") {
+            updateAn2015();
+        }
+        else if (selectedOption === "data27") {
+            updateAn2016();
+        }
+        else if (selectedOption === "data28") {
+            updateAn2017();
+        }
+        else {
+            updateAn1990();
+        }
+    })
+}
 
 function projectionTween(projection0, projection1) {
     return function(d) {

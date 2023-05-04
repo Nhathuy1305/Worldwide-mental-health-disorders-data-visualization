@@ -132,7 +132,11 @@ function update1990() {
 
     d3.queue()
         .defer(d3.json, "data/world.geojson")
-        .defer(d3.csv, "data/suicide_rate_data.csv", function(d) { data.set(d.Code, +d.SuicideRate); })
+        .defer(d3.csv, "data/suicide_rate_data.csv", function(d) {
+            if (d.Year === "1990") {
+                data.set(d.Code, +d.SuicideRate);
+            }
+        })
         .await(draw);
 
     function draw (error, world) {
