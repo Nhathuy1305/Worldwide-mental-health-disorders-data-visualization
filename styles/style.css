@@ -11,16 +11,16 @@ body {
     top: 10px;
 }
 
-#maps-menu {
-    position: absolute;
-    right: 10px;
-    top: 40px;
-}
+/*#maps-menu {*/
+/*    position: absolute;*/
+/*    right: 10px;*/
+/*    top: 40px;*/
+/*}*/
 
 #years-menu {
     position: absolute;
     right: 10px;
-    top: 70px;
+    top: 40px;
 }
 
 .stroke {

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Our World in Depression</title>
+    <link rel="stylesheet" href="styles/style.css" />
+    <link rel="stylesheet" href="styles/normalize.css" />
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="page.js"></script>
+</head>
+<body>
+<div id="world-map">
+    <button onclick="backToHomePage(true)">Home</button>
+    <label for="projection-menu"></label><select id="projection-menu"></select>
+    <label for="years-menu"></label><select id="years-menu"></select>
+    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+    <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+    <script src="scripts/map/suicide.js"></script>
+    <script src="scripts/map/updateYear.js"></script>
+</div>
+<div id="vietnam-area">
+    <script src="scripts/charts/index.js"></script>
+</div>
+<div id="vietnam-depression"></div>
+</body>
+</html>
