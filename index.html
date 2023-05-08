@@ -7,23 +7,14 @@
     <title>Our World in Depression</title>
     <link rel="stylesheet" href="styles/style.css" />
     <link rel="stylesheet" href="styles/normalize.css" />
-    <script src="https://d3js.org/d3.v4.js"></script>
-    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+    <script src="page.js"></script>
   </head>
   <body>
-    <div id="world-map">
-      <label for="projection-menu"></label
-      ><select id="projection-menu"></select>
-      <script src="//d3js.org/d3-geo-projection.v1.min.js"></script>
-      <script src="//d3js.org/topojson.v2.min.js"></script>
-      <script src="scripts/map/index.js"></script>
+    <div class="button-container">
+      <button class="button-page" onclick="redirectToPopPage(true)">World Population</button>
+      <button class="button-page" onclick="redirectToAgePage(true)">World Age Range</button>
+      <button class="button-page" onclick="redirectToSuiPage(true)">World Suicide Range</button>
+      <button class="button-page" onclick="redirectToDisPage(true)">World Disorders Range</button>
     </div>
-    <div id="vietnam-area">
-      <script src="scripts/charts/vietnam.js"></script>
-      <script>
-        vietnam();
-      </script>
-    </div>
-    <div id="vietnam-depression"></div>
   </body>
 </html>

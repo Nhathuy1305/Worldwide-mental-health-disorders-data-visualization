@@ -1,14 +1,27 @@
 body {
     background: #fcfcfa;
-    height: 500px;
     position: relative;
-    width: 960px;
 }
 
 #projection-menu {
     position: absolute;
-    right: 10px;
     top: 10px;
+}
+
+#maps-menu {
+    position: absolute;
+    top: 40px;
+}
+
+#years-menu {
+    position: absolute;
+    top: 40px;
+}
+
+#years-menu-dis {
+    position: absolute;
+    right: 10px;
+    top: 70px;
 }
 
 .stroke {
@@ -18,22 +31,100 @@ body {
 }
 
 .fill {
-    fill: #fff;
+    fill: #0057b9;
 }
 
 .graticule {
     fill: none;
-    stroke: #777;
-    stroke-width: .5px;
+    stroke: rgba(201, 190, 190, 0.89);
+    stroke-width: 1px;
     stroke-opacity: .5;
-}
-
-.land {
-    fill: #222;
 }
 
 .boundary {
     fill: none;
     stroke: #fff;
     stroke-width: 1px;
+}
+
+.tooltip {
+    position: absolute;
+    padding: 8px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.button-page {
+    background-color: #c2fbd7;
+    border-radius: 100px;
+    box-shadow: rgba(44, 187, 99, .2) 0 -25px 18px -14px inset, rgba(44, 187, 99, .15) 0 1px 2px, rgba(44, 187, 99, .15) 0 2px 4px, rgba(44, 187, 99, .15) 0 4px 8px, rgba(44, 187, 99, .15) 0 8px 16px, rgba(44, 187, 99, .15) 0 16px 32px;
+    color: green;
+    cursor: pointer;
+    display: inline-block;
+    font-family: CerebriSans-Regular, -apple-system, system-ui, Roboto, sans-serif;
+    padding: 7px 20px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 250ms;
+    border: 0;
+    font-size: 16px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    margin: 0 10px;
+}
+
+.button-page:hover {
+    box-shadow: rgba(44,187,99,.35) 0 -25px 18px -14px inset,rgba(44,187,99,.25) 0 1px 2px,rgba(44,187,99,.25) 0 2px 4px,rgba(44,187,99,.25) 0 4px 8px,rgba(44,187,99,.25) 0 8px 16px,rgba(44,187,99,.25) 0 16px 32px;
+    transform: scale(1.05) rotate(-1deg);
+}
+
+.button-back {
+    background-color: #13aa52;
+    border: 1px solid #13aa52;
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    font-family: "Akzidenz Grotesk BQ Medium", -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    outline: none;
+    outline: 0;
+    padding: 10px 25px;
+    text-align: center;
+    transform: translateY(0);
+    transition: transform 150ms, box-shadow 150ms;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    margin: 20px;
+    position: absolute;
+}
+
+.button-back:hover {
+    box-shadow: rgba(0, 0, 0, .15) 0 3px 9px 0;
+    transform: translateY(-2px);
+}
+
+@media (min-width: 768px) {
+    .button-back {
+        padding: 10px 30px;
+    }
+}
+
+.select-option {
+
 }
