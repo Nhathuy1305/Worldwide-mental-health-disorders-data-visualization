@@ -347,3 +347,7 @@ template {
 [hidden] {
   display: none;
 }
+
+button {
+  border: 0;
+}
