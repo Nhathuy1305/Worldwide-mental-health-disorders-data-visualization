@@ -103,41 +103,100 @@ body {
     cursor: pointer;
 }
 
-/*#button-main:hover {*/
-/*    right: 94%;*/
-/*}*/
-
 #button-1 {
     left: -4%;
-    right: 84%;
+    right: 94%;
     top: 222%;
     bottom: -180%;
-    transition: left 0.3s ease-in-out;
+    transition: right 0.3s ease-in-out;
 }
 
 #button-1:hover {
-    right: 94%;
+    right: 84%;
+}
+
+.button-text-1::before {
+    content: '1';
+}
+
+#button-1:hover .button-text-1::before {
+    content: '';
+}
+
+#button-1:hover .button-text:after {
+    content: 'POPULATION';
 }
 
 #button-2 {
     left: -4%;
-    right: 84%;
+    right: 94%;
     top: 302%;
     bottom: -260%;
+    transition: right 0.3s ease-in-out;
+}
+
+#button-2:hover {
+    right: 84%;
+}
+
+.button-text-2::before {
+    content: '2';
+}
+
+#button-2:hover .button-text-2::before {
+    content: '';
+}
+
+#button-2:hover .button-text:after {
+    content: 'AGE';
 }
 
 #button-3 {
     left: -4%;
-    right: 84%;
+    right: 94%;
     top: 382%;
     bottom: -340%;
+    transition: right 0.3s ease-in-out;
+}
+
+#button-3:hover {
+    right: 84%;
+}
+
+.button-text-3::before {
+    content: '3';
+}
+
+#button-3:hover .button-text-3::before {
+    content: '';
+}
+
+#button-3:hover .button-text:after {
+    content: 'SUICIDE';
 }
 
 #button-4 {
     left: -4%;
-    right: 84%;
+    right: 94%;
     top: 462%;
     bottom: -420%;
+    transition: right 0.3s ease-in-out;
+}
+
+#button-4:hover {
+    right: 84%;
+}
+
+.button-text-4::before {
+    content: '4';
+}
+
+#button-4:hover .button-text-4::before {
+    content: '';
+}
+
+#button-4:hover .button-text:after {
+    content: 'DISORDER';
 }
 
 .button-text {
