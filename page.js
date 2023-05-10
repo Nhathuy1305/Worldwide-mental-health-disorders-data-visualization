@@ -1,39 +1,38 @@
-function redirectToPopPage(loggedIn) {
-    if (loggedIn === true) {
-        window.location.href = "populationPage.html";
-    } else {
-        window.location.href = "notLoggedInPage.html";
-    }
-}
+let activeButton = null;
 
-function redirectToAgePage(loggedIn) {
-    if (loggedIn === true) {
-        window.location.href = "agePage.html";
-    } else {
-        window.location.href = "notLoggedInPage.html";
-    }
-}
+function redirectToPage(loggedIn) {
+    const button = document.getElementById('button-' + loggedIn);
 
-function redirectToSuiPage(loggedIn) {
-    if (loggedIn === true) {
-        window.location.href = "suicidePage.html";
-    } else {
-        window.location.href = "notLoggedInPage.html";
+    if (loggedIn === 1) {
+        if (activeButton != null && activeButton !== button) {
+            activeButton.classList.remove('active');
+        }
+        button.classList.toggle('active');
+        activeButton = button;
+        population();
     }
-}
-
-function redirectToDisPage(loggedIn) {
-    if (loggedIn === true) {
-        window.location.href = "disorderPage.html";
-    } else {
-        window.location.href = "notLoggedInPage.html";
+    else if (loggedIn === 2) {
+        if (activeButton != null && activeButton !== button) {
+            activeButton.classList.remove('active');
+        }
+        button.classList.toggle('active');
+        activeButton = button;
+        age();
     }
-}
-
-function backToHomePage(loggedIn) {
-    if (loggedIn === true) {
-        window.location.href = "index.html";
-    } else {
-        window.location.href = "notLoggedInPage.html";
+    else if (loggedIn === 3) {
+        if (activeButton != null && activeButton !== button) {
+            activeButton.classList.remove('active');
+        }
+        button.classList.toggle('active');
+        activeButton = button;
+        suicide();
+    }
+    else if (loggedIn === 4) {
+        if (activeButton != null && activeButton !== button) {
+            activeButton.classList.remove('active');
+        }
+        button.classList.toggle('active');
+        activeButton = button;
+        disorder();
     }
 }

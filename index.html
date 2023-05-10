@@ -1,20 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Our World in Depression</title>
     <link rel="stylesheet" href="styles/style.css" />
     <link rel="stylesheet" href="styles/normalize.css" />
+    <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="page.js"></script>
-  </head>
-  <body>
-    <div class="button-container">
-      <button class="button-page" onclick="redirectToPopPage(true)">World Population</button>
-      <button class="button-page" onclick="redirectToAgePage(true)">World Age Range</button>
-      <button class="button-page" onclick="redirectToSuiPage(true)">World Suicide Range</button>
-      <button class="button-page" onclick="redirectToDisPage(true)">World Disorders Range</button>
+    <script src="scripts/map/population.js"></script>
+</head>
+<body>
+    <div id="header">
+        <h1 id="title">OUR WORLD IN DEPRESSION</h1>
+        <p id="copyright">copyrighted by Tramcam Team</p>
     </div>
-  </body>
+
+    <div class="main-page">
+        <div class="header-title">
+            <h2 id="header-title--article">THE GLOBAL VIEW</h2>
+        </div>
+
+        <label class="select-option" for="years-menu"></label><select id="years-menu"></select>
+
+        <button class="button-main" id="button-1" onclick="redirectToPage(1)">
+            <h1 class="button-text button-text-1"></h1>
+        </button>
+        <button class="button-main" id="button-2" onclick="redirectToPage(2)">
+            <h1 class="button-text button-text-2"></h1>
+        </button>
+        <button class="button-main" id="button-3"  onclick="redirectToPage(3)">
+            <h1 class="button-text button-text-3"></h1>
+        </button>
+        <button class="button-main" id="button-4" onclick="redirectToPage(4)">
+            <h1 class="button-text button-text-4"></h1>
+        </button>
+
+        <button class="btn_nav page-change">Details</button>
+        <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+        <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+        <script src="scripts/map/population.js"></script>
+        <script src="scripts/map/suicide.js"></script>
+        <script src="scripts/map/age.js"></script>
+        <script src="scripts/map/disorder.js"></script>
+    </div>
+
+    <div class="second-page">
+        <div id="vietnam-area">
+            <script src="scripts/charts/index.js"></script>
+        </div>
+        <div id="vietnam-depression"></div>
+    </div>
+</body>
 </html>
