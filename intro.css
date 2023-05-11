@@ -1,0 +1,17 @@
+body {
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+
+.container {
+    width: 100%;
+}
+
+.container .main {
+    display: flex;
+    flex-direction: row;
+}
+
+.container .row {
+    justify-content: space-between;
+}
