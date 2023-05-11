@@ -1,39 +1,79 @@
-function redirectToPopPage(loggedIn) {
-    if (loggedIn === true) {
-        window.location.href = "populationPage.html";
-    } else {
-        window.location.href = "notLoggedInPage.html";
+let activeButton = null;
+
+function redirectToPage(loggedIn) {
+    const button = document.getElementById('button-' + loggedIn);
+
+    if (loggedIn === 1) {
+        if (activeButton != null && activeButton !== button) {
+            activeButton.classList.remove('active');
+        }
+        button.classList.toggle('active');
+        activeButton = button;
+        population();
+    }
+    else if (loggedIn === 2) {
+        if (activeButton != null && activeButton !== button) {
+            activeButton.classList.remove('active');
+        }
+        button.classList.toggle('active');
+        activeButton = button;
+        age();
+    }
+    else if (loggedIn === 3) {
+        if (activeButton != null && activeButton !== button) {
+            activeButton.classList.remove('active');
+        }
+        button.classList.toggle('active');
+        activeButton = button;
+        suicide();
+    }
+    else if (loggedIn === 4) {
+        if (activeButton != null && activeButton !== button) {
+            activeButton.classList.remove('active');
+        }
+        button.classList.toggle('active');
+        activeButton = button;
+        disorder();
     }
 }
 
-function redirectToAgePage(loggedIn) {
-    if (loggedIn === true) {
-        window.location.href = "agePage.html";
-    } else {
-        window.location.href = "notLoggedInPage.html";
+// Load the first page 1 when access to the main page at the first time
+window.addEventListener('load', function() {
+    redirectToPage(1);
+});
+
+function changeToNextPage(condition) {
+    if (condition === true) {
+        window.location.href = "vietnam-1.html";
+    }
+    else {
+        window.location.href = "not-found.html"
     }
 }
 
-function redirectToSuiPage(loggedIn) {
-    if (loggedIn === true) {
-        window.location.href = "suicidePage.html";
-    } else {
-        window.location.href = "notLoggedInPage.html";
-    }
-}
-
-function redirectToDisPage(loggedIn) {
-    if (loggedIn === true) {
-        window.location.href = "disorderPage.html";
-    } else {
-        window.location.href = "notLoggedInPage.html";
-    }
-}
-
-function backToHomePage(loggedIn) {
-    if (loggedIn === true) {
+function changeToPreviousPage(condition) {
+    if (condition === true) {
         window.location.href = "index.html";
-    } else {
-        window.location.href = "notLoggedInPage.html";
+    }
+    else {
+        window.location.href = "not-found.html";
+    }
+}
+
+function changeToNextPage2(condition) {
+    if (condition === true) {
+        window.location.href = "vietnam-2.html";
+    }
+    else {
+        window.location.href = "not-found.html";
+    }
+}
+
+function changeToPreviousPage2(condition) {
+    if (condition === true) {
+        window.location.href = "vietnam-1.html";
+    }
+    else {
+        window.location.href = "not-found.html";
     }
 }
