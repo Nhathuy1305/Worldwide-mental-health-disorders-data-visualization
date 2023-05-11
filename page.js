@@ -59,3 +59,21 @@ function changeToPreviousPage(condition) {
         window.location.href = "not-found.html";
     }
 }
+
+function changeToNextPage2(condition) {
+    if (condition === true) {
+        window.location.href = "vietnam-2.html";
+    }
+    else {
+        window.location.href = "not-found.html";
+    }
+}
+
+function changeToPreviousPage2(condition) {
+    if (condition === true) {
+        window.location.href = "vietnam-1.html";
+    }
+    else {
+        window.location.href = "not-found.html";
+    }
+}
