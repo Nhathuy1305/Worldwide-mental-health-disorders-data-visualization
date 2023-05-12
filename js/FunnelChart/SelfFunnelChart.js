@@ -1,10 +1,29 @@
-// Load data from CSV file
-d3.csv("../assets/education/education-frequency.csv").then(function (data) {
-  // Convert data types from string to number
-  data.forEach(function (d) {
-    d.label = d["Mức độ thường xuyên nghĩ đến việc tự sát"];
-    d.value = parseInt(d[" Số lượng người mắc phải"]);
-  });
+d3.csv("../assets/self/self.csv").then((data) => {
+  const label = [
+    "Chưa từng",
+    "Một - hai lần",
+    "Rất nhiều",
+    "Khoảng năm lần",
+    "Khoảng 10 lần",
+  ];
+
+  const labelCounts = label.map((category) =>
+    data.reduce((count, d) => {
+      return d["Bạn từng nghĩ tới việc t.ự s.á.t bao nhiêu lần?"] === category
+        ? count + 1
+        : count;
+    }, 0)
+  );
+
+  console.log(labelCounts);
+
+  const newData = label
+    .map((label, i) => {
+      return { label, value: labelCounts[i] };
+    })
+    .sort((a, b) => b.value - a.value); // sort data in descending order
+
+  console.log(newData);
 
   const options = {
     block: {
@@ -12,19 +31,19 @@ d3.csv("../assets/education/education-frequency.csv").then(function (data) {
       minHeight: 20,
       fill: {
         type: "gradient",
-        gradient: ["#87CEFA", "#1E90FF"],
+        gradient: ["#ade3fb", "#079ee3", "#076ba9", "#005095", "#031347"],
       },
+      color: ["#031347", "#005095", "#ade3fb", "#ade3fb", "#ade3fb"],
     },
     label: {
       fontFamily: "Arial",
-      fontSize: "14px",
+      fontSize: "18px",
       fill: "white",
     },
   };
-
   // Create the chart
   const chart = new D3Funnel("#funnel");
-  chart.draw(data, options);
+  chart.draw(newData, options);
 
   // Add tooltip on block hover
   chart

@@ -1,4 +1,4 @@
-d3.csv("../assets/education/education.csv").then((data) => {
+d3.csv("../assets/love/love.csv").then((data) => {
   const categories = ["Tối thiểu", "Nhẹ", "Trung bình", "Bình thường", "Nặng"];
 
   const categoryCounts = categories.map((category) =>
@@ -21,8 +21,8 @@ d3.csv("../assets/education/education.csv").then((data) => {
     .range(["#ade3fb", "#079ee3", "#076ba9", "#005095", "#031347"]);
 
   const legendWidth = 120,
-    legendHeight = categories.length * 25,
-    width = legendWidth + 500,
+    legendHeight = categories.length * 15,
+    width = legendWidth + 550,
     height = Math.max(legendHeight, 350);
 
   const svg = d3
@@ -32,9 +32,9 @@ d3.csv("../assets/education/education.csv").then((data) => {
 
   let g = svg
     .append("g")
-    .attr("transform", `translate(${width / 2}, ${height / 2})`);
+    .attr("transform", `translate(${width / 2 - 150}, ${height / 2 - 0})`);
 
-  const radius = Math.min(width, height) / 2 - 20;
+  const radius = Math.min(width, height) / 2 - 1;
 
   const pie = d3
     .pie()
@@ -89,7 +89,7 @@ d3.csv("../assets/education/education.csv").then((data) => {
 
   const legend = svg
     .append("g")
-    .attr("transform", `translate(${width - legendWidth}, 20)`)
+    .attr("transform", `translate(${width - legendWidth - 150}, 20)`)
     .selectAll("g")
     .data(categories)
     .enter()
@@ -106,6 +106,6 @@ d3.csv("../assets/education/education.csv").then((data) => {
     .append("text")
     .text((d) => d)
     .attr("fill", "black")
-    .attr("x", 30)
+    .attr("x", 25)
     .attr("y", 14);
 });
