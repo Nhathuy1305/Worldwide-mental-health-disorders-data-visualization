@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Education</title>
+    <title>Self</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/d3-funnel@2.1.0/dist/d3-funnel.js"></script>
     <link rel="stylesheet" href="../index.css" />
@@ -12,8 +12,17 @@
   <body>
     <div class="container">
       <div class="main edu-main">
+        <script>
+          d3.csv("../assets/love/love.csv").then(function (data) {
+            var columnValues = data.map(function (d) {
+              return d.value;
+            });
+            var columnLength = columnValues.length - 1;
+            d3.select("#family-title-h2").text(columnLength);
+          });
+        </script>
         <div class="row edu-row edu-title">
-          <h2>292</h2>
+          <h2 id="family-title-h2"></h2>
           <p>Người bị áp lực bởi các vấn đề về gia đình</p>
         </div>
         <div class="row edu-row edu-content">
