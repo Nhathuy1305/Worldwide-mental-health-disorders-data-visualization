@@ -184,6 +184,10 @@ body {
     margin: 10px;
 }
 
+.edu-main .edu-content .col script {
+    width: 100%;
+}
+
 .edu-content .edu-col .chart-title {
     color: #2a5c92;
     background-color: #f1f1f1

@@ -12,16 +12,16 @@
   <body>
     <div class="container">
       <div class="main edu-main">
-        <script>
-          d3.csv("../assets/education/education.csv").then(function (data) {
-            var columnValues = data.map(function (d) {
-              return d.value;
-            });
-            var columnLength = columnValues.length - 1;
-            d3.select("#edu-title-h2").text(columnLength);
-          });
-        </script>
         <div class="row edu-row edu-title">
+          <script>
+            d3.csv("../assets/education/education.csv").then(function (data) {
+              var columnValues = data.map(function (d) {
+                return d.value;
+              });
+              var columnLength = columnValues.length - 1;
+              d3.select("#edu-title-h2").text(columnLength);
+            });
+          </script>
           <h2 id="edu-title-h2"></h2>
           <p>Người bị áp lực bởi các vấn đề về học tập</p>
         </div>
@@ -34,10 +34,9 @@
             <div id="tooltip" style="position: absolute; opacity: 0"></div>
             <script src="../js/FunnelChart.js"></script>
           </div>
-
           <div class="col edu-col col-pie">
             <div class="chart-title pie-title"><h3>Mức độ trầm cảm</h3></div>
-            <svg></svg>
+            <svg id="pie-chart"></svg>
             <script src="../js/EduPieChart.js"></script>
           </div>
         </div>

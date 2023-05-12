@@ -1,4 +1,4 @@
-d3.csv("../assets/education/education.csv").then((data) => {
+d3.csv("../assets/work/work.csv").then((data) => {
   const categories = ["Tối thiểu", "Nhẹ", "Trung bình", "Bình thường", "Nặng"];
 
   const categoryCounts = categories.map((category) =>
