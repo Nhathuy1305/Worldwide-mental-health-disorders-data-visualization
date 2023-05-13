@@ -1,0 +1,35 @@
+body {
+    box-sizing: border-box;
+    margin: 0 auto;
+    color: black;
+}
+
+.background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1000;
+    background-image: linear-gradient(241.5deg, #D1D0F7 15.83%, #0093E9 89.93%);
+    background-size: cover;
+    width: 100%;
+    height: 1250px;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+}
+
+.main .row {
+    display: flex;
+    flex-direction: column;
+}
+
+.row .col {
+    width: 33%;
+}
