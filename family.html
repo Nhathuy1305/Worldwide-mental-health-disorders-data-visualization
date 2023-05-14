@@ -4,26 +4,26 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Education</title>
+    <title>Family</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/d3-funnel@2.1.0/dist/d3-funnel.js"></script>
-    <link rel="stylesheet" href="../index.css" />
+    <link rel="stylesheet" href="styles/index.css" />
   </head>
   <body>
     <div class="container">
       <div class="main edu-main">
-        <div class="row edu-row edu-title">
-          <script>
-            d3.csv("../assets/education/education.csv").then(function (data) {
-              var columnValues = data.map(function (d) {
-                return d.value;
-              });
-              var columnLength = columnValues.length - 1;
-              d3.select("#edu-title-h2").text(columnLength);
+        <script>
+          d3.csv("../assets/family/family.csv").then(function (data) {
+            var columnValues = data.map(function (d) {
+              return d.value;
             });
-          </script>
+            var columnLength = columnValues.length - 1;
+            d3.select("#edu-title-h2").text(columnLength);
+          });
+        </script>
+        <div class="row edu-row edu-title">
           <h2 id="edu-title-h2"></h2>
-          <p>Người bị áp lực bởi các vấn đề về học tập</p>
+          <p>Người bị áp lực bởi các vấn đề về gia đình</p>
         </div>
         <div class="row edu-row edu-content">
           <div class="col edu-col col-funnel">
@@ -32,12 +32,13 @@
             </div>
             <div id="funnel" style="width: 550px; height: 300px"></div>
             <div id="tooltip" style="position: absolute; opacity: 0"></div>
-            <script src="../js/FunnelChart/EduFunnelChart.js"></script>
+            <script src="scripts/FunnelChart/FamilyFunnelChart.js"></script>
           </div>
+
           <div class="col edu-col col-pie">
             <div class="chart-title pie-title"><h3>Mức độ trầm cảm</h3></div>
             <svg id="pie-chart"></svg>
-            <script src="../js/PieChart/EduPieChart.js"></script>
+            <script src="scripts/PieChart/FamilyPieChart.js"></script>
           </div>
         </div>
       </div>

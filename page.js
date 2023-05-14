@@ -62,7 +62,7 @@ function changeToPreviousPage(condition) {
 
 function changeToNextPage2(condition) {
     if (condition === true) {
-        window.location.href = "vietnam-2.html";
+        window.location.href = "depress.html";
     }
     else {
         window.location.href = "not-found.html";
