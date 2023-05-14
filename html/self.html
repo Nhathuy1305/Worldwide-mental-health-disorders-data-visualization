@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Self</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-funnel@2.1.0/dist/d3-funnel.js"></script>
+    <link rel="stylesheet" href="../index.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="main edu-main">
+        <script>
+          d3.csv("../assets/self/self.csv").then(function (data) {
+            var columnValues = data.map(function (d) {
+              return d.value;
+            });
+            var columnLength = columnValues.length - 1;
+            d3.select("#self-title-h2").text(columnLength);
+          });
+        </script>
+        <div class="row edu-row edu-title">
+          <h2 id="self-title-h2"></h2>
+          <p>Người bị áp lực bởi các vấn đề về bản thân</p>
+        </div>
+        <div class="row edu-row edu-content">
+          <div class="col edu-col col-funnel">
+            <div class="chart-title funnel-title">
+              <h3>Mức độ thường xuyên nghĩ tới việc tự tử</h3>
+            </div>
+            <div id="funnel" style="width: 550px; height: 300px"></div>
+            <div id="tooltip" style="position: absolute; opacity: 0"></div>
+            <script src="../js/FunnelChart/SelfFunnelChart.js"></script>
+          </div>
+
+          <div class="col edu-col col-pie">
+            <div class="chart-title pie-title"><h3>Mức độ trầm cảm</h3></div>
+            <svg id="pie-chart"></svg>
+            <script src="../js/PieChart/SelfPieChart.js"></script>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
