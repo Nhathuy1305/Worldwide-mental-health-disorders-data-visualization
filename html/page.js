@@ -44,7 +44,7 @@ window.addEventListener('load', function() {
 
 function changeToNextPage(condition) {
     if (condition === true) {
-        window.location.href = "vietnam-1.html";
+        window.location.href = "vietnam.html";
     }
     else {
         window.location.href = "not-found.html"
@@ -71,7 +71,7 @@ function changeToNextPage2(condition) {
 
 function changeToPreviousPage2(condition) {
     if (condition === true) {
-        window.location.href = "vietnam-1.html";
+        window.location.href = "vietnam.html";
     }
     else {
         window.location.href = "not-found.html";
