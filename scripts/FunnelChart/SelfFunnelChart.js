@@ -105,13 +105,13 @@ d3.csv("../assets/self/self.csv").then((data) => {
     .attr("width", (d) => xScale(d.value))
     .attr("height", yScale.bandwidth())
     .attr("fill", "#ade3fb")
-    .on("mouseover", function (d) {
+    .on("mouseover", function (d, event) {
       d3.select(this).attr("fill", "#005095");
       tooltip.transition().duration(200).style("opacity", 0.9);
       tooltip
         .html(`${d.label}: ${d.value}`)
-        .style("left", d3.event.pageX + 10 + "px")
-        .style("top", d3.event.pageY - 28 + "px");
+        .style("left", event.pageX + 10 + "px")
+        .style("top", event.pageY - 28 + "px");
     })
     .on("mouseout", function () {
       d3.select(this).attr("fill", "#ade3fb");

@@ -224,6 +224,17 @@ body {
     pointer-events: none;
 }
 
+.col-funnel #tooltip {
+    opacity: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 8px;
+    border-radius: 4px;
+    position: absolute;
+    pointer-events: none;
+    font-size: 12px;
+}
+
 .btn_nav {
     text-align: center;
     font-weight: 700;
