@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Our World in Depression</title>
+    <link rel="stylesheet" href="styles/style.css"/>
+    <link rel="stylesheet" href="styles/normalize.css"/>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="/scripts/charts/vietnam.js"></script>
+    <script src="page.js"></script>
+</head>
+<body>
+<div id="header">
+    <h1 id="title">OUR WORLD IN DEPRESSION</h1>
+    <p id="copyright">copyrighted by Tramcam Team</p>
+</div>
+
+<div class="main-page-2 back-main-page">
+    <div class="header-title">
+        <h2 id="header-title--article-2">VIETNAM OVERVIEW</h2>
+    </div>
+    <button class="btn_nav" id="page-change-btn-2" onclick="changeToNextPage2(true)">Next</button>
+    <button id="page-back-btn" onclick="changeToPreviousPage(true)">Return</button>
+    <div id="vietnam-area">
+        <script>vietnam();</script>
+    </div>
+</div>
+</body>
+</html>

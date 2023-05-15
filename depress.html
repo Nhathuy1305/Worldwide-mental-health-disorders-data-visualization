@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Intro</title>
+    <link rel="stylesheet" href="/styles/index.css" />
+    <script src="page.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="background"></div>
+      <nav class="field-header">
+        <h2>OUR WORLD IN DEPRESSION <span>copyrighted by tramcamteam</span></h2>
+        <h1>VIETNAM OVERVIEW</h1>
+      </nav>
+      <div class="main">
+        <div class="row sidebar">
+          <div class="col tab-header">
+            <button class="tab-button active" onclick="showTab('hoc-duong')">
+              Học đường
+            </button>
+            <button class="tab-button" onclick="showTab('gia-dinh')">
+              Gia đình
+            </button>
+            <button class="tab-button" onclick="showTab('tinh-yeu')">
+              Tình yêu
+            </button>
+            <button class="tab-button" onclick="showTab('ban-than')">
+              Bản Thân
+            </button>
+            <button class="tab-button" onclick="showTab('cong-viec')">
+              Công việc
+            </button>
+          </div>
+
+          <div class="col main-content edu-content">
+            <div class="tab-panel">
+              <div id="hoc-duong" class="tab-content" style="display: block">
+                <iframe
+                  src="education.html"
+                  allowfullscreen
+                  scrolling="no"
+                ></iframe>
+              </div>
+              <div id="gia-dinh" class="tab-content">
+                <iframe
+                  src="family.html"
+                  allowfullscreen
+                  scrolling="no"
+                ></iframe>
+              </div>
+              <div id="tinh-yeu" class="tab-content">
+                <iframe
+                  src="love.html"
+                  allowfullscreen
+                  scrolling="no"
+                ></iframe>
+              </div>
+              <div id="ban-than" class="tab-content">
+                <iframe
+                  src="self.html"
+                  allowfullscreen
+                  scrolling="no"
+                ></iframe>
+              </div>
+              <div id="cong-viec" class="tab-content">
+                <iframe src="work.html" allowfullscreen scrolling="no"></iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function showTab(tabId) {
+        const tabButtons = document.querySelectorAll(".tab-button");
+        const tabContents = document.querySelectorAll(".tab-content");
+
+        // Hide all tab content
+        tabContents.forEach((tabContent) => {
+          tabContent.style.display = "none";
+        });
+
+        // Show the tab content associated with the clicked button
+        document.getElementById(tabId).style.display = "block";
+
+        // Make the clicked button active and deactivate all other buttons
+        tabButtons.forEach((tabButton) => {
+          if (tabButton.getAttribute("onclick").includes(tabId)) {
+            tabButton.classList.add("active");
+          } else {
+            tabButton.classList.remove("active");
+          }
+        });
+      }
+    </script>
+    <button class="btn_nav page-change" onclick="changeToNextPage(true)">Return</button>
+  </body>
+  </html>

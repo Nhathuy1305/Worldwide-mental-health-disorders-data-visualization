@@ -11,7 +11,6 @@ function population() {
         {year: 2010, value: "data21"}, {year: 2011, value: "data22"}, {year: 2012, value: "data23"}, {year: 2013, value: "data24"},
         {year: 2014, value: "data25"}, {year: 2015, value: "data26"}, {year: 2016, value: "data27"}, {year: 2017, value: "data28"}
     ]
-
     const options = [
         {name: "Equiangular (Plate Carrée)", projection: d3.geoEquirectangular()}
     ];
@@ -39,6 +38,42 @@ function population() {
     svg.append("use")
         .attr("class", "fill")
         .attr("xlink:href", "#sphere");
+
+    function zoomToBoundingBox(bbox) {
+        const [[x0, y0], [x1, y1]] = bbox;
+        const bounds = [[x0, y0], [x1, y1]];
+
+        // Compute the center of the bounding box
+        const center = [    (bounds[0][0] + bounds[1][0]) / 2,
+            (bounds[0][1] + bounds[1][1]) / 2
+        ];
+
+        // Compute the zoom level based on the bounding box width
+        const dx = bounds[1][0] - bounds[0][0];
+        const dy = bounds[1][1] - bounds[0][1];
+        const zoom = Math.min(12, 0.9 / Math.max(dx / width, dy / height));
+
+        // Apply the zoom and pan to the map
+        svg.transition().duration(750)
+            .call(zoomFunction.transform, d3.zoomIdentity
+                .translate(width / 2, height / 2)
+                .scale(zoom)
+                .translate(-projection(center)[0], -projection(center)[1])
+            );
+    }
+
+    const zoomFunction = d3.zoom()
+        .scaleExtent([1, 8])
+        .on("zoom", zoomed);
+
+    function zoomed() {
+        svg.selectAll("path")
+            .attr("transform", d3.event.transform);
+    }
+
+    svg.call(zoomFunction);
+
+    zoomToBoundingBox([[10, 20], [30, 40]]);
 
     const menu = d3.select("#projection-menu")
         .on("change", change)
