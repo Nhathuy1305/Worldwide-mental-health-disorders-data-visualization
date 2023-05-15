@@ -416,3 +416,14 @@
     border-radius: 5px;
     cursor: pointer;
 }
+
+.btn_nav {
+    text-align: center;
+    font-weight: 700;
+    font-size: 14px;
+    color: #D4ADFC;
+    border-radius: 10px;
+    background-color: #0d134f;
+    margin-bottom: 20px;
+    padding: 5px 10px;
+}
