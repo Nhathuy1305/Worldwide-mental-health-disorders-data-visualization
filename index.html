@@ -7,10 +7,10 @@
     <title>Our World in Depression</title>
     <link rel="stylesheet" href="styles/style.css" />
     <link rel="stylesheet" href="styles/normalize.css" />
+<!--    <script src="https://kit.fontawesome.com/7b9a1721c6.js" crossorigin="anonymous"></script>-->
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="page.js"></script>
     <script src="scripts/map/population.js"></script>
-    <script src="page.js"></script>
 </head>
 <body>
     <div id="header">
@@ -38,12 +38,16 @@
             <h1 class="button-text button-text-4"></h1>
         </button>
 
-        <button class="btn_nav page-change" onclick="changeToNextPage(true)">Details</button>
+        <button class="btn_nav" id="page-change-btn" onclick="changeToNextPage(true)">
+<!--            <i class="fa-solid fa-chevrons-right"></i>-->
+            Details
+        </button>
         <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
         <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
         <script src="scripts/map/population.js"></script>
         <script src="scripts/map/suicide.js"></script>
         <script src="scripts/map/age.js"></script>
         <script src="scripts/map/disorder.js"></script>
+        <script src="scripts/map/zoom.js"></script>
     </div>
 </body>
