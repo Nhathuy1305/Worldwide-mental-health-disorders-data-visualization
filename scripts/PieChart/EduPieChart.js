@@ -73,13 +73,14 @@ d3.csv("../assets/education/education.csv").then((data) => {
     .attr("fill", (d) => color(d.data.category))
     .attr("stroke", "white")
     .attr("stroke-width", "2px")
+    .style("opacity", (d) => (d.clicked ? 1.5 : 1.5))
     .on("mouseover", function (event, d) {
       d3.select(this)
         .transition()
         .duration(200)
         .attr("transform", `scale(1.1)`);
       percentage = ((d.data.value / total) * 100).toFixed(2);
-      tooltip.transition().duration(200).style("opacity", 0.9);
+      tooltip.transition().duration(200);
       tooltip
         .html(`Value: ${d.data.value}, ${percentage}%`)
         .style("left", event.pageX + "px")
@@ -87,10 +88,37 @@ d3.csv("../assets/education/education.csv").then((data) => {
     })
     .on("mouseout", function () {
       d3.select(this).transition().duration(200).attr("transform", `scale(1)`);
-      tooltip.transition().duration(200).style("opacity", 0.9);
-      percentage = ((d.data.value / total) * 100).toFixed(2);
     })
     .on("click", function (event, d) {
+      const clickedArc = d3.select(this);
+      const isClicked = !d.clicked;
+
+      arcs
+        .style("opacity", function (data) {
+          if (data === d) {
+            data.clicked = isClicked;
+            return isClicked ? 1 : 0.2;
+          } else {
+            data.clicked = false;
+            return 0.2;
+          }
+        })
+        .attr("fill", (data) =>
+          data.clicked
+            ? color(data.data.category)
+            : d3.color(color(data.data.category)).brighter(0.5)
+        );
+      if (isClicked) {
+        const percentage = ((d.data.value / total) * 100).toFixed(2);
+        tooltip.transition().duration(200).style("opacity", 0.9);
+        tooltip
+          .html(`Value: ${d.data.value}, ${percentage}%`)
+          .style("left", event.pageX + "px")
+          .style("top", event.pageY - 28 + "px");
+      } else {
+        tooltip.transition().duration(200).style("opacity", 0);
+      }
+
       d3.select("#info-box").text(info);
     });
 
@@ -156,4 +184,82 @@ d3.csv("../assets/education/education.csv").then((data) => {
     .attr("fill", "black")
     .attr("x", 25)
     .attr("y", 14);
+
+  legend.on("click", function (event, d) {
+    const clickedLegend = d3.select(this);
+    const isClicked = !d.clicked;
+
+    // Update the clicked property for both arc data and legend data
+    arcs.each(function (data) {
+      if (data.data.category === d) {
+        data.clicked = isClicked;
+      } else {
+        data.clicked = false;
+      }
+    });
+
+    legend.each(function (data) {
+      if (data === d) {
+        data.clicked = isClicked;
+      } else {
+        data.clicked = false;
+      }
+    });
+
+    // Update the opacity and fill color of arcs based on the clicked property
+    arcs
+      .style("opacity", function (data) {
+        return data.clicked ? 1 : 0.2;
+      })
+      .attr("fill", function (data) {
+        return data.clicked
+          ? color(data.data.category)
+          : d3.color(color(data.data.category)).brighter(0.5);
+      });
+
+    // Update the opacity and fill color of legend items based on the clicked property
+    legend.select("rect").attr("fill", function (data) {
+      return data.clicked ? color(data) : d3.color(color(data)).brighter(0.5);
+    });
+
+    legend.select("text").attr("fill", function (data) {
+      return data.clicked ? "black" : "#777";
+    });
+
+    if (isClicked) {
+      const clickedArc = arcs.filter((data) => data.data.category === d);
+      const percentage = (
+        (clickedArc.datum().data.value / total) *
+        100
+      ).toFixed(2);
+
+      tooltip.transition().duration(200).style("opacity", 0.9);
+      tooltip
+        .html(`Value: ${clickedArc.datum().data.value}, ${percentage}%`)
+        .style("left", `${width / 2 + centroid[0]}px`)
+        .style("top", `${height / 2 + centroid[1]}px`)
+        .style("transform", `translate(-50%, -50%)`); // Adjust the tooltip position
+    } else {
+      tooltip.transition().duration(200).style("opacity", 0);
+    }
+
+    // Make the colors of other legend items lighter
+    legend
+      .filter(function (data) {
+        return data !== d;
+      })
+      .select("rect")
+      .attr("fill", function (data) {
+        return d3.color(color(data)).brighter(0.5);
+      });
+
+    legend
+      .filter(function (data) {
+        return data !== d;
+      })
+      .select("text")
+      .attr("fill", "#777");
+
+    d3.select("#info-box").text(info);
+  });
 });
