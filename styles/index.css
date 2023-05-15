@@ -69,29 +69,48 @@ body {
 
 /* Tab button styles */
 .tab-header .tab-button {
-    display: block;
-    border: none;
-    margin-bottom: 15px;
     cursor: pointer;
+    position: relative;
+    border: none;
     width: 100%;
-    text-align: left;
-    font-size: 16px;
-    color: white;
-    padding: 15px;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
-    background-color: rgb(156, 196, 239);
+    left: -50%;
+    text-align: right;
+    font-weight: 700;
+    font-size: 15px;
+    color: #D4ADFC;
+    border-radius: 20px;
+    background-color: #0d134f;
+    margin-bottom: 20px;
+    padding: 0 20px;
+    transition: width 0.3s ease-in-out;
 }
 
-.tab-header .tab-button.active {
-    transform: scale(1.2);
-    transition: transform 0.2s ease-in-out;
-    background-color: #0d134f;
+.button-1.active:active {
+    width: 100%;
 }
 
 .tab-header .tab-button:hover {
-    transform: scale(1.2);
-    transition: transform 0.2s ease-in-out;
+    transform: translateX(60px);
+}
+
+.tab-button .button-text-1::before {
+    content: 'EDUCATION';
+}
+
+.tab-button .button-text-2::before {
+    content: 'Family';
+}
+
+.tab-button .button-text-3::before {
+    content: 'LOVE';
+}
+
+.tab-button .button-text-4::before {
+    content: 'SELF';
+}
+
+.tab-button .button-text-5::before {
+    content: 'WORK';
 }
 
 .sidebar .main-content {
