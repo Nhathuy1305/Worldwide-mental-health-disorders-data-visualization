@@ -69,6 +69,7 @@ body {
 
 /* Tab button styles */
 .tab-header .tab-button {
+    display: block;
     cursor: pointer;
     position: relative;
     border: none;
@@ -85,7 +86,7 @@ body {
     transition: width 0.3s ease-in-out;
 }
 
-.button-1.active:active {
+.button-1:active {
     width: 100%;
 }
 
@@ -210,4 +211,15 @@ body {
 .edu-content .edu-col .chart-title {
     color: #2a5c92;
     background-color: #f1f1f1
+}
+
+.tooltip {
+    position: absolute;
+    width: 80px;
+    height: 50px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 8px;
+    font-size: 18px;
+    pointer-events: none;
 }

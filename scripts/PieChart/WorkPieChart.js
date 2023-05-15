@@ -1,6 +1,8 @@
 d3.csv("../assets/work/work.csv").then((data) => {
   const categories = ["Tối thiểu", "Nhẹ", "Trung bình", "Bình thường", "Nặng"];
 
+  const englishCategories = ["Minimum", "Mild", "Moderate", "Normal", "Severe"];
+
   const categoryCounts = categories.map((category) =>
     data.reduce((count, d) => {
       return d["Mức độ"] === category ? count + 1 : count;
@@ -10,7 +12,7 @@ d3.csv("../assets/work/work.csv").then((data) => {
   console.log(categoryCounts);
 
   const newData = categories.map((category, i) => {
-    return { category, value: categoryCounts[i] };
+    return { category: englishCategories[i], value: categoryCounts[i] };
   });
 
   console.log(newData);
@@ -91,7 +93,7 @@ d3.csv("../assets/work/work.csv").then((data) => {
     .append("g")
     .attr("transform", `translate(${width - legendWidth - 150}, 20)`)
     .selectAll("g")
-    .data(categories)
+    .data(englishCategories)
     .enter()
     .append("g")
     .attr("transform", (d, i) => `translate(0,${i * 0.5 * legendHeight})`);
