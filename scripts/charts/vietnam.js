@@ -7,12 +7,12 @@ function vietnam() {
   let rowConverter = function (d) {
     return {
       year: d["Year"],
-      male: parseFloat(d["Male"]),
-      female: parseFloat(d["Female"]),
+      rate: parseFloat(d["Rate"]),
       population: parseInt(d["Population"]),
       suicide: parseFloat(d["Suicide Rate"]),
       depressive: parseFloat(d["Depressive Disorder Rates"]),
       all: parseInt(d[" All Ages "]),
+      gender: d["Gender"],
     };
   };
 
@@ -23,6 +23,7 @@ function vietnam() {
       if (error) {
         console.log(error);
       } else {
+        console.log(data);
         // Define depressive rate scale
         let depScale = d3
           .scaleLinear()
@@ -56,6 +57,7 @@ function vietnam() {
           .attr("height", height)
           .attr("width", width);
 
+        // Add the scatter plot
         svg1
           .selectAll("circle")
           .data(data)
@@ -69,7 +71,22 @@ function vietnam() {
           })
           .attr("r", 5)
           .attr("fill", "black")
-          .attr("class", "correlation");
+          .attr("class", "correlation")
+          .on("mouseover", function (d) {
+            d3.select("#tooltip")
+              .append("p", d.year)
+              .attr("id", "area")
+              .text("Year: " + d.year + " Suicide rate: " + d.suicide);
+
+            //Show the tooltip
+            d3.select("#tooltip").classed("hidden", false);
+          })
+          .on("mouseout", function () {
+            //Hide the tooltip
+            d3.select("#tooltip").classed("hidden", true);
+            d3.selectAll("p").remove();
+            d3.select(this);
+          });
 
         // Add x-axis
         let depAxis = d3.axisBottom(depScale).ticks(6);
@@ -149,24 +166,29 @@ function vietnam() {
           })
           .attr("r", 5)
           .attr("fill", "black")
-          .attr("class", "suffering");
-        svg2
-          .selectAll("text")
-          .data(data)
-          .enter()
-          .append("text")
-          .text(function (d) {
-            return d.year;
+          .attr("class", "suffering")
+          .on("mouseover", function (d) {
+            let xPosition = parseFloat(d3.select(this).attr("cx"));
+            let yPosition = parseFloat(d3.select(this).attr("cy"));
+            d3.select("#tooltip")
+              .append("p", d.all)
+              .attr("id", "area")
+              .text(
+                "Population: " +
+                  d3.format(",")(d.population) +
+                  " Number of people suffering: " +
+                  d3.format(",")(d.all)
+              );
+
+            //Show the tooltip
+            d3.select("#tooltip").classed("hidden", false);
           })
-          .attr("x", function (d) {
-            return allScale(d.all);
-          })
-          .attr("y", function (d) {
-            return popScale(d.population);
-          })
-          .attr("r", 5)
-          .attr("fill", "black")
-          .attr("class", "suffering");
+          .on("mouseout", function () {
+            //Hide the tooltip
+            d3.select("#tooltip").classed("hidden", true);
+            d3.selectAll("p").remove();
+            d3.select(this);
+          });
 
         // Add x-axis
         let allAxis = d3
@@ -207,6 +229,13 @@ function vietnam() {
           .attr("font-size", 14)
           .attr("transform", "rotate(-90)");
 
+        // Define new data based on gender
+        groupedData = d3
+          .nest()
+          .key((d) => d.gender)
+          .entries(data);
+        console.log(groupedData);
+
         // Define yearly scale
         let yearScale = d3
           .scaleLinear()
@@ -224,12 +253,18 @@ function vietnam() {
         let maleScale = d3
           .scaleLinear()
           .domain([
-            d3.min(data, function (d) {
-              return d.male;
-            }),
-            d3.max(data, function (d) {
-              return d.male;
-            }),
+            d3.min(
+              groupedData[0].values.map((item) => item.rate),
+              function (d) {
+                return d.rate;
+              }
+            ),
+            d3.max(
+              groupedData[0].values.map((item) => item.rate),
+              function (d) {
+                return d.rate;
+              }
+            ),
           ])
           .range([height - padding, padding]);
 
@@ -237,33 +272,30 @@ function vietnam() {
         let femaleScale = d3
           .scaleLinear()
           .domain([
-            d3.min(data, function (d) {
-              return d.female;
-            }),
-            d3.max(data, function (d) {
-              return d.female;
-            }),
+            d3.min(
+              groupedData[1].values.map((item) => item.rate),
+              function (d) {
+                return d.rate;
+              }
+            ),
+            d3.max(
+              groupedData[1].values.map((item) => item.rate),
+              function (d) {
+                return d.rate;
+              }
+            ),
           ])
           .range([height - padding, padding]);
 
-        // Define lines function
-        let maleLine = d3
+        // Define line function
+        let line = d3
           .line()
           .x(function (d) {
-            return yearScale(+d.year);
+            return yearScale(+d.map((item) => item.year));
           })
           .y(function (d) {
-            return maleScale(+d.male);
-          });
-
-        // Define lines function
-        let femaleLine = d3
-          .line()
-          .x(function (d) {
-            return yearScale(+d.year);
-          })
-          .y(function (d) {
-            return femaleScale(+d.female);
+            if (d.rate < 3) return maleScale(+d.rate);
+            return femaleScale(+d.rate);
           });
 
         // Add new sexes canvas
@@ -273,23 +305,101 @@ function vietnam() {
           .attr("height", height)
           .attr("width", width);
 
-        let malePath = svg3
-          .datum(data)
+        // Draw charts
+        let maleChart = svg3
+          .datum(groupedData[0].values)
           .append("path")
-          .attr("d", maleLine)
+          .attr("d", line)
           .attr("stroke", "#0013de")
           .style("stroke-width", 4)
           .style("fill", "none")
           .attr("class", "sexes-line");
 
-        let femalePath = svg3
-          .datum(data)
+        let femaleChart = svg3
+          .datum(groupedData[1])
           .append("path")
-          .attr("d", femaleLine)
-          .attr("stroke", "#ff00a8")
+          .attr("d", line)
+          .attr("stroke", "#0013de")
           .style("stroke-width", 4)
           .style("fill", "none")
           .attr("class", "sexes-line");
+
+        // Get nearest x-position
+        let bisect = d3.bisector(function (d) {
+          return d.year;
+        }).left;
+
+        function mouseout() {
+          svg3.selectAll("circle").data(data).attr("stroke", "none");
+          svg3.selectAll(".focus").data(data).attr("fill", "none");
+        }
+        // Define mouse moving function
+        function mousemove() {
+          // get the coordinate we need
+          let x0 = yearScale.invert(d3.mouse(this)[0]);
+          let i = bisect(data, x0, 1);
+          selectedData = data[i];
+          // Update focus circle
+          svg3
+            .selectAll("circle")
+            .data(selectedData)
+            .attr("cx", function (d) {
+              return yearScale(d.year);
+            })
+            .attr("cy", function (d) {
+              return maleScale(d.male);
+            })
+            .attr("r", 6)
+            .attr("fill", "none")
+            .attr("stroke", "black")
+            .attr("stroke-width", 4);
+
+          // Update focus text
+          svg3
+            .selectAll(".focus")
+            .data(selectedData)
+            .text(function (d) {
+              return (
+                "Date: " +
+                d.date.toLocaleDateString("en-US") +
+                " Case(s): " +
+                d.cases
+              );
+            })
+            .attr("x", function (d) {
+              return xScale(d.date);
+            })
+            .attr("y", function (d) {
+              if (d.country == "France") return yScale(d.cases) + 20;
+              return yScale(d.cases) - 20;
+            })
+            .attr("fill", "black");
+        }
+        // Append rectangle to get user mouse position
+        svg3
+          .append("rect")
+          .style("fill", "none")
+          .style("pointer-events", "all")
+          .attr("width", width)
+          .attr("height", height - padding)
+          .on("mousemove", mousemove)
+          .on("mouseout", mouseout);
+
+        // Pre-append focus circle and text
+        svg3
+          .append("g")
+          .selectAll("circle")
+          .data(data)
+          .enter()
+          .append("circle");
+        svg3
+          .append("g")
+          .selectAll(".focus")
+          .data(data)
+          .enter()
+          .append("text")
+          .attr("class", "focus")
+          .attr("text-anchor", "middle");
 
         svg3
           .append("text")
