@@ -385,3 +385,14 @@ button {
 .back-main-page.hidden {
     transform: translateX(100%);
 }
+
+.btn_nav {
+    text-align: center;
+    font-weight: 700;
+    font-size: 14px;
+    color: #D4ADFC;
+    border-radius: 10px;
+    background-color: #0d134f;
+    margin-bottom: 20px;
+    padding: 5px 10px;
+}
