@@ -23,10 +23,14 @@ d3.csv("../assets/love/love.csv").then((data) => {
     }, 0)
   );
 
+  console.log(labelCounts);
+
   const total = labelCounts.reduce((sum, count) => sum + count, 0);
   const percentages = labelCounts.map(
     (count) => ((count / total) * 100).toFixed(2) + "%"
   );
+
+  console.log(total);
 
   const newData = label
     .map((label, i) => {
@@ -37,6 +41,8 @@ d3.csv("../assets/love/love.csv").then((data) => {
       };
     })
     .sort((a, b) => b.value - a.value); // sort data in descending order
+
+  console.log(newData);
 
   const margin = { top: 20, right: 20, bottom: 20, left: 100 };
   const width = 500 - margin.left - margin.right;
@@ -79,8 +85,9 @@ d3.csv("../assets/love/love.csv").then((data) => {
     .style("opacity", 0)
     .style("background-color", "rgba(0, 0, 0, 0.7)")
     .style("color", "white")
-    .style("padding", "8px")
+    .style("padding", "10px") // Increase the padding to make the tooltip box bigger
     .style("border-radius", "4px")
+    .style("font-size", "20px")
     .style("position", "absolute")
     .style("pointer-events", "none");
 
@@ -88,11 +95,13 @@ d3.csv("../assets/love/love.csv").then((data) => {
   svg
     .append("text")
     .attr("class", "total-text")
-    .attr("x", width + margin.left + 10)
-    .attr("y", height - 10)
+    .attr("x", width + margin.left - 100)
+    .attr("y", height + 10)
     .style("text-anchor", "end")
-    .style("font-size", "12px")
-    .text(`Total: ${total} (${100}%)`);
+    .style("font-size", "18px")
+    .style("font-weight", "bold")
+    .text(`Total: ${total} (${100}%)`)
+    .style("color", "#13388e");
 
   svg
     .selectAll(".bar")
@@ -100,55 +109,65 @@ d3.csv("../assets/love/love.csv").then((data) => {
     .enter()
     .append("rect")
     .attr("class", "bar")
-    .attr("x", (d) => (width + 5 - xScale(d.value)) / 2) // center the bars
+    .attr("x", (d) => (width - xScale(d.value)) / 2) // center the bars
     .attr("y", (d) => yScale(d.label))
     .attr("width", (d) => xScale(d.value))
     .attr("height", yScale.bandwidth())
     .attr("fill", "#ade3fb")
+    .style("cursor", "pointer") // add cursor style for interaction
     .on("mouseover", function (d, event) {
-      d3.select(this).attr("fill", "#005095");
-      tooltip.transition().duration(200).style("opacity", 0.9);
-      tooltip
-        .html(`${d.label}: ${d.value}`)
-        .style("left", event.pageX + 10 + "px")
-        .style("top", event.pageY - 28 + "px");
+      d3.select(this)
+        .attr("fill", "#ade3fb")
+        .selectAll(".bar-text")
+        .style("fill", "white"); // change text color to white
+      tooltip.transition().duration(500).style("opacity", 0);
     })
     .on("mouseout", function () {
       d3.select(this).attr("fill", "#ade3fb");
       tooltip.transition().duration(500).style("opacity", 0);
     })
-    .on("click", function (d) {
-      // Get the current fill color of the clicked bar
-      const currentFill = d3.select(this).attr("fill");
-      // Check if the current fill color is the original color
-      const isOriginalColor = currentFill === "#ade3fb";
-      // Change the color of all bars to the original color
-      svg.selectAll(".bar").attr("fill", "#ade3fb");
-      // Change the color of the clicked bar to a darker shade if it was the original color
-      if (isOriginalColor) {
-        d3.select(this).attr("fill", "#003b5c");
-      }
-    })
-    .each(function (d) {
-      // Add label counts to each bar
-      svg
-        .append("text")
-        .attr("class", "bar-label")
-        .attr("x", (width + 5 - xScale(d.value)) / 2 + xScale(d.value) + 5)
-        .attr("y", yScale(d.label) + yScale.bandwidth() / 2)
-        .attr("dy", "0.35em")
-        .style("font-size", "12px")
-        .style("fill", "white")
-        .style("text-anchor", "start")
-        .text(d.value);
-    });
+    .on("click", function (event, d) {
+      const clickedBar = d3.select(this);
+      const isClicked = !d.clicked;
 
-  // Update total count and percentage text when data changes
-  function updateTotalText() {
-    svg
-      .select(".total-text")
-      .text(`Total: ${total} (${100}%)`)
-      .transition()
-      .duration(500);
-  }
+      svg
+        .selectAll(".bar")
+        .style("opacity", function (data) {
+          if (data === d) {
+            data.clicked = isClicked;
+            return isClicked ? 1 : 0.2;
+          } else {
+            data.clicked = false;
+            return 0.2;
+          }
+        })
+        .attr("fill", (data) => (data.clicked ? "#94d9f7" : "#ade3fb"));
+
+      if (isClicked) {
+        const percentage = ((d.value / total) * 100).toFixed(2);
+        tooltip.transition().duration(200).style("opacity", 0.9);
+        tooltip
+          .html(`Value: ${d.value} </br> (${percentage}%)`)
+          .style("left", `${event.pageX + 10}px`)
+          .style("top", `${event.pageY - 28}px`);
+      } else {
+        tooltip.transition().duration(200).style("opacity", 0);
+      }
+
+      d3.select("#info-box").text(info);
+    });
+  svg
+    .selectAll(".bar-text") // Add text elements for values
+    .data(newData)
+    .enter()
+    .append("text")
+    .attr("class", "bar-text")
+    .attr("x", (d) => (width - xScale(d.value)) / 2 + xScale(d.value) / 2) //
+    .attr("y", (d) => yScale(d.label) + yScale.bandwidth() / 2 + 5)
+    .style("font-size", "16px")
+    .style("text-anchor", "middle")
+    .style("dominant-baseline", "middle") // Center-align the text vertically
+    .style("fill", "#00316E") // Set the text color to white
+    .style("font-weight", "bold")
+    .text((d) => d.value);
 });
