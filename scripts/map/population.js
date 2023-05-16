@@ -44,7 +44,8 @@ function population() {
         const bounds = [[x0, y0], [x1, y1]];
 
         // Compute the center of the bounding box
-        const center = [    (bounds[0][0] + bounds[1][0]) / 2,
+        const center = [
+            (bounds[0][0] + bounds[1][0]) / 2,
             (bounds[0][1] + bounds[1][1]) / 2
         ];
 
@@ -53,13 +54,8 @@ function population() {
         const dy = bounds[1][1] - bounds[0][1];
         const zoom = Math.min(12, 0.9 / Math.max(dx / width, dy / height));
 
-        // Apply the zoom and pan to the map
-        svg.transition().duration(750)
-            .call(zoomFunction.transform, d3.zoomIdentity
-                .translate(width / 2, height / 2)
-                .scale(zoom)
-                .translate(-projection(center)[0], -projection(center)[1])
-            );
+        // Return the center and zoom level, but don't apply the zoom and pan to the map
+        return { center, zoom };
     }
 
     const zoomFunction = d3.zoom()
@@ -73,7 +69,21 @@ function population() {
 
     svg.call(zoomFunction);
 
-    zoomToBoundingBox([[10, 20], [30, 40]]);
+    d3.select("body")
+        .on("click", (event) => {
+            const clickedElement = event.target;
+
+            // Exclude clicks on the select element with an id of "years-menu"
+            if (clickedElement.id !== "years-menu") {
+                const { center, zoom } = zoomToBoundingBox([[10, 20], [30, 40]]);
+                svg.transition().duration(750)
+                    .call(zoomFunction.transform, d3.zoomIdentity
+                        .translate(width / 2, height / 2)
+                        .scale(zoom)
+                        .translate(-projection(center)[0], -projection(center)[1])
+                    );
+            }
+        });
 
     const menu = d3.select("#projection-menu")
         .on("change", change)
