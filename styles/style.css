@@ -84,7 +84,7 @@
 .world {
     position: absolute;
     top: 120px;
-    right: 39px;
+    right: 20px;
     border-radius: 70px;
 }
 
@@ -101,8 +101,8 @@
 #button-1 {
     left: -1%;
     right: 94%;
-    top: 142%;
-    bottom: -100%;
+    top: 130%;
+    bottom: -88%;
     transition: right 0.3s ease-in-out;
 }
 
@@ -144,8 +144,8 @@
 #button-2 {
     left: -1%;
     right: 94%;
-    top: 222%;
-    bottom: -180%;
+    top: 202%;
+    bottom: -160%;
     transition: right 0.3s ease-in-out;
 }
 
@@ -187,8 +187,8 @@
 #button-3 {
     left: -1%;
     right: 94%;
-    top: 302%;
-    bottom: -260%;
+    top: 274%;
+    bottom: -232%;
     transition: right 0.3s ease-in-out;
 }
 
@@ -230,8 +230,8 @@
 #button-4 {
     left: -1%;
     right: 94%;
-    top: 382%;
-    bottom: -340%;
+    top: 346%;
+    bottom: -304%;
     transition: right 0.3s ease-in-out;
 }
 
@@ -320,67 +320,6 @@
     line-height: 1.4;
 }
 
-/*.button-container {*/
-/*    display: flex;*/
-/*    justify-content: center;*/
-/*    align-items: center;*/
-/*    height: 100vh;*/
-/*}*/
-
-/*.button-page {*/
-/*    background-color: #c2fbd7;*/
-/*    border-radius: 100px;*/
-/*    box-shadow: rgba(44, 187, 99, .2) 0 -25px 18px -14px inset, rgba(44, 187, 99, .15) 0 1px 2px, rgba(44, 187, 99, .15) 0 2px 4px, rgba(44, 187, 99, .15) 0 4px 8px, rgba(44, 187, 99, .15) 0 8px 16px, rgba(44, 187, 99, .15) 0 16px 32px;*/
-/*    color: green;*/
-/*    cursor: pointer;*/
-/*    display: inline-block;*/
-/*    font-family: CerebriSans-Regular, -apple-system, system-ui, Roboto, sans-serif;*/
-/*    padding: 7px 20px;*/
-/*    text-align: center;*/
-/*    text-decoration: none;*/
-/*    transition: all 250ms;*/
-/*    border: 0;*/
-/*    font-size: 16px;*/
-/*    user-select: none;*/
-/*    -webkit-user-select: none;*/
-/*    touch-action: manipulation;*/
-/*    margin: 0 10px;*/
-/*}*/
-
-/*.button-page:hover {*/
-/*    box-shadow: rgba(44,187,99,.35) 0 -25px 18px -14px inset,rgba(44,187,99,.25) 0 1px 2px,rgba(44,187,99,.25) 0 2px 4px,rgba(44,187,99,.25) 0 4px 8px,rgba(44,187,99,.25) 0 8px 16px,rgba(44,187,99,.25) 0 16px 32px;*/
-/*    transform: scale(1.05) rotate(-1deg);*/
-/*}*/
-
-/*.button-back {*/
-/*    background-color: #13aa52;*/
-/*    border: 1px solid #13aa52;*/
-/*    border-radius: 4px;*/
-/*    box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;*/
-/*    box-sizing: border-box;*/
-/*    color: #fff;*/
-/*    cursor: pointer;*/
-/*    font-family: "Akzidenz Grotesk BQ Medium", -apple-system, BlinkMacSystemFont, sans-serif;*/
-/*    font-size: 16px;*/
-/*    font-weight: 400;*/
-/*    outline: none;*/
-/*    outline: 0;*/
-/*    padding: 10px 25px;*/
-/*    text-align: center;*/
-/*    transform: translateY(0);*/
-/*    transition: transform 150ms, box-shadow 150ms;*/
-/*    user-select: none;*/
-/*    -webkit-user-select: none;*/
-/*    touch-action: manipulation;*/
-/*    margin: 20px;*/
-/*    position: absolute;*/
-/*}*/
-
-/*.button-back:hover {*/
-/*    box-shadow: rgba(0, 0, 0, .15) 0 3px 9px 0;*/
-/*    transform: translateY(-2px);*/
-/*}*/
-
 @media (min-width: 768px) {
     .button-back {
         padding: 10px 30px;
@@ -405,14 +344,44 @@
 }
 
 #page-change-btn {
-    position: fixed;
-    /*bottom: 20px;*/
-    left: 65px;
-    /*z-index: 999;*/
-    background-color: #007bff;
-    color: #fff;
+    position: absolute;
+    bottom: 41px;
+    right: 38px;
+    z-index: 1;
+    background-color: #19376D;
+    color: #D4ADFC;
     border: none;
-    padding: 10px 20px;
+    padding: 7px 7px;
     border-radius: 5px;
     cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+#page-change-btn:hover {
+    transform: translateX(10px);
+    background-color: #D4ADFC;
+    color: #19376D;
+}
+
+#years-menu {
+    width: 6%;
+    margin-left: 90px;
+    font-size: 16px;
+    font-weight: 700;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+    color: #D4ADFC;
+    background-color: #19376D;
+    text-align: center;
+    padding: 7px;
+}
+
+ /*Style the select dropdown options */
+#years-menu option {
+    background-color: #19376D;
+    font-size: 16px;
+    font-weight: 500;
+    color: #D4ADFC;
 }
