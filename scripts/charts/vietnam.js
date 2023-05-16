@@ -168,8 +168,6 @@ function vietnam() {
           .attr("fill", "black")
           .attr("class", "suffering")
           .on("mouseover", function (d) {
-            let xPosition = parseFloat(d3.select(this).attr("cx"));
-            let yPosition = parseFloat(d3.select(this).attr("cy"));
             d3.select("#tooltip")
               .append("p", d.all)
               .attr("id", "area")
@@ -230,7 +228,7 @@ function vietnam() {
           .attr("transform", "rotate(-90)");
 
         // Define new data based on gender
-        groupedData = d3
+        let groupedData = d3
           .nest()
           .key((d) => d.gender)
           .entries(data);
@@ -253,18 +251,12 @@ function vietnam() {
         let maleScale = d3
           .scaleLinear()
           .domain([
-            d3.min(
-              groupedData[0].values.map((item) => item.rate),
-              function (d) {
-                return d.rate;
-              }
-            ),
-            d3.max(
-              groupedData[0].values.map((item) => item.rate),
-              function (d) {
-                return d.rate;
-              }
-            ),
+            d3.min(groupedData[0].values, function (d) {
+              return d.rate;
+            }),
+            d3.max(groupedData[0].values, function (d) {
+              return d.rate;
+            }),
           ])
           .range([height - padding, padding]);
 
@@ -272,18 +264,12 @@ function vietnam() {
         let femaleScale = d3
           .scaleLinear()
           .domain([
-            d3.min(
-              groupedData[1].values.map((item) => item.rate),
-              function (d) {
-                return d.rate;
-              }
-            ),
-            d3.max(
-              groupedData[1].values.map((item) => item.rate),
-              function (d) {
-                return d.rate;
-              }
-            ),
+            d3.min(groupedData[1].values, function (d) {
+              return d.rate;
+            }),
+            d3.max(groupedData[1].values, function (d) {
+              return d.rate;
+            }),
           ])
           .range([height - padding, padding]);
 
@@ -291,7 +277,7 @@ function vietnam() {
         let line = d3
           .line()
           .x(function (d) {
-            return yearScale(+d.map((item) => item.year));
+            return yearScale(+d.year);
           })
           .y(function (d) {
             if (d.rate < 3) return maleScale(+d.rate);
@@ -316,10 +302,10 @@ function vietnam() {
           .attr("class", "sexes-line");
 
         let femaleChart = svg3
-          .datum(groupedData[1])
+          .datum(groupedData[1].values)
           .append("path")
           .attr("d", line)
-          .attr("stroke", "#0013de")
+          .attr("stroke", "#ff00a8")
           .style("stroke-width", 4)
           .style("fill", "none")
           .attr("class", "sexes-line");
@@ -329,52 +315,6 @@ function vietnam() {
           return d.year;
         }).left;
 
-        function mouseout() {
-          svg3.selectAll("circle").data(data).attr("stroke", "none");
-          svg3.selectAll(".focus").data(data).attr("fill", "none");
-        }
-        // Define mouse moving function
-        function mousemove() {
-          // get the coordinate we need
-          let x0 = yearScale.invert(d3.mouse(this)[0]);
-          let i = bisect(data, x0, 1);
-          selectedData = data[i];
-          // Update focus circle
-          svg3
-            .selectAll("circle")
-            .data(selectedData)
-            .attr("cx", function (d) {
-              return yearScale(d.year);
-            })
-            .attr("cy", function (d) {
-              return maleScale(d.male);
-            })
-            .attr("r", 6)
-            .attr("fill", "none")
-            .attr("stroke", "black")
-            .attr("stroke-width", 4);
-
-          // Update focus text
-          svg3
-            .selectAll(".focus")
-            .data(selectedData)
-            .text(function (d) {
-              return (
-                "Date: " +
-                d.date.toLocaleDateString("en-US") +
-                " Case(s): " +
-                d.cases
-              );
-            })
-            .attr("x", function (d) {
-              return xScale(d.date);
-            })
-            .attr("y", function (d) {
-              if (d.country == "France") return yScale(d.cases) + 20;
-              return yScale(d.cases) - 20;
-            })
-            .attr("fill", "black");
-        }
         // Append rectangle to get user mouse position
         svg3
           .append("rect")
@@ -384,22 +324,67 @@ function vietnam() {
           .attr("height", height - padding)
           .on("mousemove", mousemove)
           .on("mouseout", mouseout);
-
         // Pre-append focus circle and text
         svg3
           .append("g")
-          .selectAll("circle")
+          .selectAll(".foucus-circle")
           .data(data)
           .enter()
-          .append("circle");
+          .append("circle")
+          .attr("class", "focus-circle");
         svg3
           .append("g")
-          .selectAll(".focus")
+          .selectAll(".focus-text")
           .data(data)
           .enter()
           .append("text")
-          .attr("class", "focus")
+          .attr("class", "focus-text")
           .attr("text-anchor", "middle");
+
+        function mouseout() {
+          svg3.selectAll(".focus-circle").data(data).attr("stroke", "none");
+          svg3.selectAll(".focus-text").data(data).attr("fill", "none");
+        }
+
+        // Define mouse moving function
+        function mousemove() {
+          // get the coordinate we need
+          let x0 = yearScale.invert(d3.mouse(this)[0]);
+          let i = bisect(groupedData[0].values, x0, 1);
+          selectedData = groupedData.map((item) => item.values[i]);
+
+          // Update focus circle
+          svg3
+            .selectAll(".focus-circle")
+            .data(selectedData)
+            .attr("cx", function (d) {
+              return yearScale(d.year);
+            })
+            .attr("cy", function (d) {
+              if (d.rate < 3) return maleScale(d.rate);
+              return femaleScale(d.rate);
+            })
+            .attr("r", 6)
+            .attr("fill", "none")
+            .attr("stroke", "black")
+            .attr("stroke-width", 4);
+
+          // Update focus text
+          svg3
+            .selectAll(".focus-text")
+            .data(selectedData)
+            .text(function (d) {
+              return "Rate: " + d.rate;
+            })
+            .attr("x", function (d) {
+              return yearScale(d.year);
+            })
+            .attr("y", function (d) {
+              if (d.gender == "Male") return maleScale(d.rate) + 30;
+              return femaleScale(d.rate) - 30;
+            })
+            .attr("fill", "black");
+        }
 
         svg3
           .append("text")
@@ -484,96 +469,133 @@ function vietnam() {
               .duration(5500)
               .attrTween("stroke-dasharray", tweenDash);
           }
-          malePath.call(transition);
-          femalePath.call(transition);
+          maleChart.call(transition);
+          femaleChart.call(transition);
           setInterval(() => {
             if (currentData.length < data.length) {
               currentData.push(data[currentData.length]);
-              // Update the scales
-              depScale.domain([
-                d3.min(currentData, function (d) {
-                  return d.depressive;
-                }),
-                d3.max(currentData, function (d) {
-                  return d.depressive;
-                }),
-              ]);
-
-              suiScale.domain([
-                d3.min(currentData, function (d) {
-                  return d.suicide;
-                }),
-                d3.max(currentData, function (d) {
-                  return d.suicide;
-                }),
-              ]);
-
-              allScale.domain([
-                d3.min(currentData, function (d) {
-                  return d.all;
-                }),
-                d3.max(currentData, function (d) {
-                  return d.all;
-                }),
-              ]);
-
-              popScale.domain([
-                d3.min(currentData, function (d) {
-                  return d.population;
-                }),
-                d3.max(currentData, function (d) {
-                  return d.population;
-                }),
-              ]);
-
-              // Add new elements 1
-              var update1 = svg1.selectAll(".correlation").data(currentData);
-              update1
-                .enter()
-                .append("circle")
-                .attr("cx", 0)
-                .attr("cy", height)
-                .merge(update1)
-                .transition()
-                .attr("cx", function (d) {
-                  return depScale(d.depressive);
-                })
-                .attr("cy", function (d) {
-                  return suiScale(d.suicide);
-                })
-                .attr("r", 5)
-                .attr("fill", "black")
-                .attr("class", "correlation");
-              update1.exit().remove();
-              svg1.select(".xAxis").call(d3.axisBottom(depScale));
-              svg1.select(".yAxis").call(d3.axisLeft(suiScale));
-
-              // Add new elements 2
-              var update2 = svg2.selectAll(".suffering").data(currentData);
-              update2
-                .enter()
-                .append("circle")
-                .attr("cx", 0)
-                .attr("cy", 0)
-                .merge(update2)
-                .transition()
-                .attr("cx", function (d) {
-                  return allScale(d.all);
-                })
-                .attr("cy", function (d) {
-                  return popScale(d.population);
-                })
-                .attr("r", 5)
-                .attr("fill", "black")
-                .attr("class", "suffering");
-              update2.exit().remove();
-              svg2
-                .select(".xAxis")
-                .call(d3.axisBottom(allScale).tickFormat(d3.format(".2s")));
-              svg2
-                .select(".yAxis")
-                .call(d3.axisLeft(popScale).tickFormat(d3.format(".3s")));
             }
+            // Update the scales
+            depScale.domain([
+              d3.min(currentData, function (d) {
+                return d.depressive;
+              }),
+              d3.max(currentData, function (d) {
+                return d.depressive;
+              }),
+            ]);
+
+            suiScale.domain([
+              d3.min(currentData, function (d) {
+                return d.suicide;
+              }),
+              d3.max(currentData, function (d) {
+                return d.suicide;
+              }),
+            ]);
+
+            allScale.domain([
+              d3.min(currentData, function (d) {
+                return d.all;
+              }),
+              d3.max(currentData, function (d) {
+                return d.all;
+              }),
+            ]);
+
+            popScale.domain([
+              d3.min(currentData, function (d) {
+                return d.population;
+              }),
+              d3.max(currentData, function (d) {
+                return d.population;
+              }),
+            ]);
+
+            // Add new elements 1
+            var update1 = svg1.selectAll(".correlation").data(currentData);
+            update1.exit().remove();
+            update1
+              .enter()
+              .append("circle")
+              .attr("cx", 0)
+              .attr("cy", height)
+              .on("mouseover", function (d) {
+                d3.select("#tooltip")
+                  .append("p", d.year)
+                  .attr("id", "area")
+                  .text("Year: " + d.year + " Suicide rate: " + d.suicide);
+
+                //Show the tooltip
+                d3.select("#tooltip").classed("hidden", false);
+              })
+              .on("mouseout", function () {
+                //Hide the tooltip
+                d3.select("#tooltip").classed("hidden", true);
+                d3.selectAll("p").remove();
+                d3.select(this);
+              })
+              .merge(update1)
+              .transition()
+              .attr("cx", function (d) {
+                return depScale(d.depressive);
+              })
+              .attr("cy", function (d) {
+                return suiScale(d.suicide);
+              })
+              .attr("r", 5)
+              .attr("fill", "black")
+              .attr("class", "correlation");
+
+            svg1.select(".xAxis").call(d3.axisBottom(depScale));
+            svg1.select(".yAxis").call(d3.axisLeft(suiScale));
+
+            // Add new elements 2
+            var update2 = svg2.selectAll(".suffering").data(currentData);
+            update2
+              .enter()
+              .append("circle")
+              .attr("cx", 0)
+              .attr("cy", 0)
+              .on("mouseover", function (d) {
+                d3.select("#tooltip")
+                  .append("p", d.all)
+                  .attr("id", "area")
+                  .text(
+                    "Population: " +
+                      d3.format(",")(d.population) +
+                      " Number of people suffering: " +
+                      d3.format(",")(d.all)
+                  );
+
+                //Show the tooltip
+                d3.select("#tooltip").classed("hidden", false);
+              })
+              .on("mouseout", function () {
+                //Hide the tooltip
+                d3.select("#tooltip").classed("hidden", true);
+                d3.selectAll("p").remove();
+                d3.select(this);
+              })
+              .merge(update2)
+              .transition()
+              .attr("cx", function (d) {
+                return allScale(d.all);
+              })
+              .attr("cy", function (d) {
+                return popScale(d.population);
+              })
+              .attr("r", 5)
+              .attr("fill", "black")
+              .attr("class", "suffering");
+
+            update2.exit().remove();
+            svg2
+              .select(".xAxis")
+              .call(d3.axisBottom(allScale).tickFormat(d3.format(".2s")));
+            svg2
+              .select(".yAxis")
+              .call(d3.axisLeft(popScale).tickFormat(d3.format(".3s")));
           }, 150);
         });
       }
