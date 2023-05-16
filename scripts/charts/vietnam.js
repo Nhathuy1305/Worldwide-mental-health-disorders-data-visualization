@@ -7,12 +7,12 @@ function vietnam() {
   let rowConverter = function (d) {
     return {
       year: d["Year"],
-      male: parseFloat(d["Male"]),
-      female: parseFloat(d["Female"]),
+      rate: parseFloat(d["Rate"]),
       population: parseInt(d["Population"]),
       suicide: parseFloat(d["Suicide Rate"]),
       depressive: parseFloat(d["Depressive Disorder Rates"]),
       all: parseInt(d[" All Ages "]),
+      gender: d["Gender"],
     };
   };
 
@@ -23,6 +23,7 @@ function vietnam() {
       if (error) {
         console.log(error);
       } else {
+        console.log(data);
         // Define depressive rate scale
         let depScale = d3
           .scaleLinear()
@@ -56,6 +57,7 @@ function vietnam() {
           .attr("height", height)
           .attr("width", width);
 
+        // Add the scatter plot
         svg1
           .selectAll("circle")
           .data(data)
@@ -69,7 +71,22 @@ function vietnam() {
           })
           .attr("r", 5)
           .attr("fill", "black")
-          .attr("class", "correlation");
+          .attr("class", "correlation")
+          .on("mouseover", function (d) {
+            d3.select("#tooltip")
+              .append("p", d.year)
+              .attr("id", "area")
+              .text("Year: " + d.year + " Suicide rate: " + d.suicide);
+
+            //Show the tooltip
+            d3.select("#tooltip").classed("hidden", false);
+          })
+          .on("mouseout", function () {
+            //Hide the tooltip
+            d3.select("#tooltip").classed("hidden", true);
+            d3.selectAll("p").remove();
+            d3.select(this);
+          });
 
         // Add x-axis
         let depAxis = d3.axisBottom(depScale).ticks(6);
@@ -149,24 +166,27 @@ function vietnam() {
           })
           .attr("r", 5)
           .attr("fill", "black")
-          .attr("class", "suffering");
-        svg2
-          .selectAll("text")
-          .data(data)
-          .enter()
-          .append("text")
-          .text(function (d) {
-            return d.year;
+          .attr("class", "suffering")
+          .on("mouseover", function (d) {
+            d3.select("#tooltip")
+              .append("p", d.all)
+              .attr("id", "area")
+              .text(
+                "Population: " +
+                  d3.format(",")(d.population) +
+                  " Number of people suffering: " +
+                  d3.format(",")(d.all)
+              );
+
+            //Show the tooltip
+            d3.select("#tooltip").classed("hidden", false);
           })
-          .attr("x", function (d) {
-            return allScale(d.all);
-          })
-          .attr("y", function (d) {
-            return popScale(d.population);
-          })
-          .attr("r", 5)
-          .attr("fill", "black")
-          .attr("class", "suffering");
+          .on("mouseout", function () {
+            //Hide the tooltip
+            d3.select("#tooltip").classed("hidden", true);
+            d3.selectAll("p").remove();
+            d3.select(this);
+          });
 
         // Add x-axis
         let allAxis = d3
@@ -207,6 +227,13 @@ function vietnam() {
           .attr("font-size", 14)
           .attr("transform", "rotate(-90)");
 
+        // Define new data based on gender
+        let groupedData = d3
+          .nest()
+          .key((d) => d.gender)
+          .entries(data);
+        console.log(groupedData);
+
         // Define yearly scale
         let yearScale = d3
           .scaleLinear()
@@ -224,11 +251,11 @@ function vietnam() {
         let maleScale = d3
           .scaleLinear()
           .domain([
-            d3.min(data, function (d) {
-              return d.male;
+            d3.min(groupedData[0].values, function (d) {
+              return d.rate;
             }),
-            d3.max(data, function (d) {
-              return d.male;
+            d3.max(groupedData[0].values, function (d) {
+              return d.rate;
             }),
           ])
           .range([height - padding, padding]);
@@ -237,33 +264,24 @@ function vietnam() {
         let femaleScale = d3
           .scaleLinear()
           .domain([
-            d3.min(data, function (d) {
-              return d.female;
+            d3.min(groupedData[1].values, function (d) {
+              return d.rate;
             }),
-            d3.max(data, function (d) {
-              return d.female;
+            d3.max(groupedData[1].values, function (d) {
+              return d.rate;
             }),
           ])
           .range([height - padding, padding]);
 
-        // Define lines function
-        let maleLine = d3
+        // Define line function
+        let line = d3
           .line()
           .x(function (d) {
             return yearScale(+d.year);
           })
           .y(function (d) {
-            return maleScale(+d.male);
-          });
-
-        // Define lines function
-        let femaleLine = d3
-          .line()
-          .x(function (d) {
-            return yearScale(+d.year);
-          })
-          .y(function (d) {
-            return femaleScale(+d.female);
+            if (d.rate < 3) return maleScale(+d.rate);
+            return femaleScale(+d.rate);
           });
 
         // Add new sexes canvas
@@ -273,23 +291,100 @@ function vietnam() {
           .attr("height", height)
           .attr("width", width);
 
-        let malePath = svg3
-          .datum(data)
+        // Draw charts
+        let maleChart = svg3
+          .datum(groupedData[0].values)
           .append("path")
-          .attr("d", maleLine)
+          .attr("d", line)
           .attr("stroke", "#0013de")
           .style("stroke-width", 4)
           .style("fill", "none")
           .attr("class", "sexes-line");
 
-        let femalePath = svg3
-          .datum(data)
+        let femaleChart = svg3
+          .datum(groupedData[1].values)
           .append("path")
-          .attr("d", femaleLine)
+          .attr("d", line)
           .attr("stroke", "#ff00a8")
           .style("stroke-width", 4)
           .style("fill", "none")
           .attr("class", "sexes-line");
+
+        // Get nearest x-position
+        let bisect = d3.bisector(function (d) {
+          return d.year;
+        }).left;
+
+        // Append rectangle to get user mouse position
+        svg3
+          .append("rect")
+          .style("fill", "none")
+          .style("pointer-events", "all")
+          .attr("width", width)
+          .attr("height", height - padding)
+          .on("mousemove", mousemove)
+          .on("mouseout", mouseout);
+        // Pre-append focus circle and text
+        svg3
+          .append("g")
+          .selectAll(".foucus-circle")
+          .data(data)
+          .enter()
+          .append("circle")
+          .attr("class", "focus-circle");
+        svg3
+          .append("g")
+          .selectAll(".focus-text")
+          .data(data)
+          .enter()
+          .append("text")
+          .attr("class", "focus-text")
+          .attr("text-anchor", "middle");
+
+        function mouseout() {
+          svg3.selectAll(".focus-circle").data(data).attr("stroke", "none");
+          svg3.selectAll(".focus-text").data(data).attr("fill", "none");
+        }
+
+        // Define mouse moving function
+        function mousemove() {
+          // get the coordinate we need
+          let x0 = yearScale.invert(d3.mouse(this)[0]);
+          let i = bisect(groupedData[0].values, x0, 1);
+          selectedData = groupedData.map((item) => item.values[i]);
+
+          // Update focus circle
+          svg3
+            .selectAll(".focus-circle")
+            .data(selectedData)
+            .attr("cx", function (d) {
+              return yearScale(d.year);
+            })
+            .attr("cy", function (d) {
+              if (d.rate < 3) return maleScale(d.rate);
+              return femaleScale(d.rate);
+            })
+            .attr("r", 6)
+            .attr("fill", "none")
+            .attr("stroke", "black")
+            .attr("stroke-width", 4);
+
+          // Update focus text
+          svg3
+            .selectAll(".focus-text")
+            .data(selectedData)
+            .text(function (d) {
+              return "Rate: " + d.rate;
+            })
+            .attr("x", function (d) {
+              return yearScale(d.year);
+            })
+            .attr("y", function (d) {
+              if (d.gender == "Male") return maleScale(d.rate) + 30;
+              return femaleScale(d.rate) - 30;
+            })
+            .attr("fill", "black");
+        }
 
         svg3
           .append("text")
@@ -374,96 +469,133 @@ function vietnam() {
               .duration(5500)
               .attrTween("stroke-dasharray", tweenDash);
           }
-          malePath.call(transition);
-          femalePath.call(transition);
+          maleChart.call(transition);
+          femaleChart.call(transition);
           setInterval(() => {
             if (currentData.length < data.length) {
               currentData.push(data[currentData.length]);
-              // Update the scales
-              depScale.domain([
-                d3.min(currentData, function (d) {
-                  return d.depressive;
-                }),
-                d3.max(currentData, function (d) {
-                  return d.depressive;
-                }),
-              ]);
-
-              suiScale.domain([
-                d3.min(currentData, function (d) {
-                  return d.suicide;
-                }),
-                d3.max(currentData, function (d) {
-                  return d.suicide;
-                }),
-              ]);
-
-              allScale.domain([
-                d3.min(currentData, function (d) {
-                  return d.all;
-                }),
-                d3.max(currentData, function (d) {
-                  return d.all;
-                }),
-              ]);
-
-              popScale.domain([
-                d3.min(currentData, function (d) {
-                  return d.population;
-                }),
-                d3.max(currentData, function (d) {
-                  return d.population;
-                }),
-              ]);
-
-              // Add new elements 1
-              var update1 = svg1.selectAll(".correlation").data(currentData);
-              update1
-                .enter()
-                .append("circle")
-                .attr("cx", 0)
-                .attr("cy", height)
-                .merge(update1)
-                .transition()
-                .attr("cx", function (d) {
-                  return depScale(d.depressive);
-                })
-                .attr("cy", function (d) {
-                  return suiScale(d.suicide);
-                })
-                .attr("r", 5)
-                .attr("fill", "black")
-                .attr("class", "correlation");
-              update1.exit().remove();
-              svg1.select(".xAxis").call(d3.axisBottom(depScale));
-              svg1.select(".yAxis").call(d3.axisLeft(suiScale));
-
-              // Add new elements 2
-              var update2 = svg2.selectAll(".suffering").data(currentData);
-              update2
-                .enter()
-                .append("circle")
-                .attr("cx", 0)
-                .attr("cy", 0)
-                .merge(update2)
-                .transition()
-                .attr("cx", function (d) {
-                  return allScale(d.all);
-                })
-                .attr("cy", function (d) {
-                  return popScale(d.population);
-                })
-                .attr("r", 5)
-                .attr("fill", "black")
-                .attr("class", "suffering");
-              update2.exit().remove();
-              svg2
-                .select(".xAxis")
-                .call(d3.axisBottom(allScale).tickFormat(d3.format(".2s")));
-              svg2
-                .select(".yAxis")
-                .call(d3.axisLeft(popScale).tickFormat(d3.format(".3s")));
             }
+            // Update the scales
+            depScale.domain([
+              d3.min(currentData, function (d) {
+                return d.depressive;
+              }),
+              d3.max(currentData, function (d) {
+                return d.depressive;
+              }),
+            ]);
+
+            suiScale.domain([
+              d3.min(currentData, function (d) {
+                return d.suicide;
+              }),
+              d3.max(currentData, function (d) {
+                return d.suicide;
+              }),
+            ]);
+
+            allScale.domain([
+              d3.min(currentData, function (d) {
+                return d.all;
+              }),
+              d3.max(currentData, function (d) {
+                return d.all;
+              }),
+            ]);
+
+            popScale.domain([
+              d3.min(currentData, function (d) {
+                return d.population;
+              }),
+              d3.max(currentData, function (d) {
+                return d.population;
+              }),
+            ]);
+
+            // Add new elements 1
+            var update1 = svg1.selectAll(".correlation").data(currentData);
+            update1.exit().remove();
+            update1
+              .enter()
+              .append("circle")
+              .attr("cx", 0)
+              .attr("cy", height)
+              .on("mouseover", function (d) {
+                d3.select("#tooltip")
+                  .append("p", d.year)
+                  .attr("id", "area")
+                  .text("Year: " + d.year + " Suicide rate: " + d.suicide);
+
+                //Show the tooltip
+                d3.select("#tooltip").classed("hidden", false);
+              })
+              .on("mouseout", function () {
+                //Hide the tooltip
+                d3.select("#tooltip").classed("hidden", true);
+                d3.selectAll("p").remove();
+                d3.select(this);
+              })
+              .merge(update1)
+              .transition()
+              .attr("cx", function (d) {
+                return depScale(d.depressive);
+              })
+              .attr("cy", function (d) {
+                return suiScale(d.suicide);
+              })
+              .attr("r", 5)
+              .attr("fill", "black")
+              .attr("class", "correlation");
+
+            svg1.select(".xAxis").call(d3.axisBottom(depScale));
+            svg1.select(".yAxis").call(d3.axisLeft(suiScale));
+
+            // Add new elements 2
+            var update2 = svg2.selectAll(".suffering").data(currentData);
+            update2
+              .enter()
+              .append("circle")
+              .attr("cx", 0)
+              .attr("cy", 0)
+              .on("mouseover", function (d) {
+                d3.select("#tooltip")
+                  .append("p", d.all)
+                  .attr("id", "area")
+                  .text(
+                    "Population: " +
+                      d3.format(",")(d.population) +
+                      " Number of people suffering: " +
+                      d3.format(",")(d.all)
+                  );
+
+                //Show the tooltip
+                d3.select("#tooltip").classed("hidden", false);
+              })
+              .on("mouseout", function () {
+                //Hide the tooltip
+                d3.select("#tooltip").classed("hidden", true);
+                d3.selectAll("p").remove();
+                d3.select(this);
+              })
+              .merge(update2)
+              .transition()
+              .attr("cx", function (d) {
+                return allScale(d.all);
+              })
+              .attr("cy", function (d) {
+                return popScale(d.population);
+              })
+              .attr("r", 5)
+              .attr("fill", "black")
+              .attr("class", "suffering");
+
+            update2.exit().remove();
+            svg2
+              .select(".xAxis")
+              .call(d3.axisBottom(allScale).tickFormat(d3.format(".2s")));
+            svg2
+              .select(".yAxis")
+              .call(d3.axisLeft(popScale).tickFormat(d3.format(".3s")));
           }, 150);
         });
       }
