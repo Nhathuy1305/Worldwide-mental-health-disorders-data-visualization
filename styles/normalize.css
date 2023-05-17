@@ -386,13 +386,82 @@ button {
     transform: translateX(100%);
 }
 
+.container {
+    transition: transform 0.5s ease-in-out;
+}
+
+.container.hidden {
+    transform: translateX(100%);
+}
+
 .btn_nav {
     text-align: center;
     font-weight: 700;
     font-size: 14px;
     color: #D4ADFC;
     border-radius: 10px;
-    background-color: #0d134f;
+    background-color: #19376D;
     margin-bottom: 20px;
     padding: 5px 10px;
+    cursor: pointer;
+}
+
+.btn_nav:hover {
+    background-color: #D4ADFC;
+    color: #19376D;
+}
+
+#play-btn-1 {
+    position: relative;
+    left: 36%;
+    top: 34rem;
+    transition: all 0.2s ease-in-out;
+}
+
+#play-btn-2 {
+    position: relative;
+    left: 29%;
+    top: 64rem;
+    transition: all 0.2s ease-in-out;
+}
+
+#play-btn-3 {
+    position: relative;
+    left: 22%;
+    top: 96rem;
+    transition: all 0.2s ease-in-out;
+}
+
+#page-back-btn {
+    position: relative;
+    top: 1rem;
+    left: -3%;
+    border: none;
+    padding: 7px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+#page-back-btn:hover {
+    transform: translateX(-10px);
+    background-color: #D4ADFC;
+    color: #19376D;
+}
+
+#page-change-btn-2 {
+    position: relative;
+    top: 1rem;
+    right: -92%;
+    border: none;
+    padding: 7px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+#page-change-btn-2:hover {
+    transform: translateX(10px);
+    background-color: #D4ADFC;
+    color: #19376D;
 }

@@ -10,6 +10,7 @@
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="/scripts/charts/vietnam.js"></script>
     <script src="page.js"></script>
+    <script src="https://kit.fontawesome.com/7b9a1721c6.js" crossorigin="anonymous"></script>
   </head>
   <body>
     <div id="header">
@@ -20,7 +21,8 @@
     <div class="main-page-2 back-main-page">
       <div class="header-title">
         <h2 id="header-title--article-2">VIETNAM OVERVIEW</h2>
-        <div id="tooltip" class="hidden"></div>
+        <div id="tooltip1" class="hidden"></div>
+        <div id="tooltip2" class="hidden"></div>
       </div>
       <button
         class="btn_nav"
@@ -28,23 +30,27 @@
         onclick="changeToNextPage2(true)"
       >
         Next
+        <i class="fa-solid fa-chevron-right"></i>
       </button>
       <button
         class="btn_nav"
         id="page-back-btn"
         onclick="changeToPreviousPage(true)"
       >
-        Return
+        <i class="fa-solid fa-house"></i>
+        Home
       </button>
-      <button class="btn_nav" id="play-btn">Play overtime graph</button>
+      <button class="btn_nav" id="play-btn-1">Play overtime</button>
+      <button class="btn_nav" id="play-btn-2">Play overtime</button>
+      <button class="btn_nav" id="play-btn-3">Play overtime</button>
 
-      <button
-        class="btn_nav"
-        id="reset-btn"
-        onClick="window.location.reload();"
-      >
-        Reset Map
-      </button>
+<!--      <button-->
+<!--        class="btn_nav"-->
+<!--        id="reset-btn"-->
+<!--        onClick="window.location.reload();"-->
+<!--      >-->
+<!--        Reset Map-->
+<!--      </button>-->
 
       <div id="vietnam-area">
         <script>

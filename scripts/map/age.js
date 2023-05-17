@@ -122,7 +122,8 @@ function age() {
             .defer(d3.json, "data/world.geojson")
             .defer(d3.csv, "data/age_range_data.csv", function(d) {
                 if (d.Year === "1990") {
-                    data.set(d.Code, +d.AllAges);
+                    data.set(d.Code, parseFloat(+d.AllAges));
+                    console.log(parseFloat(d))
                 }
             })
             .await(draw);

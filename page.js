@@ -134,3 +134,23 @@ document.addEventListener("DOMContentLoaded", function () {
     pageContainer.classList.remove("hidden");
   }
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+  const backPageBtn = document.getElementById("page-change-btn-3");
+  if (backPageBtn) {
+    backPageBtn.addEventListener("click", function () {
+      const pageContainer = document.querySelector(".container");
+      pageContainer.classList.add("hidden");
+      setTimeout(function () {
+        window.location.href = "index.html";
+      }, 1500); // wait 0.5 seconds before navigating to next page
+    });
+  }
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  const pageContainer = document.querySelector(".container");
+  if (pageContainer) {
+    pageContainer.classList.remove("hidden");
+  }
+});
