@@ -122,9 +122,6 @@ The beauty of data visualization is its capacity to bring seemingly disparate da
 - Library: [D3.js](https://d3js.org)
 
 
-<br />
-
-
 <!-- FEATURES -->
 ## Features <a name="Features"></a>:joystick:
 - Completed: UX/UI,
