@@ -150,8 +150,10 @@ d3.csv("../assets/work/work.csv").then((data) => {
           .html(`Value: ${d.value} </br> (${percentage}%)`)
           .style("left", `${event.pageX + 10}px`)
           .style("top", `${event.pageY - 28}px`);
+        svg.select(".total-text").text(`Total: ${d.value} (${percentage}%)`);
       } else {
         tooltip.transition().duration(200).style("opacity", 0);
+        svg.select(".total-text").text(`Total: ${total} (${100}%)`);
       }
 
       d3.select("#info-box").text(info);
