@@ -420,15 +420,16 @@ button {
 
 #play-btn-2 {
     position: relative;
-    left: 29%;
+    left: 5%;
     top: 64rem;
     transition: all 0.2s ease-in-out;
 }
 
 #play-btn-3 {
     position: relative;
-    left: 22%;
-    top: 96rem;
+    left: 50%;
+    top: 64rem;
+    z-index: 1;
     transition: all 0.2s ease-in-out;
 }
 

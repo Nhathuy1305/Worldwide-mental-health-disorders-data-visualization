@@ -32,7 +32,7 @@ function vietnam() {
                 return d.depressive;
               }),
             ])
-            .range([width - padding, padding]);
+            .range([(width - padding) / 2, padding]);
 
         // Define suicide rate scale
         let suiScale = d3
@@ -59,7 +59,7 @@ function vietnam() {
             .select("#vietnam-area")
             .append("svg")
             .attr("height", height)
-            .attr("width", width);
+            .attr("width", width / 2);
 
         // Add the scatter plot
         svg1
@@ -95,14 +95,17 @@ function vietnam() {
             .append("g")
             .attr("class", "xAxis")
             .attr("transform", "translate(0," + (height - padding) + ")")
+            .style("stroke-width", "2px")
+            .attr("font-weight", "bold")
             .call(depAxis);
         svg1
             .append("text")
             .text("Depression disorder rate")
             .attr("class", "Axis-label")
             .attr("text-anchor", "middle")
-            .attr("x", width / 2)
+            .attr("x", width / 4 + 20)
             .attr("y", height - padding * 0.6)
+            .attr("font-weight", "bold")
             .attr("font-size", 14);
 
         // Add y-axis
@@ -111,6 +114,8 @@ function vietnam() {
             .append("g")
             .attr("class", "yAxis")
             .attr("transform", "translate(" + padding + ",0)")
+            .style("stroke-width", "2px")
+            .attr("font-weight", "bold")
             .call(suiAxis);
         svg1
             .append("text")
@@ -120,6 +125,7 @@ function vietnam() {
             .attr("x", -height / 2)
             .attr("y", padding / 2)
             .attr("font-size", 14)
+            .attr("font-weight", "bold")
             .attr("transform", "rotate(-90)");
 
         // Define all people who suffered from depression scale
@@ -133,7 +139,7 @@ function vietnam() {
                 return d.all;
               }),
             ])
-            .range([padding, width - padding]);
+            .range([padding, (width - padding) / 2]);
 
         // Define population scale
         let popScale = d3
@@ -153,7 +159,8 @@ function vietnam() {
             .select("#vietnam-area")
             .append("svg")
             .attr("height", height)
-            .attr("width", width);
+            .style("position", "absolute")
+            .attr("width", width / 2);
         svg2
             .selectAll("circle")
             .data(data)
@@ -195,14 +202,17 @@ function vietnam() {
             .append("g")
             .attr("class", "xAxis")
             .attr("transform", "translate(0," + (height - padding) + ")")
+            .style("stroke-width", "2px")
+            .attr("font-weight", "bold")
             .call(allAxis);
         svg2
             .append("text")
             .text("The number of people suffering from depression")
             .attr("class", "Axis-label")
             .attr("text-anchor", "middle")
-            .attr("x", width / 2)
+            .attr("x", width / 4 + 46)
             .attr("y", height - padding * 0.6)
+            .attr("font-weight", "bold")
             .attr("font-size", 14);
 
         // Add y-axis
@@ -214,6 +224,8 @@ function vietnam() {
             .append("g")
             .attr("class", "yAxis")
             .attr("transform", "translate(" + padding + ",0)")
+            .style("stroke-width", "2px")
+            .attr("font-weight", "bold")
             .call(popAxis);
         svg2
             .append("text")
@@ -221,8 +233,9 @@ function vietnam() {
             .attr("class", "Axis-label")
             .attr("text-anchor", "middle")
             .attr("x", -height / 2)
-            .attr("y", padding / 2)
+            .attr("y", padding / 2 - 10)
             .attr("font-size", 14)
+            .attr("font-weight", "bold")
             .attr("transform", "rotate(-90)");
 
         // Define new data based on gender
@@ -371,7 +384,7 @@ function vietnam() {
                 return yearScale(d.year);
               })
               .attr("y", function (d) {
-                if (d.gender == "Male") return maleScale(d.rate) + 30;
+                if (d.gender === "Male") return maleScale(d.rate) + 30;
                 return femaleScale(d.rate) - 30;
               })
               .attr("fill", "black");
@@ -384,7 +397,8 @@ function vietnam() {
             .attr("text-anchor", "middle")
             .attr("x", width / 2)
             .attr("y", height - padding * 0.3)
-            .attr("font-size", 14);
+            .attr("font-size", 14)
+            .attr("font-weight", "bold");
 
         // Add x-axis
         let yearAxis = d3
@@ -395,6 +409,8 @@ function vietnam() {
             .append("g")
             .attr("class", "xAxis")
             .attr("transform", "translate(0," + (height - padding) + ")")
+            .attr("font-weight", "bold")
+            .style("stroke-width", "2px")
             .call(yearAxis);
         svg3
             .append("text")
@@ -403,6 +419,7 @@ function vietnam() {
             .attr("text-anchor", "middle")
             .attr("x", width / 2)
             .attr("y", height - padding * 0.6)
+            .attr("font-weight", "bold")
             .attr("font-size", 14);
 
         // Add y-axis
@@ -414,6 +431,8 @@ function vietnam() {
             .append("g")
             .attr("class", "yAxis")
             .attr("transform", "translate(" + padding + ",0)")
+            .attr("font-weight", "bold")
+            .style("stroke-width", "2px")
             .call(maleAxis);
         svg3
             .append("text")
@@ -423,6 +442,7 @@ function vietnam() {
             .attr("x", -height / 2)
             .attr("y", padding / 2)
             .attr("font-size", 14)
+            .attr("font-weight", "bold")
             .attr("transform", "rotate(-90)");
 
         // Add y-axis
@@ -434,6 +454,8 @@ function vietnam() {
             .append("g")
             .attr("class", "yAxis")
             .attr("transform", "translate(" + (width - padding * 2) + ",0)")
+            .attr("font-weight", "bold")
+            .style("stroke-width", "2px")
             .call(femaleAxis);
         svg3
             .append("text")
@@ -443,6 +465,7 @@ function vietnam() {
             .attr("x", height / 2)
             .attr("y", padding - width)
             .attr("font-size", 14)
+            .attr("font-weight", "bold")
             .attr("transform", "rotate(90)");
 
         d3.selectAll("#play-btn-1").on("click", function () {
@@ -517,8 +540,8 @@ function vietnam() {
             update1
                 .enter()
                 .append("circle")
-                .attr("cx", 0)
-                .attr("cy", height)
+                .attr("cx", 8)
+                .attr("cy", height - 15)
                 .on("mouseover", function (d) {
                   d3.select("#tooltip1")
                       .append("p", d.year)
@@ -549,6 +572,7 @@ function vietnam() {
             svg1.select(".xAxis").call(d3.axisBottom(depScale));
             svg1.select(".yAxis").call(d3.axisLeft(suiScale));
           }, 150);
+            currentData = data.slice(0, 0);
         });
 
         d3.selectAll("#play-btn-3").on("click", function () {
@@ -600,7 +624,7 @@ function vietnam() {
             update2
                 .enter()
                 .append("circle")
-                .attr("cx", 0)
+                .attr("cx", width)
                 .attr("cy", 0)
                 .on("mouseover", function (d) {
                   d3.select("#tooltip")
@@ -642,6 +666,7 @@ function vietnam() {
                 .select(".yAxis")
                 .call(d3.axisLeft(popScale).tickFormat(d3.format(".3s")));
           }, 150);
+            currentData = data.slice(0, 0);
         });
       } else {
         console.log(error);
