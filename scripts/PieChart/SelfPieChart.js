@@ -144,7 +144,6 @@ d3.csv("../assets/self/self.csv").then((data) => {
     })
     .attr("stroke", "#076ba9")
     .attr("stroke-width", "0.5px");
-
   const lineTexts = arcs
     .append("text")
     .attr("transform", (d) => {
@@ -165,11 +164,26 @@ d3.csv("../assets/self/self.csv").then((data) => {
     .attr("fill", "black")
     .attr("dy", "0.35em");
 
+  // Create a temporary array of objects with the English categories and their corresponding colors
+  const tempArray = englishCategories.map((category) => ({
+    category,
+    color: color(category),
+  }));
+
+  // Sort the temporary array based on the color order
+  tempArray.sort((a, b) => {
+    const colorOrder = ["#ade3fb", "#079ee3", "#076ba9", "#005095", "#031347"];
+    return colorOrder.indexOf(a.color) - colorOrder.indexOf(b.color);
+  });
+
+  // Extract the sorted categories from the temporary array
+  const sortedEnglishCategories = tempArray.map((item) => item.category);
+
   const legend = svg
     .append("g")
     .attr("transform", `translate(${width - legendWidth - 20}, 20)`)
     .selectAll("g")
-    .data(englishCategories)
+    .data(sortedEnglishCategories)
     .enter()
     .append("g")
     .attr("transform", (d, i) => `translate(0,${i * 0.5 * legendHeight})`);
