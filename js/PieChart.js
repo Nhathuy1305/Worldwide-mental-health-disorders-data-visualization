@@ -33,7 +33,6 @@ function pieChart(data) {
 
   var pie = d3
     .pie()
-    .sort(null)
     .value(function (d) {
       return d.freq;
     });
