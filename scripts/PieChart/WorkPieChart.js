@@ -14,6 +14,8 @@ d3.csv("../assets/work/work.csv").then((data) => {
     return { category: englishCategories[i], value: categoryCounts[i] };
   });
 
+  newData.sort((a, b) => b.value - a.value);
+
   console.log(newData);
 
   const color = d3

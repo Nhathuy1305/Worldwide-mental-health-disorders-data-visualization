@@ -14,6 +14,8 @@ d3.csv("../assets/education/education.csv").then((data) => {
     return { category: englishCategories[i], value: categoryCounts[i] };
   });
 
+  newData.sort((a, b) => b.value - a.value);
+
   console.log(newData);
 
   const color = d3
@@ -165,27 +167,34 @@ d3.csv("../assets/education/education.csv").then((data) => {
 
   const legend = svg
     .append("g")
-    .attr("transform", `translate(${width - legendWidth - 20}, 20)`)
+    .attr("transform", `translate(${width - legendWidth - 20} 20)`);
+
+  // Sort the categories array based on the brightness of colors
+  englishCategories.sort(
+    (a, b) =>
+      d3.color(color(a)).brighter(0.5) - d3.color(color(b)).brighter(0.5)
+  );
+
+  const legendItems = legend
     .selectAll("g")
     .data(englishCategories)
     .enter()
     .append("g")
     .attr("transform", (d, i) => `translate(0,${i * 0.5 * legendHeight})`);
 
-  legend
+  legendItems
     .append("rect")
     .attr("width", 20)
     .attr("height", 20)
     .attr("fill", (d) => color(d));
-
-  legend
+  legendItems
     .append("text")
     .text((d) => d)
     .attr("fill", "black")
     .attr("x", 25)
     .attr("y", 14);
 
-  legend.on("click", function (event, d) {
+  legendItems.on("click", function (event, d) {
     const clickedLegend = d3.select(this);
     const isClicked = !d.clicked;
 
@@ -198,7 +207,7 @@ d3.csv("../assets/education/education.csv").then((data) => {
       }
     });
 
-    legend.each(function (data) {
+    legendItems.each(function (data) {
       if (data === d) {
         data.clicked = isClicked;
       } else {
@@ -218,11 +227,11 @@ d3.csv("../assets/education/education.csv").then((data) => {
       });
 
     // Update the opacity and fill color of legend items based on the clicked property
-    legend.select("rect").attr("fill", function (data) {
+    legendItems.select("rect").attr("fill", function (data) {
       return data.clicked ? color(data) : d3.color(color(data)).brighter(0.5);
     });
 
-    legend.select("text").attr("fill", function (data) {
+    legendItems.select("text").attr("fill", function (data) {
       return data.clicked ? "black" : "#777";
     });
 
@@ -244,7 +253,7 @@ d3.csv("../assets/education/education.csv").then((data) => {
     }
 
     // Make the colors of other legend items lighter
-    legend
+    legendItems
       .filter(function (data) {
         return data !== d;
       })
@@ -253,7 +262,7 @@ d3.csv("../assets/education/education.csv").then((data) => {
         return d3.color(color(data)).brighter(0.5);
       });
 
-    legend
+    legendItems
       .filter(function (data) {
         return data !== d;
       })
