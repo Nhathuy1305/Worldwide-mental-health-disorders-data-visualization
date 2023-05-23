@@ -179,6 +179,51 @@ d3.csv("../assets/self/self.csv").then((data) => {
   // Extract the sorted categories from the temporary array
   const sortedEnglishCategories = tempArray.map((item) => item.category);
 
+  // Add event listener to reset the chart when clicking outside the chart
+  document.addEventListener("click", function (event) {
+    const chartContainer = document.getElementById("pie-chart");
+    const tooltipContainer = document.querySelector(".tooltip");
+
+    if (
+      !chartContainer.contains(event.target) &&
+      !tooltipContainer.contains(event.target)
+    ) {
+      resetChart();
+    }
+  });
+
+  // Function to reset the chart to its default state
+  function resetChart() {
+    // Reset clicked property for arc and legend data
+    arcs.each(function (data) {
+      data.clicked = false;
+    });
+
+    legendItems.each(function (data) {
+      data.clicked = false;
+    });
+
+    // Reset opacity and fill color of arcs
+    arcs.style("opacity", 1).attr("fill", (data) => color(data.data.category));
+
+    // Reset fill color of legend items
+    legendItems
+      .select("rect")
+      .attr("fill", (data) => color(data))
+      .attr("fill", function (data) {
+        return d3.color(color(data)).brighter(0.5);
+      });
+
+    // Reset text color of legend items
+    legendItems.select("text").attr("fill", "#777");
+
+    // Hide tooltip
+    tooltip.transition().duration(200).style("opacity", 0);
+
+    // Clear info box
+    d3.select("#info-box").text("");
+  }
+
   const legend = svg
     .append("g")
     .attr("transform", `translate(${width - legendWidth - 20}, 20)`)

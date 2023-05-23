@@ -59,6 +59,26 @@ d3.csv("../assets/love/love.csv").then((data) => {
     .range([0, height]) // Reverse the range to display the graph upside down
     .padding(0.2);
 
+  // Add event listener to the entire document
+  d3.select(document).on("click", function (event) {
+    const isChartClicked = d3.select(event.target).classed("bar");
+
+    // Check if the clicked element is within the chart area
+    if (!isChartClicked) {
+      // Reset the chart to its default state
+      svg
+        .selectAll(".bar")
+        .style("opacity", 1)
+        .attr("fill", "#ade3fb")
+        .each(function (data) {
+          data.clicked = false;
+        });
+
+      tooltip.transition().duration(200).style("opacity", 0);
+      svg.select(".total-text").text(`Total: ${total} (${100}%)`);
+    }
+  });
+
   const svg = d3
     .select("svg") // Select the SVG element already appended to the DOM
     .attr("width", width + margin.left + margin.right)
