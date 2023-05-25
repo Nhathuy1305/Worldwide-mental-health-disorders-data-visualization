@@ -414,21 +414,31 @@ button {
 #play-btn-1 {
     position: relative;
     left: 36%;
-    top: 34rem;
+    top: 31rem;
+    z-index: 1;
     transition: all 0.2s ease-in-out;
 }
 
 #play-btn-2 {
     position: relative;
-    left: 5%;
-    top: 64rem;
+    left: 29%;
+    top: 65rem;
+    z-index: 1;
     transition: all 0.2s ease-in-out;
 }
 
 #play-btn-3 {
     position: relative;
-    left: 50%;
-    top: 64rem;
+    left: -3%;
+    top: 95rem;
+    z-index: 1;
+    transition: all 0.2s ease-in-out;
+}
+
+#play-btn-4 {
+    position: relative;
+    left: 43%;
+    top: 95rem;
     z-index: 1;
     transition: all 0.2s ease-in-out;
 }
