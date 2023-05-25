@@ -298,7 +298,8 @@ function vietnam() {
           .attr("stroke", "#0013de")
           .style("stroke-width", 4)
           .style("fill", "none")
-          .attr("class", "sexes-line");
+          .attr("class", "sexes-line")
+          .attr("id", "Male");
 
         let femaleChart = svg1
           .datum(groupedData[1].values)
@@ -307,8 +308,8 @@ function vietnam() {
           .attr("stroke", "#ff00a8")
           .style("stroke-width", 4)
           .style("fill", "none")
-          .attr("class", "sexes-line");
-
+          .attr("class", "sexes-line")
+          .attr("id", "Female");
         // Append rectangle to get user mouse position
         svg1
           .append("rect")
@@ -413,6 +414,59 @@ function vietnam() {
           .attr("font-size", 14)
           .attr("font-weight", "bold")
           .attr("transform", "rotate(90)");
+
+        // Add legend for line
+        console.log(groupedData.key);
+        const size = 20;
+        let colScale = d3
+          .scaleOrdinal()
+          .domain(groupedData.map((item) => item.key))
+          .range(["#0013de", "#ff00a8"]);
+
+        // Highlight selected line
+        const highlight = function (d) {
+          // reduce opacity of all groups
+          d3.selectAll(".sexes-line").style("opacity", 0.1);
+          // expect the one that is hovered
+          d3.selectAll("#" + d).style("opacity", 1);
+        };
+
+        // Undo highlighting
+        const noHighlight = function (d) {
+          d3.selectAll("path").style("opacity", 1);
+        };
+        svg1
+          .selectAll("legend")
+          .data(groupedData.map((item) => item.key))
+          .enter()
+          .append("rect")
+          .attr("x", function (d, i) {
+            return padding * 1.2 + i * 70;
+          })
+          .attr("y", height - padding * 0.8)
+          .attr("width", size)
+          .attr("height", size)
+          .attr("fill", function (d) {
+            return colScale(d);
+          })
+          .on("mouseover", highlight)
+          .on("mouseleave", noHighlight);
+        svg1
+          .selectAll(".legend text")
+          .data(groupedData)
+          .enter()
+          .append("text")
+          .text(function (d) {
+            return d.key;
+          })
+          .attr("class", "legend text")
+          .attr("text-anchor", "start")
+          .attr("x", function (d, i) {
+            return padding * 1.5 + i * 70;
+          })
+          .attr("y", height - padding * 0.65)
+          .attr("font-size", 14)
+          .attr("fill", "black");
 
         // Get nearest x-position
         let bisect = d3.bisector(function (d) {
