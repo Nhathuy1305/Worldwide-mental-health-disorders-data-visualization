@@ -441,9 +441,9 @@ function vietnam() {
           .enter()
           .append("rect")
           .attr("x", function (d, i) {
-            return padding * 1.2 + i * 70;
+            return width / 1.7 + i * 70;
           })
-          .attr("y", height - padding * 0.8)
+          .attr("y", padding * 0.8)
           .attr("width", size)
           .attr("height", size)
           .attr("fill", function (d) {
@@ -462,9 +462,9 @@ function vietnam() {
           .attr("class", "legend text")
           .attr("text-anchor", "start")
           .attr("x", function (d, i) {
-            return padding * 1.5 + i * 70;
+            return width / 1.65 + i * 70;
           })
-          .attr("y", height - padding * 0.65)
+          .attr("y", padding * 0.95)
           .attr("font-size", 14)
           .attr("fill", "black");
 
@@ -593,7 +593,14 @@ function vietnam() {
           .on("mouseover", function (d) {
             d3.select(this).attr("opacity", 0.8);
             d3.select("#tooltip1")
-              .html("Year: " + d.year + "<br>Suicide rate: " + d.suicide)
+              .html(
+                "Year: " +
+                  d.year +
+                  "<br>Suicide rate: " +
+                  d.suicide +
+                  "<br>Disorder rate: " +
+                  d.depressive
+              )
               .style("left", d3.event.pageX + 10 + "px")
               .style("top", d3.event.pageY - 130 + "px")
               .classed("hidden", false);
@@ -771,7 +778,9 @@ function vietnam() {
             // Show the tooltip
             d3.select("#tooltip2")
               .html(
-                "Population: " +
+                "Year: " +
+                  d.year +
+                  "<br>Population: " +
                   d3.format(",")(d.population) +
                   "<br>Number of people suffering: " +
                   d3.format(",")(d.all)
