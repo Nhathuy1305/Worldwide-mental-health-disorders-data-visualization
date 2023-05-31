@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="0b5e336d-c45f-4fcb-984e-ec31ca149d85" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+        <option value="package.json" />
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2P9EINuiqjLkUq55s9W1O8RjHOy" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "map",
+    "last_opened_file_path": "D:/Worldwide-mental-health-disorders-data-visualization",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\huyng\OneDrive - VietNam National University - HCM INTERNATIONAL UNIVERSITY\Documents\GitHub\DSDV-project-1\data" />
+      <recent name="C:\Users\huyng\OneDrive - VietNam National University - HCM INTERNATIONAL UNIVERSITY\Documents\GitHub\DSDV-project-1" />
+      <recent name="C:\Users\huyng\OneDrive - VietNam National University - HCM INTERNATIONAL UNIVERSITY\Documents\GitHub\DSDV-project-1\scripts\map" />
+      <recent name="C:\Users\huyng\OneDrive - VietNam National University - HCM INTERNATIONAL UNIVERSITY\Documents\GitHub\DSDV-project-1\scripts\Charts" />
+      <recent name="C:\Users\huyng\OneDrive - VietNam National University - HCM INTERNATIONAL UNIVERSITY\Documents\GitHub\DSDV-project-1\scripts\Map" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0b5e336d-c45f-4fcb-984e-ec31ca149d85" name="Changes" comment="" />
+      <created>1682860816562</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1682860816562</updated>
+      <workItem from="1682860821290" duration="5600000" />
+      <workItem from="1682947603895" duration="6335000" />
+      <workItem from="1683012617306" duration="3252000" />
+      <workItem from="1683015968662" duration="7430000" />
+      <workItem from="1683031731038" duration="6093000" />
+      <workItem from="1683084087181" duration="280000" />
+      <workItem from="1683084491493" duration="3803000" />
+      <workItem from="1683128354105" duration="771000" />
+      <workItem from="1683130899647" duration="57000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+</project>
