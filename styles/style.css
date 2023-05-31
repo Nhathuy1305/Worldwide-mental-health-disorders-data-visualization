@@ -1,0 +1,420 @@
+#header {
+  position: relative;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 62px;
+  z-index: 1;
+  background: rgba(29, 38, 125, 0.4);
+}
+
+@media (max-width: 1440px) {
+  .header {
+    width: 100%;
+  }
+}
+
+#title {
+  position: absolute;
+  width: 64%;
+  height: 57px;
+  font-family: "Google Sans", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 3rem;
+  line-height: 40px;
+  display: flex;
+  align-items: center;
+  color: #19376d;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: 0 0 0 0.5em;
+}
+
+#copyright {
+  position: absolute;
+  width: 39%;
+  height: 50px;
+  font-family: "Google Sans", sans-serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: 2rem;
+  line-height: 40px;
+  display: flex;
+  align-items: center;
+  color: #19376d;
+  margin: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 0;
+}
+
+.header-title {
+  position: relative;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 53px;
+  z-index: 1;
+}
+
+@media (max-width: 1440px) {
+  .header-title {
+    width: 100%;
+  }
+}
+
+#header-title--article {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-family: "Google Sans", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 43px;
+  line-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #19376d;
+  margin: 0;
+}
+
+.world {
+    position: absolute;
+    top: 120px;
+    right: 20px;
+    border-radius: 70px;
+}
+
+.button-main {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #0c134f;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+#button-1 {
+    left: -1%;
+    right: 94%;
+    top: 130%;
+    bottom: -88%;
+    transition: right 0.3s ease-in-out;
+}
+
+#button-1:hover {
+  right: 79%;
+}
+
+.button-text-1::before {
+  content: "1";
+}
+
+#button-1:hover .button-text-1::before {
+  content: "";
+}
+
+#button-1:hover .button-text:after {
+  content: "POPULATION";
+  margin-left: 9px;
+}
+
+#button-1:active,
+#button-1.active {
+  right: 79%;
+}
+
+.button-text-1.active::before {
+  content: "";
+}
+
+#button-1.active .button-text-1::before {
+  content: "";
+}
+
+#button-1.active .button-text:after {
+  content: "POPULATION";
+  margin-left: 9px;
+}
+
+#button-2 {
+    left: -1%;
+    right: 94%;
+    top: 202%;
+    bottom: -160%;
+    transition: right 0.3s ease-in-out;
+}
+
+#button-2:hover {
+  right: 79%;
+}
+
+.button-text-2::before {
+  content: "2";
+}
+
+#button-2:hover .button-text-2::before {
+  content: "";
+}
+
+#button-2:hover .button-text:after {
+  content: "AGE";
+  margin-left: -11px;
+}
+
+#button-2:active,
+#button-2.active {
+  right: 79%;
+}
+
+.button-text-2.active::before {
+  content: "";
+}
+
+#button-2.active .button-text-2::before {
+  content: "";
+}
+
+#button-2.active .button-text:after {
+  content: "AGE";
+  margin-left: -11px;
+}
+
+#button-3 {
+    left: -1%;
+    right: 94%;
+    top: 274%;
+    bottom: -232%;
+    transition: right 0.3s ease-in-out;
+}
+
+#button-3:hover {
+  right: 79%;
+}
+
+.button-text-3::before {
+  content: "3";
+}
+
+#button-3:hover .button-text-3::before {
+  content: "";
+}
+
+#button-3:hover .button-text:after {
+  content: "SUICIDE";
+  margin-left: -6px;
+}
+
+#button-3:active,
+#button-3.active {
+  right: 79%;
+}
+
+.button-text-3.active::before {
+  content: "";
+}
+
+#button-3.active .button-text-3::before {
+  content: "";
+}
+
+#button-3.active .button-text:after {
+  content: "SUICIDE";
+  margin-left: -6px;
+}
+
+#button-4 {
+    left: -1%;
+    right: 94%;
+    top: 346%;
+    bottom: -304%;
+    transition: right 0.3s ease-in-out;
+}
+
+#button-4:hover {
+  right: 79%;
+}
+
+.button-text-4::before {
+  content: "4";
+}
+
+#button-4:hover .button-text-4::before {
+  content: "";
+}
+
+#button-4:hover .button-text:after {
+  content: "DISORDER";
+  margin-left: 0;
+}
+
+#button-4:active,
+#button-4.active {
+  right: 79%;
+}
+
+.button-text-4.active::before {
+  content: "";
+}
+
+#button-4.active .button-text-4::before {
+  content: "";
+}
+
+#button-4.active .button-text:after {
+  content: "DISORDER";
+  margin-left: 0;
+}
+
+.button-text {
+  height: 100%;
+  left: 22px;
+  right: 0;
+  top: 487px;
+  font-family: "Google Sans", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 40px;
+  display: flex;
+  align-items: center;
+  color: #d4adfc;
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  margin: 0;
+}
+
+#years-menu {
+  top: 10px;
+}
+
+.fill {
+  fill: #25498a;
+}
+
+.graticule {
+  fill: none;
+  stroke: rgba(201, 190, 190, 0.89);
+  stroke-width: 1px;
+  stroke-opacity: 0.5;
+  border-radius: 3px;
+}
+
+.boundary {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 1px;
+}
+
+.tooltip {
+  position: absolute;
+  padding: 8px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+  font-size: 14px;
+}
+
+#tooltip1 {
+  position: absolute;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+  font-size: 14px;
+}
+#tooltip1.hidden {
+  display: none;
+}
+
+#tooltip2 {
+    position: absolute;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+    font-size: 14px;
+}
+#tooltip2.hidden {
+    display: none;
+}
+
+@media (min-width: 768px) {
+  .button-back {
+    padding: 10px 30px;
+  }
+}
+
+#header-title--article-2 {
+  position: absolute;
+  left: 21%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-family: "Google Sans", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 43px;
+  line-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #19376d;
+  margin: 0;
+}
+
+#page-change-btn {
+    position: absolute;
+    bottom: 25px;
+    right: 27px;
+    z-index: 1;
+    background-color: #19376D;
+    color: #D4ADFC;
+    border: none;
+    padding: 7px 7px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+#page-change-btn:hover {
+    transform: translateX(10px);
+    background-color: #D4ADFC;
+    color: #19376D;
+}
+
+#years-menu {
+    width: 6%;
+    margin-left: 90px;
+    font-size: 16px;
+    font-weight: 700;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+    color: #D4ADFC;
+    background-color: #19376D;
+    text-align: center;
+    padding: 7px;
+    transition: all 0.2s ease-in-out;
+}
+
+#years-menu:hover {
+    transform: translateY(-5px);
+    background-color: #D4ADFC;
+    color: #19376D;
+}
+
+ /*Style the select dropdown options */
+#years-menu option {
+    background-color: #19376D;
+    font-size: 16px;
+    font-weight: 500;
+    color: #D4ADFC;
+}

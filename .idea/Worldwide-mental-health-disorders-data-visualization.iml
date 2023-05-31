@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="WEB_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/.tmp" />
+      <excludeFolder url="file://$MODULE_DIR$/temp" />
+      <excludeFolder url="file://$MODULE_DIR$/tmp" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="d3-geo-projection.v2" level="application" />
+    <orderEntry type="library" name="d3-scale-chromatic.v1" level="application" />
+    <orderEntry type="library" name="d3.v4" level="application" />
+    <orderEntry type="library" name="d3-funnel" level="application" />
+    <orderEntry type="library" name="d3.v6" level="application" />
+    <orderEntry type="library" name="d3.v7" level="application" />
+    <orderEntry type="library" name="d3-scale-chromatic.v1" level="application" />
+    <orderEntry type="library" name="7b9a1721c6" level="application" />
+    <orderEntry type="library" name="d3-geo-projection.v2" level="application" />
+    <orderEntry type="library" name="d3-funnel" level="application" />
+    <orderEntry type="library" name="d3.v7" level="application" />
+    <orderEntry type="library" name="d3.v4" level="application" />
+    <orderEntry type="library" name="7b9a1721c6" level="application" />
+    <orderEntry type="library" name="d3.v6" level="application" />
+  </component>
+</module>
