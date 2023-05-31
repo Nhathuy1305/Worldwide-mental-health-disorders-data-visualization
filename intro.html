@@ -1,27 +1,63 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>My HTML Page</title>
-    <script src="https://d3js.org/d3.v6.min.js"></script>
-
-    <link rel="stylesheet" href="../intro.css" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Introduction to tramcam</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link rel="stylesheet" href="./Intro.css" />
   </head>
   <body>
     <div class="container">
+      <div class="background"></div>
       <div class="main">
-        <div class="row first-row">
-          <div class="col horizontalbar-chart">
-            <script src="../HorizontalBarchart.js"></script>
+        <div class="row">
+          <div class="col">
+            <div class="item-title">Giới tính sinh học</div>
+            <div class="item">
+              <script src="./js/HorizontalBarchart.js"></script>
+            </div>
           </div>
-          <div class="col"><h2>1000 Người tham gia khảo sát</h2></div>
-          <div class="col donut-chart">
-            <script src="../js/DonutChart.js"></script>
+          <div class="col col-title">
+            <script>
+              d3.csv("./assets/Condition.csv").then(function (data) {
+                var columnValues = data.map(function (d) {
+                  return d.value;
+                });
+                var columnLength = columnValues.length;
+                d3.select("#col-title-h2").text(columnLength);
+              });
+            </script>
+            <h2 id="col-title-h2"></h2>
+            <p>Người Khảo Sát</p>
+          </div>
+          <div class="col">
+            <div class="item-title">Cộng Đồng LGBT</div>
+            <div class="item">
+              <script src="./js/DonutChart.js"></script>
+            </div>
           </div>
         </div>
-        <div class="row second-row">
-          <div class="col"><script src="Treemap.js"></script></div>
-          <div class="col"><script src="VerticalBarchart.js"></script></div>
-          <div class="col"><script src="PieChart.js"></script></div>
+        <div class="row">
+          <div class="col">
+            <div class="item-title">Trình độ học vấn</div>
+            <div class="item">
+              <script src="./js/Treemap.js"></script>
+            </div>
+          </div>
+          <div class="col">
+            <div class="item-title">Mức độ trầm cảm</div>
+            <div class="item">
+              <script src="./js/PieChart.js"></script>
+            </div>
+          </div>
+          <div class="col">
+            <div class="item-title">Yếu tố gây ra áp lực</div>
+            <div class="item">
+              <script src="./js/VerticalBarchart.js"></script>
+            </div>
+          </div>
         </div>
       </div>
     </div>
