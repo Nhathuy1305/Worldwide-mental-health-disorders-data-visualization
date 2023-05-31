@@ -15,8 +15,8 @@ function horizontalBarChart(data) {
   }
 
   var margin = { top: 50, right: 50, bottom: 50, left: 50 },
-    width = 200 - margin.left - margin.right,
-    height = 200 - margin.top - margin.bottom,
+    width = 600 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom,
     color = d3.scaleOrdinal().range(["#fc749d", "#f7bed0"]);
 
   var svg = d3
