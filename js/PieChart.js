@@ -27,9 +27,9 @@ function pieChart(data) {
     .append("g")
     .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-  var color = d3
-    .scaleOrdinal()
-    .range(["#FFDBF5", "#C2C3F5", "#FFF8E8", "#BFE3DF", "#EE9D94"]);
+  var color = d3.scaleLinear()
+    .domain([d3.min(bins, function (d) { return d.freq; }), d3.max(bins, function (d) { return d.freq; })])
+    .range(["#BDCFFF", "#366FFF"]);
 
   var pie = d3
     .pie()
@@ -46,7 +46,7 @@ function pieChart(data) {
     .append("path")
     .attr("d", d3.arc().innerRadius(0).outerRadius(radius))
     .attr("fill", function (d) {
-      return color(d.data.condition);
+      return color(d.data.freq);
     })
     .attr("stroke", "black")
     .style("stroke-width", "2px")
