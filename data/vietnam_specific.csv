@@ -1,0 +1,197 @@
+﻿Year,Value,Disease
+1990,0.2227357,Schizophrenia
+1990,0.539199657,Bipolar disorder
+1990,0.083484478,Eating disorders
+1990,2.03684216,Anxiety disorders
+1990,0.615660927,Drug use disorders
+1990,2.919092516,Depression
+1990,1.500753898,Alcohol use disorders
+1991,0.223310753,Schizophrenia
+1991,0.539394713,Bipolar disorder
+1991,0.084259553,Eating disorders
+1991,2.035960122,Anxiety disorders
+1991,0.617620523,Drug use disorders
+1991,2.918349271,Depression
+1991,1.505008315,Alcohol use disorders
+1992,0.223929154,Schizophrenia
+1992,0.539599695,Bipolar disorder
+1992,0.085276975,Eating disorders
+1992,2.035156771,Anxiety disorders
+1992,0.619293827,Drug use disorders
+1992,2.918750364,Depression
+1992,1.509042231,Alcohol use disorders
+1993,0.224570716,Schizophrenia
+1993,0.539822196,Bipolar disorder
+1993,0.086063242,Eating disorders
+1993,2.03446741,Anxiety disorders
+1993,0.621353475,Drug use disorders
+1993,2.918465759,Depression
+1993,1.512757516,Alcohol use disorders
+1994,0.225204623,Schizophrenia
+1994,0.540043707,Bipolar disorder
+1994,0.087392992,Eating disorders
+1994,2.0338212,Anxiety disorders
+1994,0.623610738,Drug use disorders
+1994,2.919504679,Depression
+1994,1.515986319,Alcohol use disorders
+1995,0.225797107,Schizophrenia
+1995,0.540274957,Bipolar disorder
+1995,0.088194011,Eating disorders
+1995,2.033583347,Anxiety disorders
+1995,0.625366884,Drug use disorders
+1995,2.919847309,Depression
+1995,1.518522626,Alcohol use disorders
+1996,0.226597594,Schizophrenia
+1996,0.540567533,Bipolar disorder
+1996,0.089382003,Eating disorders
+1996,2.033560179,Anxiety disorders
+1996,0.628343867,Drug use disorders
+1996,2.919639455,Depression
+1996,1.520877319,Alcohol use disorders
+1997,0.227721833,Schizophrenia
+1997,0.540984305,Bipolar disorder
+1997,0.090626547,Eating disorders
+1997,2.034222084,Anxiety disorders
+1997,0.630889481,Drug use disorders
+1997,2.921793516,Depression
+1997,1.523472313,Alcohol use disorders
+1998,0.228974176,Schizophrenia
+1998,0.541495345,Bipolar disorder
+1998,0.091865637,Eating disorders
+1998,2.035245019,Anxiety disorders
+1998,0.63499603,Drug use disorders
+1998,2.925501831,Depression
+1998,1.526312806,Alcohol use disorders
+1999,0.230153912,Schizophrenia
+1999,0.542055063,Bipolar disorder
+1999,0.093637981,Eating disorders
+1999,2.036239245,Anxiety disorders
+1999,0.637321176,Drug use disorders
+1999,2.929882041,Depression
+1999,1.529365428,Alcohol use disorders
+2000,0.231050054,Schizophrenia
+2000,0.542619754,Bipolar disorder
+2000,0.095310453,Eating disorders
+2000,2.037101445,Anxiety disorders
+2000,0.640988922,Drug use disorders
+2000,2.929392062,Depression
+2000,1.532476881,Alcohol use disorders
+2001,0.231830513,Schizophrenia
+2001,0.543266293,Bipolar disorder
+2001,0.096805155,Eating disorders
+2001,2.035678866,Anxiety disorders
+2001,0.642857995,Drug use disorders
+2001,2.929636607,Depression
+2001,1.536203463,Alcohol use disorders
+2002,0.232740945,Schizophrenia
+2002,0.544102842,Bipolar disorder
+2002,0.098532387,Eating disorders
+2002,2.032027868,Anxiety disorders
+2002,0.644562673,Drug use disorders
+2002,2.927852693,Depression
+2002,1.540911459,Alcohol use disorders
+2003,0.233697535,Schizophrenia
+2003,0.545030836,Bipolar disorder
+2003,0.100451382,Eating disorders
+2003,2.027715348,Anxiety disorders
+2003,0.646826631,Drug use disorders
+2003,2.926208391,Depression
+2003,1.546416209,Alcohol use disorders
+2004,0.234611428,Schizophrenia
+2004,0.545940842,Bipolar disorder
+2004,0.101795736,Eating disorders
+2004,2.024291374,Anxiety disorders
+2004,0.6482166,Drug use disorders
+2004,2.924381928,Depression
+2004,1.552511386,Alcohol use disorders
+2005,0.235363217,Schizophrenia
+2005,0.546672351,Bipolar disorder
+2005,0.103510857,Eating disorders
+2005,2.023392812,Anxiety disorders
+2005,0.649576542,Drug use disorders
+2005,2.923107403,Depression
+2005,1.558684391,Alcohol use disorders
+2006,0.236037643,Schizophrenia
+2006,0.547208054,Bipolar disorder
+2006,0.105386404,Eating disorders
+2006,2.023866057,Anxiety disorders
+2006,0.652337114,Drug use disorders
+2006,2.918924729,Depression
+2006,1.576123748,Alcohol use disorders
+2007,0.236772924,Schizophrenia
+2007,0.547715801,Bipolar disorder
+2007,0.107264669,Eating disorders
+2007,2.024573222,Anxiety disorders
+2007,0.655124505,Drug use disorders
+2007,2.912969529,Depression
+2007,1.609349694,Alcohol use disorders
+2008,0.237511653,Schizophrenia
+2008,0.548167867,Bipolar disorder
+2008,0.109160742,Eating disorders
+2008,2.025459336,Anxiety disorders
+2008,0.657372087,Drug use disorders
+2008,2.907161665,Depression
+2008,1.648056498,Alcohol use disorders
+2009,0.238224495,Schizophrenia
+2009,0.548607121,Bipolar disorder
+2009,0.111048504,Eating disorders
+2009,2.02670525,Anxiety disorders
+2009,0.660233628,Drug use disorders
+2009,2.901149062,Depression
+2009,1.682081852,Alcohol use disorders
+2010,0.238863278,Schizophrenia
+2010,0.549043902,Bipolar disorder
+2010,0.113015301,Eating disorders
+2010,2.028608402,Anxiety disorders
+2010,0.66310394,Drug use disorders
+2010,2.896071926,Depression
+2010,1.701022841,Alcohol use disorders
+2011,0.239504381,Schizophrenia
+2011,0.549496518,Bipolar disorder
+2011,0.115108585,Eating disorders
+2011,2.031182731,Anxiety disorders
+2011,0.666203041,Drug use disorders
+2011,2.891419694,Depression
+2011,1.708862875,Alcohol use disorders
+2012,0.240229622,Schizophrenia
+2012,0.549976643,Bipolar disorder
+2012,0.117146763,Eating disorders
+2012,2.034897505,Anxiety disorders
+2012,0.669358007,Drug use disorders
+2012,2.888482058,Depression
+2012,1.716125559,Alcohol use disorders
+2013,0.241026219,Schizophrenia
+2013,0.550479386,Bipolar disorder
+2013,0.119353369,Eating disorders
+2013,2.03964452,Anxiety disorders
+2013,0.67357938,Drug use disorders
+2013,2.884934181,Depression
+2013,1.72268917,Alcohol use disorders
+2014,0.241883246,Schizophrenia
+2014,0.551005233,Bipolar disorder
+2014,0.121582912,Eating disorders
+2014,2.045304822,Anxiety disorders
+2014,0.67782934,Drug use disorders
+2014,2.882767147,Depression
+2014,1.728448068,Alcohol use disorders
+2015,0.242782529,Schizophrenia
+2015,0.551547515,Bipolar disorder
+2015,0.123608853,Eating disorders
+2015,2.051936811,Anxiety disorders
+2015,0.682933084,Drug use disorders
+2015,2.88175028,Depression
+2015,1.733233426,Alcohol use disorders
+2016,0.243709463,Schizophrenia
+2016,0.552083703,Bipolar disorder
+2016,0.126256435,Eating disorders
+2016,2.059036655,Anxiety disorders
+2016,0.687896435,Drug use disorders
+2016,2.879812935,Depression
+2016,1.736928734,Alcohol use disorders
+2017,0.244662787,Schizophrenia
+2017,0.552653321,Bipolar disorder
+2017,0.128466466,Eating disorders
+2017,2.066871058,Anxiety disorders
+2017,0.693534364,Drug use disorders
+2017,2.879450065,Depression
+2017,1.739465895,Alcohol use disorders
