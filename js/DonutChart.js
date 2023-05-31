@@ -27,7 +27,7 @@ function donutChart(data) {
     .append("g")
     .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-  var color = d3.scaleOrdinal().range(["#FFF8E8", "#BFE3DF", "#EE9D94"]);
+  var color = d3.scaleOrdinal().range(["#95FF9A", "#95ECFF", "#95ABFF"]);
 
   var pie = d3
     .pie()
