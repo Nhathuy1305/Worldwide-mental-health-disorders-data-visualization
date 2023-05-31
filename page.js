@@ -60,7 +60,7 @@ function changeToPreviousPage(condition) {
 
 function changeToNextPage2(condition) {
   if (condition === true) {
-    window.location.href = "depress.html";
+    window.location.href = "intro.html";
   } else {
     window.location.href = "not-found.html";
   }
@@ -69,6 +69,22 @@ function changeToNextPage2(condition) {
 function changeToPreviousPage2(condition) {
   if (condition === true) {
     window.location.href = "vietnam.html";
+  } else {
+    window.location.href = "not-found.html";
+  }
+}
+
+function changeToNextPage3(condition) {
+  if (condition === true) {
+    window.location.href = "depress.html";
+  } else {
+    window.location.href = "not-found.html";
+  }
+}
+
+function changeToPreviousPage3(condition) {
+  if (condition === true) {
+    window.location.href = "intro.html";
   } else {
     window.location.href = "not-found.html";
   }

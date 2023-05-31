@@ -3,13 +3,31 @@
   <head>
     <title>My HTML Page</title>
     <script src="https://d3js.org/d3.v6.min.js"></script>
-
+    <script src="page.js"></script>
     <link rel="stylesheet" href="../intro.css" />
+    <link rel="stylesheet" href="styles/style.css" />
+    <link rel="stylesheet" href="styles/normalize.css" />
   </head>
   <body>
     <div class="container">
       <div class="main">
         <div class="row first-row">
+          <div>
+            <button
+              class="btn_nav"
+              id="page-back-btn"
+              onclick="changeToNextPage(true)"
+            >
+              Previous
+            </button>
+            <button
+              class="btn_nav"
+              id="page-change-btn-3"
+              onclick="changeToNextPage3(true)"
+            >
+              Next
+            </button>
+          </div>
           <div class="col horizontalbar-chart">
             <script src="../HorizontalBarchart.js"></script>
           </div>
