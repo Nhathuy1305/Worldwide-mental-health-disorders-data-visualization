@@ -476,3 +476,37 @@ button {
     background-color: #D4ADFC;
     color: #19376D;
 }
+
+#page-back-btn-3 {
+    position: relative;
+    top: 1rem;
+    right: -2%;
+    border: none;
+    padding: 7px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+#page-back-btn-3:hover {
+    transform: translateX(-10px);
+    background-color: #D4ADFC;
+    color: #19376D;
+}
+
+#page-change-btn-4 {
+    position: relative;
+    top: 1rem;
+    left: 87%;
+    border: none;
+    padding: 7px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+#page-change-btn-4:hover {
+    transform: translateX(10px);
+    background-color: #D4ADFC;
+    color: #19376D;
+}

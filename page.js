@@ -170,3 +170,45 @@ document.addEventListener("DOMContentLoaded", function () {
     pageContainer.classList.remove("hidden");
   }
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+  const nextPageBtn = document.getElementById("page-back-btn-3");
+  if (nextPageBtn) {
+    // check if element exists
+    nextPageBtn.addEventListener("click", function () {
+      const pageContainer = document.querySelector(".main-page-3");
+      pageContainer.classList.add("hidden");
+      setTimeout(function () {
+        window.location.href = "vietnam.html";
+      }, 1500); // wait 0.5 seconds before navigating to next page
+    });
+  }
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  const pageContainer = document.querySelector(".main-page-3");
+  if (pageContainer) {
+    pageContainer.classList.remove("hidden");
+  }
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  const nextPageBtn = document.getElementById("page-change-btn-4");
+  if (nextPageBtn) {
+    // check if element exists
+    nextPageBtn.addEventListener("click", function () {
+      const pageContainer = document.querySelector(".main-page-3");
+      pageContainer.classList.add("hidden");
+      setTimeout(function () {
+        window.location.href = "vietnam.html";
+      }, 1500); // wait 0.5 seconds before navigating to next page
+    });
+  }
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  const pageContainer = document.querySelector(".main-page-3");
+  if (pageContainer) {
+    pageContainer.classList.remove("hidden");
+  }
+});

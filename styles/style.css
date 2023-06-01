@@ -354,7 +354,7 @@
 
 #header-title--article-2 {
   position: absolute;
-  left: 21%;
+  left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
   font-family: "Google Sans", sans-serif;
@@ -363,8 +363,6 @@
   font-size: 43px;
   line-height: 40px;
   display: flex;
-  align-items: center;
-  justify-content: center;
   color: #19376d;
   margin: 0;
 }

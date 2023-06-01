@@ -1,53 +1,63 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>My HTML Page</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Our World in Depression</title>
     <script src="https://d3js.org/d3.v6.min.js"></script>
     <script src="page.js"></script>
-    <link rel="stylesheet" href="../intro.css" />
     <link rel="stylesheet" href="styles/style.css" />
     <link rel="stylesheet" href="styles/normalize.css" />
+    <script
+            src="https://kit.fontawesome.com/7b9a1721c6.js"
+            crossorigin="anonymous"
+    ></script>
   </head>
   <body>
-    <div class="container">
-      <div class="main">
-        <div class="row first-row">
-          <div>
-            <button
-              class="btn_nav"
-              id="page-back-btn"
-              onclick="changeToNextPage(true)"
-            >
-              Previous
-            </button>
-            <button
-              class="btn_nav"
-              id="page-change-btn-3"
-              onclick="changeToNextPage3(true)"
-            >
-              Next
-            </button>
-          </div>
-          <div class="col horizontalbar-chart">
-            <script src="./scripts/intro/HorizontalBarchart.js"></script>
-          </div>
-          <div class="col"><h2>1000 Người tham gia khảo sát</h2></div>
-          <div class="col donut-chart">
+  <div id="header">
+    <h1 id="title">OUR WORLD IN DEPRESSION</h1>
+    <p id="copyright">copyrighted by Tramcam Team</p>
+  </div>
+
+  <div class="main-page-3 back-main-page">
+      <div class="header-title">
+        <h2 id="header-title--article">SOME REPORTS</h2>
+      </div>
+      <button
+            class="btn_nav"
+            id="page-back-btn-3"
+            onclick="changeToNextPage(true)"
+      >
+        <i class="fa-solid fa-chevron-left"></i>
+        Previous
+      </button>
+      <button
+            class="btn_nav"
+            id="page-change-btn-4"
+            onclick="changeToNextPage3(true)"
+      >
+        Next
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
+    <div class="col horizontalbar-chart">
+      <script src="./scripts/intro/HorizontalBarchart.js"></script>
+    </div>
+    <div class="col" style="text-align: center"><h2>1000 people participated in the survey</h2></div>
+    <div class="col donut-chart">
             <script src="./scripts/intro/DonutChart.js"></script>
-          </div>
-        </div>
-        <div class="row second-row">
-          <div class="col">
-            <script src="./scripts/intro/Treemap.js"></script>
-          </div>
-          <div class="col">
-            <script src="./scripts/intro/VerticalBarchart.js"></script>
-          </div>
-          <div class="col">
-            <script src="./scripts/intro/PieChart.js"></script>
-          </div>
-        </div>
+    </div>
+    <div class="row second-row">
+      <div class="col">
+        <script src="./scripts/intro/Treemap.js"></script>
+      </div>
+      <div class="col">
+        <script src="./scripts/intro/VerticalBarchart.js"></script>
+      </div>
+      <div class="col">
+        <script src="./scripts/intro/PieChart.js"></script>
       </div>
     </div>
+  </div>
   </body>
 </html>

@@ -757,6 +757,7 @@ function vietnam() {
           .attr("height", height)
           .style("position", "absolute")
           .attr("width", width / 2);
+
         svg3
           .selectAll("circle")
           .data(groupedData[0].values)
