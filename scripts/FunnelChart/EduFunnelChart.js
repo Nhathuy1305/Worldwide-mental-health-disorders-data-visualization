@@ -1,3 +1,5 @@
+// Distribution and percentage about how often people aged from 16-24 think about suicide
+//1. Loading data
 d3.csv("../assets/education/education.csv").then((data) => {
   const label = [
     "Chưa từng",
@@ -15,6 +17,8 @@ d3.csv("../assets/education/education.csv").then((data) => {
     "About ten times",
   ];
 
+  // 2. Data manipulation: count each categories
+  // reduce function
   const labelCounts = label.map((category) =>
     data.reduce((count, d) => {
       return d["Bạn từng nghĩ tới việc t.ự s.á.t bao nhiêu lần?"] === category
@@ -25,13 +29,17 @@ d3.csv("../assets/education/education.csv").then((data) => {
 
   console.log(labelCounts);
 
+  // count total amount
   const total = labelCounts.reduce((sum, count) => sum + count, 0);
+
+  // 3. Percentage calculation
   const percentages = labelCounts.map(
     (count) => ((count / total) * 100).toFixed(2) + "%"
   );
 
   console.log(total);
 
+  // 4. Data Sorting in descending order
   const newData = label
     .map((label, i) => {
       return {
@@ -40,10 +48,11 @@ d3.csv("../assets/education/education.csv").then((data) => {
         percentage: percentages[i],
       };
     })
-    .sort((a, b) => b.value - a.value); // sort data in descending order
+    .sort((a, b) => b.value - a.value);
 
   console.log(newData);
 
+  // 5. Chart Setup: defines dimensions (margins, width, height, scales)
   const margin = { top: 20, right: 20, bottom: 20, left: 100 };
   const width = 500 - margin.left - margin.right;
   const height = 300 - margin.top - margin.bottom;
@@ -86,7 +95,8 @@ d3.csv("../assets/education/education.csv").then((data) => {
     .append("g")
     .attr("transform", `translate(${margin.left + 20},${margin.top})`);
 
-  // Add category labels on the left vertical axis
+  // 6. Axis and Labels
+  // append the vertical axis to the left of the chart, displaying category labels
   svg
     .append("g")
     .attr("class", "axis")
@@ -97,6 +107,7 @@ d3.csv("../assets/education/education.csv").then((data) => {
     .style("text-anchor", "start")
     .style("font-size", "15px");
 
+  // 7. Tool tips: additional information while hovering
   // Add tooltip
   const tooltip = d3
     .select("body") // Select the body element to append the tooltip
@@ -110,8 +121,6 @@ d3.csv("../assets/education/education.csv").then((data) => {
     .style("font-size", "20px")
     .style("position", "absolute")
     .style("pointer-events", "none");
-
-  // Add total count and percentage text
   svg
     .append("text")
     .attr("class", "total-text")
@@ -123,6 +132,7 @@ d3.csv("../assets/education/education.csv").then((data) => {
     .text(`Total: ${total} (${100}%)`)
     .style("color", "#13388e");
 
+  // 8. Rectangle bars: creates rectangle for each categories
   svg
     .selectAll(".bar")
     .data(newData)
@@ -135,6 +145,8 @@ d3.csv("../assets/education/education.csv").then((data) => {
     .attr("height", yScale.bandwidth())
     .attr("fill", "#ade3fb")
     .style("cursor", "pointer") // add cursor style for interaction
+
+    // 9. Interaction: click on bars
     .on("mouseover", function (d, event) {
       d3.select(this)
         .attr("fill", "#ade3fb")
@@ -178,6 +190,8 @@ d3.csv("../assets/education/education.csv").then((data) => {
 
       d3.select("#info-box").text(info);
     });
+
+  // 10. Text labels
   svg
     .selectAll(".bar-text") // Add text elements for values
     .data(newData)

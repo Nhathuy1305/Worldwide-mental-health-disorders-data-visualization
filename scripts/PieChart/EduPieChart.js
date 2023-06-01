@@ -1,7 +1,9 @@
+// 1. Loading data
 d3.csv("../assets/education/education.csv").then((data) => {
   const categories = ["Tối thiểu", "Nhẹ", "Trung bình", "Bình thường", "Nặng"];
   const englishCategories = ["Minimum", "Mild", "Moderate", "Normal", "Severe"];
 
+  // 2. Data manipulation
   const categoryCounts = categories.map((category) =>
     data.reduce((count, d) => {
       return d["Mức độ"] === category ? count + 1 : count;
@@ -10,6 +12,7 @@ d3.csv("../assets/education/education.csv").then((data) => {
 
   console.log(categoryCounts);
 
+  // 3. Sorting data in descending order
   const newData = categories.map((category, i) => {
     return { category: englishCategories[i], value: categoryCounts[i] };
   });
@@ -23,6 +26,7 @@ d3.csv("../assets/education/education.csv").then((data) => {
     .domain(categories)
     .range(["#ade3fb", "#079ee3", "#076ba9", "#005095", "#031347"]);
 
+  // 4. Setting up the chart
   const legendWidth = 120,
     legendHeight = categories.length * 15,
     width = Math.max(legendWidth + 500, 400),
@@ -51,6 +55,8 @@ d3.csv("../assets/education/education.csv").then((data) => {
     .outerRadius(radius)
     .innerRadius(radius - 100);
 
+  // 5. Rendering each slice: binds 'newData' array to the arcs selection
+  // Each slice colors will change based on the counts of each category: lighter for bigger counts, darker for smaller counts
   const arcs = g
     .selectAll(".arc")
     .data(pie(newData))
@@ -58,6 +64,7 @@ d3.csv("../assets/education/education.csv").then((data) => {
     .append("g")
     .attr("class", "arc");
 
+  // 6. Add tooltips and interaction
   const tooltip = d3
     .select("body")
     .append("div")
@@ -126,6 +133,7 @@ d3.csv("../assets/education/education.csv").then((data) => {
 
   const total = newData.reduce((acc, curr) => acc + curr.value, 0); // get the total value
 
+  // 7. Add lines and labels
   const lines = arcs
     .append("line")
     .attr("x1", (d) => label.centroid(d)[0])
@@ -165,6 +173,8 @@ d3.csv("../assets/education/education.csv").then((data) => {
     .attr("fill", "black")
     .attr("dy", "0.35em");
 
+  // 8. Create legend include color rectangle and corresponding category name
+  // The category name and color rentangle will absolutey be updated just like the pie chart
   const legend = svg
     .append("g")
     .attr("transform", `translate(${width - legendWidth - 20} 20)`);
@@ -175,6 +185,7 @@ d3.csv("../assets/education/education.csv").then((data) => {
       d3.color(color(a)).brighter(0.5) - d3.color(color(b)).brighter(0.5)
   );
 
+  // 9. Chart reset functionality
   // Add event listener to reset the chart when clicking outside the chart
   document.addEventListener("click", function (event) {
     const chartContainer = document.getElementById("pie-chart");
