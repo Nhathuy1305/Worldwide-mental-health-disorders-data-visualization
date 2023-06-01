@@ -60,6 +60,7 @@ body {
 .sidebar {
   display: flex;
   flex-direction: row;
+  margin-top: 60px;
 }
 
 .sidebar .tab-header {

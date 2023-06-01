@@ -22,6 +22,7 @@ function donutChart(data) {
   var svg = d3
     .select("body")
     .append("svg")
+    .attr("class", "chart-2")
     .attr("width", width)
     .attr("height", height)
     .append("g")

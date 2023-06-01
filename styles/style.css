@@ -416,3 +416,23 @@
     font-weight: 500;
     color: #D4ADFC;
 }
+
+.chart-1 {
+    position: relative;
+    left: 10%;
+}
+
+.chart-2 {
+    position: relative;
+    right: -18%;
+}
+
+.chart-3 {
+    position: relative;
+    left: 10%;
+}
+
+.chart-4 {
+    position: relative;
+    right: -24%;
+}

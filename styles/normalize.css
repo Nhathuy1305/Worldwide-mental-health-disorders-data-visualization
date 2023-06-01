@@ -414,7 +414,7 @@ button {
 #play-btn-1 {
     position: relative;
     left: 36%;
-    top: 31rem;
+    top: 34rem;
     z-index: 1;
     transition: all 0.2s ease-in-out;
 }
@@ -422,7 +422,7 @@ button {
 #play-btn-2 {
     position: relative;
     left: 29%;
-    top: 65rem;
+    top: 68rem;
     z-index: 1;
     transition: all 0.2s ease-in-out;
 }
@@ -430,7 +430,7 @@ button {
 #play-btn-3 {
     position: relative;
     left: -3%;
-    top: 95rem;
+    top: 98rem;
     z-index: 1;
     transition: all 0.2s ease-in-out;
 }
@@ -438,7 +438,7 @@ button {
 #play-btn-4 {
     position: relative;
     left: 43%;
-    top: 95rem;
+    top: 98rem;
     z-index: 1;
     transition: all 0.2s ease-in-out;
 }
@@ -507,6 +507,28 @@ button {
 
 #page-change-btn-4:hover {
     transform: translateX(10px);
+    background-color: #D4ADFC;
+    color: #19376D;
+}
+
+.main-page-3 {
+    display: block;
+    align-item: center;
+}
+
+#page-change-btn-5 {
+    position: relative;
+    top: -3rem;
+    left: 35%;
+    border: none;
+    padding: 7px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+#page-change-btn-5:hover {
+    transform: translateX(-10px);
     background-color: #D4ADFC;
     color: #19376D;
 }

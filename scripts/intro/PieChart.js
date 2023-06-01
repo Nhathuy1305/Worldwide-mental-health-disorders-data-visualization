@@ -22,6 +22,7 @@ function pieChart(data) {
   var svg = d3
     .select("body")
     .append("svg")
+    .attr("class", "chart-4")
     .attr("width", width)
     .attr("height", height)
     .append("g")
