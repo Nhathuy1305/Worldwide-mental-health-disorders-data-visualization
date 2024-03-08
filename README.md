@@ -73,13 +73,13 @@ Data science and data visualization projects are becoming increasingly popular w
 
 ### Team Members :couplekiss_man_man:
 
-| Order |         Name          |     ID      |                  Email                  |                       Github account                        |                              Facebook                              |
-| :---: | :-------------------: | :---------: |:---------------------------------------:| :---------------------------------------------------------: | :----------------------------------------------------------------: |
-|   1   |     Nguyen Quang Dieu      | ITDSIU20031 |           dieu5084@gmail.com            |           [itzmealvin](https://github.com/itzmealvin)           | [Nguyen Quang Dieu](https://www.facebook.com/it.z.me.quangdieu) |
-|   2   | Nguyen Hoang Anh Tu | ITDSIU20090 |          nghganhtu@gmail.com            | [nghganhtu](https://github.com/nghganhtu) |         [Joseph Nguyen](https://www.facebook.com/profile.php?id=100084848316418)         |
-|   3   | Bui Thi Cam Van | ITITIU20111 |        buicamvan.work@gmail.com         |       [BUITHICAMVAN](https://github.com/BUITHICAMVAN)       |     [Vân Bùi](https://www.facebook.com/profile.php?id=100085262943407)      |
-|   4   | Tran Dinh An | ITDSIU20113 |                     dinhantran.2501@gmail.com                    |       [trndnhan](https://github.com/trndnhan)       |     [Đình Trần](https://www.facebook.com/1ancelot)      |
-|   5   |     Dang Nhat Huy     | ITITIU20043 |          dnhuy.ityu@gmail.com           |        [Nhathuy1305](https://github.com/Nhathuy1305)        |          [Nhật Huy](https://www.facebook.com/nhhuy.135/)           |
+| Order |         Name          |     ID      |                  Email                  |                       Github account                        |
+| :---: | :-------------------: | :---------: |:---------------------------------------:| :---------------------------------------------------------: |
+|   1   |     Nguyen Quang Dieu      | ITDSIU20031 |           dieu5084@gmail.com            |           [itzmealvin](https://github.com/itzmealvin)  | 
+|   2   | Nguyen Hoang Anh Tu | ITDSIU20090 |          nghganhtu@gmail.com            | [nghganhtu](https://github.com/nghganhtu) |       |
+|   3   | Bui Thi Cam Van | ITITIU20111 |        buicamvan.work@gmail.com         |       [BUITHICAMVAN](https://github.com/BUITHICAMVAN)       |
+|   4   | Tran Dinh An | ITDSIU20113 |                     dinhantran.2501@gmail.com                    |       [trndnhan](https://github.com/trndnhan)       | 
+|   5   |     Dang Nhat Huy     | ITITIU20043 |          dnhuy.ityu@gmail.com           |        [Nhathuy1305](https://github.com/Nhathuy1305)        |    
 
 ### Installation :dart:
 
